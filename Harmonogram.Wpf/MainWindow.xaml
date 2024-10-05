@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <MenuItem VerticalContentAlignment="Center" Header="Menu" Width="100">
+                <MenuItem Command="{Binding GoToSchedule}" Header="Harmonogram"/>
+                <MenuItem Command="{Binding GoToWorkTime}" Header="Czas Pracy"/>
+                <MenuItem Command="{Binding GoToScheduleCreator}" Header="Kreator harmonogramów"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
