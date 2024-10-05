@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Harmonogram.Wpf.ViewModels
 {
-    public partial class ScheduleViewModel: ObservableObject, IModalDialogViewModel
+    public partial class ScheduleViewModel : ObservableObject, IModalDialogViewModel
     {
         private readonly IDialogService _dialogService;
 

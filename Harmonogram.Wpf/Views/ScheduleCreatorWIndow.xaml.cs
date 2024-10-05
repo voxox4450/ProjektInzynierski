@@ -1,31 +1,33 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Harmonogram.Wpf.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using HC = HandyControl.Controls;
 
 namespace Harmonogram.Wpf.Views
 {
     /// <summary>
     /// Logika interakcji dla klasy ScheduleCreatorWindow.xaml
     /// </summary>
-    public partial class ScheduleCreatorWindow : Window
+    public partial class ScheduleCreatorWindow : HC.Window
     {
         public ScheduleCreatorWindow()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<ScheduleCreatorViewModel>();
+        }
 
+        private void Window_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Step1.DataContext = DataContext;
+            Step2.DataContext = DataContext;
+            Step3.DataContext = DataContext;
+            Step4.DataContext = DataContext;
+
+            ScheduleCreatorViewModel? viewModel = DataContext as ScheduleCreatorViewModel;
+
+            if (viewModel is null)
+                return;
+
+            viewModel.OnRequestNextStep += (s, e) => StepBar.Next();
+            viewModel.OnRequestPrevioustStep += (s, e) => StepBar.Prev();
         }
     }
 }

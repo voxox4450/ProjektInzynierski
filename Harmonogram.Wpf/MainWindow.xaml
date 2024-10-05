@@ -1,4 +1,4 @@
-﻿<Window x:Class="Harmonogram.Wpf.MainWindow"
+﻿<hc:Window x:Class="Harmonogram.Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,22 +6,23 @@
         xmlns:local="clr-namespace:Harmonogram.Wpf"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         md:DialogServiceViews.IsRegistered="True"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
             <MenuItem VerticalContentAlignment="Center" Header="Menu" Width="100">
-                <MenuItem Command="{Binding GoToScheduleCommand}" Header="Harmonogram"/>
-                <MenuItem Command="{Binding GoToWorkTimeCommand}" Header="Czas Pracy"/>
-                <MenuItem Command="{Binding GoToScheduleCreatorCommand}" Header="Kreator harmonogramów"/>
+                <MenuItem Command="{Binding GoToScheduleCommand}" Header="Harmonogram" />
+                <MenuItem Command="{Binding GoToWorkTimeCommand}" Header="Czas Pracy" />
+                <MenuItem Command="{Binding GoToScheduleCreatorCommand}" Header="Kreator harmonogramów" />
             </MenuItem>
         </Menu>
     </Grid>
-</Window>
+</hc:Window>

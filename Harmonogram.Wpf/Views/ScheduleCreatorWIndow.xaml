@@ -1,12 +1,37 @@
-﻿<Window x:Class="Harmonogram.Wpf.Views.ScheduleCreatorWindow"
+﻿<hc:Window x:Class="Harmonogram.Wpf.Views.ScheduleCreatorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Harmonogram.Wpf.Views"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:uc="clr-namespace:Harmonogram.Wpf.Views.ScheduleCreatorUserControls"
         mc:Ignorable="d"
-        Title="ScheduleCreatorWindow" Height="450" Width="800">
+        Loaded="Window_Loaded"
+        Title="Kreator Harmonogramu" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <hc:StepBar x:Name="StepBar" Grid.Row="0" Dock="Right" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,10,0">
+            <hc:StepBarItem Content="Data" />
+            <hc:StepBarItem Content="Nazwa" />
+            <hc:StepBarItem Content="Pracownicy" />
+            <hc:StepBarItem Content="Przypisz godziny" />
+        </hc:StepBar>
+
+        <uc:UserControl1Date x:Name="Step1" Visibility="{Binding UserControlsVisibility[0]}" Grid.ColumnSpan="2" />
+        <uc:UserControl2Name x:Name="Step2" Visibility="{Binding UserControlsVisibility[1]}" Grid.ColumnSpan="2" />
+        <uc:UserControl3Employees x:Name="Step3" Visibility="{Binding UserControlsVisibility[2]}" Grid.ColumnSpan="2" />
+        <uc:UserControl4Assignment x:Name="Step4" Visibility="{Binding UserControlsVisibility[3]}" Grid.ColumnSpan="2" />
+
+        <Button Grid.Row="2" Grid.Column="0" Content="Poprzedni krok" Command="{Binding PreviousStepCommand}" />
+        <Button Grid.Row="2" Grid.Column="2" Content="Następny krok" Command="{Binding NextStepCommand}" />
     </Grid>
-</Window>
+</hc:Window>
