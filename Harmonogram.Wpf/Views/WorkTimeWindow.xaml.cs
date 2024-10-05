@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Harmonogram.Wpf.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,7 @@ namespace Harmonogram.Wpf.Views
         public WorkTimeWindow()
         {
             InitializeComponent();
+            DataContext = Ioc.Default.GetRequiredService<WorkTimeViewModel>();
         }
     }
 }

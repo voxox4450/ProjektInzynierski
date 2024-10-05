@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Harmonogram.Wpf.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +17,14 @@ using System.Windows.Shapes;
 namespace Harmonogram.Wpf.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy SchdeuleWindow.xaml
+    /// Logika interakcji dla klasy ScheduleWindow.xaml
     /// </summary>
-    public partial class SchdeuleWindow : Window
+    public partial class ScheduleWindow : Window
     {
-        public SchdeuleWindow()
+        public ScheduleWindow()
         {
             InitializeComponent();
+            DataContext = Ioc.Default.GetRequiredService<ScheduleViewModel>();
         }
     }
 }

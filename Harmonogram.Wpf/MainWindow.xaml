@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Harmonogram.Wpf"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -16,9 +18,9 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
             <MenuItem VerticalContentAlignment="Center" Header="Menu" Width="100">
-                <MenuItem Command="{Binding GoToSchedule}" Header="Harmonogram"/>
-                <MenuItem Command="{Binding GoToWorkTime}" Header="Czas Pracy"/>
-                <MenuItem Command="{Binding GoToScheduleCreator}" Header="Kreator harmonogramów"/>
+                <MenuItem Command="{Binding GoToScheduleCommand}" Header="Harmonogram"/>
+                <MenuItem Command="{Binding GoToWorkTimeCommand}" Header="Czas Pracy"/>
+                <MenuItem Command="{Binding GoToScheduleCreatorCommand}" Header="Kreator harmonogramów"/>
             </MenuItem>
         </Menu>
     </Grid>

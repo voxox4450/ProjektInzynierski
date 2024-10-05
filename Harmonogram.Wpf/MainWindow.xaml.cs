@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Harmonogram.Wpf.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,7 @@ namespace Harmonogram.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = Ioc.Default.GetRequiredService<MainViewModel>();
         }
     }
 }
