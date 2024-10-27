@@ -1,0 +1,73 @@
+﻿<hc:Window
+    x:Class="Harmonogram.Wpf.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Harmonogram.Wpf.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+    Title="Harmonogram"
+    Width="1280"
+    Height="800"
+    MinWidth="1280"
+    MinHeight="800"
+    md:DialogServiceViews.IsRegistered="True"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <converters:HandyColorConverter x:Key="handyColorConverter" />
+        <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
+    </Window.Resources>
+
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="q"
+            Command="{Binding OpenWorkHoursPanelCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="w"
+            Command="{Binding OpenSchedulePanelCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="e"
+            Command="{Binding OpenCreateScheduleCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="r"
+            Command="{Binding OpenCreateUserCommand}"
+            Modifiers="Ctrl" />
+    </Window.InputBindings>
+
+    <StackPanel Background="{StaticResource SecondaryRegionColor}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!--  App menu  -->
+            <Menu
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="21">
+                <MenuItem Header="Panel Użytkownika">
+                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
+                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
+                </MenuItem>
+                <MenuItem Header="Panel Administacyjny">
+                    <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
+                    <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
+                </MenuItem>
+
+            </Menu>
+
+
+        </Grid>
+    </StackPanel>
+</hc:Window>
