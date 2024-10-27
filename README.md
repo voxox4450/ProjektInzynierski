@@ -1,3 +1,26 @@
-# Projekt Inżynierski
+# Projekt Inżynierski : Aplikacja tworzenie i układanie harmonogramów pracowników w firmie
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ornare neque sed cursus sollicitudin. In blandit nunc a aliquet efficitur. Suspendisse faucibus nec orci in ultrices. Praesent ultricies felis id libero laoreet, quis porttitor justo porta. Quisque tempus est nec nibh consequat commodo. Sed fermentum rutrum justo, eu elementum diam lacinia ut. Etiam ornare, ante sit amet dignissim sollicitudin, enim purus ullamcorper purus, quis ultricies lorem libero nec libero. Nunc erat nisi, rhoncus non feugiat non, semper vitae purus. Morbi ex lectus, elementum vitae vestibulum vel, gravida ut elit. In sem justo, mollis id nisi vel, sollicitudin rhoncus tellus. Donec porta massa non ligula consequat, ut consequat odio ornare. Mauris tincidunt ullamcorper ex, luctus vestibulum mauris aliquam in. Proin vulputate libero diam, at dignissim turpis eleifend et. Vestibulum accumsan, diam id vehicula ullamcorper, orci urna eleifend metus, nec luctus orci massa sit amet arcu. Nam condimentum tincidunt massa sed mollis. Cras malesuada diam sit amet semper consequat.
+W tym repozytorium znajduję się kod źródłowy aplikacji tworzonej dla zaliczenia projektu inżynierskiego na Uniwersytecie Komisji Edukacji Narodowej w Krakowie. Aplikacja oraz kod jest własnością uczelni, wszelkie próby zawłaszczenia jak i próba dystrybucji jest ZABRONIONA.
+
+# Dokumentacja
+
+Szczegółowa dokumentacja została podzielona i umieszczona na branchach autorów projektu dla jasnego rozdzielenia zadań. 
+> [!NOTE]
+> W późniejszych etapach projektu umieszczony zostanie krótki filmik prezentujący działanie aplikacji.
+
+W dokumentacji branchów znajduje się :
+* Imię i Nazwisko autora
+* Aktualny stan pracy
+* Streszczenie
+* Pełny opis obowiązków
+
+# Opis
+Projekt obejmuje stworzenie aplikacji desktopowej do zarządzania harmonogramami pracy, tworzenia grafików manualnie. Aplikacja działa w tle, umożliwiając pracownikom przegląd zmian, oraz obliczanie wynagrodzenia na podstawie
+przepracowanych godzin.
+
+# Cechy
+- Wykorzytanie wzorcu architektonicznego MVVM (Model-View-ViewModel) z użyciem MVVM Toolkit
+- Użycie języka C# i XAML
+- Dane użytkowe znajdujące się w bazie danych SQL
+
+# Szczegóły
