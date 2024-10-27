@@ -1,7 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Harmonogram.Common.Interfaces;
+using Harmonogram.Common.Models;
+using Harmonogram.Common.Repositories;
+using Harmonogram.Common.Services;
 using Harmonogram.Wpf.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MvvmDialogs;
+using System.IO;
 using System.Windows;
 
 namespace Harmonogram.Wpf
@@ -11,17 +18,34 @@ namespace Harmonogram.Wpf
     /// </summary>
     public partial class App : Application
     {
+        public IConfiguration? Configuration { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            Configuration = builder.Build();
+
             Ioc.Default.ConfigureServices(
             new ServiceCollection()
+            .AddDbContext<Context>(options => options
+            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
+            .AddTransient<LoginViewModel>()
             .AddTransient<MainViewModel>()
             .AddTransient<WorkHoursViewModel>()
             .AddTransient<SchedulePanelViewModel>()
             .AddTransient<CreateScheduleViewModel>()
             .AddTransient<CreateUserViewModel>()
+            .AddTransient<RegisterViewModel>()
             .AddScoped<IDialogService, DialogService>()
+            .AddScoped<IUserService, UserServices>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<SeederContext>()
             .BuildServiceProvider());
+
+            using var scope = Ioc.Default.CreateScope();
+            var seeder = scope.ServiceProvider.GetRequiredService<SeederContext>();
+            seeder.SeedUser();
         }
     }
 

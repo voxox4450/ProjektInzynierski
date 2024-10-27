@@ -9,8 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="Converters\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
@@ -30,6 +28,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Harmonogram.Common\Harmonogram.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Converters\HandyColorConverter.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

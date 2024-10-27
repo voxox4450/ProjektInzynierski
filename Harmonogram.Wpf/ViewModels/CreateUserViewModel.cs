@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using MvvmDialogs;
 
 namespace Harmonogram.Wpf.ViewModels
@@ -9,7 +8,7 @@ namespace Harmonogram.Wpf.ViewModels
         private readonly IDialogService _dialogService;
         public CreateUserViewModel()
         {
-            _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
+            //_dialogService = Ioc.Default.GetRequiredService<IDialogService>();
         }
 
         [ObservableProperty]

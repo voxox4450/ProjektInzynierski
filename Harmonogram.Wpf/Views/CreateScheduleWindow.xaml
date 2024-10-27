@@ -6,9 +6,40 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:Harmonogram.Wpf.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="CreateScheduleWindow"
-    Width="800"
-    Height="450"
+    Title="Harmonogram"
+    Width="1200"
+    Height="820"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
     mc:Ignorable="d">
-    <Grid />
+    <Window.Resources>
+        <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
+    </Window.Resources>
+    <StackPanel Background="{StaticResource SecondaryRegionColor}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Tworzenie Harmonogramu"
+                FontSize="40"
+                FontStyle="Italic"
+                FontWeight="SemiBold"
+                Foreground="White" />
+        </Grid>
+    </StackPanel>
 </hc:Window>

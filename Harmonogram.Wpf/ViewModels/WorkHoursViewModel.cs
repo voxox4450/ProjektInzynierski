@@ -1,6 +1,6 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using MvvmDialogs;
 
 namespace Harmonogram.Wpf.ViewModels
@@ -14,5 +14,11 @@ namespace Harmonogram.Wpf.ViewModels
         }
         [ObservableProperty]
         private bool? _dialogResult;
+
+        [RelayCommand]
+        private void Close()
+        {
+            DialogResult = true;
+        }
     }
 }
