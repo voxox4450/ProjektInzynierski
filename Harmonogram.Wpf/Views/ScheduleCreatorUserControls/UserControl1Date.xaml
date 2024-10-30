@@ -19,8 +19,8 @@
         </Grid.RowDefinitions>
         <Label Grid.ColumnSpan="2" FontSize="20" Height="40" VerticalContentAlignment="Center" Content="Wybierz datę harmonogramu:" />
         <Label Grid.Row="1" Content="Data rozpoczęcia:" Width="150" />
-        <DatePicker SelectedDate="{Binding StartingDate}" Grid.Row="1" Grid.Column="1" Height="50" Width="150" />
+        <DatePicker SelectedDate="{Binding StartingDate, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Height="50" Width="150" />
         <Label Grid.Row="2" Content="Data zakończenia:"  Width="150" />
-        <DatePicker SelectedDate="{Binding StartingDate}" Grid.Row="2" Grid.Column="1" Height="50" Width="150" />
+        <DatePicker SelectedDate="{Binding EndingDate, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Height="50" Width="150" />
     </Grid>
 </UserControl>

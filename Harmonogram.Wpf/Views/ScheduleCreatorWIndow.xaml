@@ -17,9 +17,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <hc:StepBar x:Name="StepBar" Grid.Row="0" Dock="Right" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,10,0">
+        <hc:StepBar x:Name="StepBar" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" Margin="0,0,10,0">
             <hc:StepBarItem Content="Data" />
             <hc:StepBarItem Content="Nazwa" />
             <hc:StepBarItem Content="Pracownicy" />

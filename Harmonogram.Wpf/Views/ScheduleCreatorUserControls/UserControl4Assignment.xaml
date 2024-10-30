@@ -3,10 +3,211 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Harmonogram.Wpf.Views.ScheduleCreatorUserControls"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Label Content="4" Foreground="White" />
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ItemsControl ItemsSource="{Binding WorkHours}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="24" Margin="20,0,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontSize="15" Height="25" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Kolumny dla każdego dnia tygodnia z blokami czasowymi -->
+            <StackPanel Grid.Column="1" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Poniedziałek" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[0]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Poniedziałek]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                                   Height="{Binding Height}"
+                                   Fill="{Binding Fill}"
+                                   Opacity="{Binding Opacity}"
+                                   Canvas.Top="{Binding Top}"
+                                   Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Wtorek" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[1]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Wtorek]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                                   Height="{Binding Height}"
+                                   Fill="{Binding Fill}"
+                                   Opacity="{Binding Opacity}"
+                                   Canvas.Top="{Binding Top}"
+                                   Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Środa" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[2]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Środa]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       Fill="{Binding Fill}"
+                       Opacity="{Binding Opacity}"
+                       Canvas.Top="{Binding Top}"
+                       Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="4" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Czwartek" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[3]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Czwartek]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       Fill="{Binding Fill}"
+                       Opacity="{Binding Opacity}"
+                       Canvas.Top="{Binding Top}"
+                       Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="5" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Piątek" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[4]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Piątek]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       Fill="{Binding Fill}"
+                       Opacity="{Binding Opacity}"
+                       Canvas.Top="{Binding Top}"
+                       Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="6" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Sobota" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[5]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Sobota]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       Fill="{Binding Fill}"
+                       Opacity="{Binding Opacity}"
+                       Canvas.Top="{Binding Top}"
+                       Canvas.Left="{Binding Left}" Grid.Row="{Binding Row}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Column="7" Grid.RowSpan="25" HorizontalAlignment="Center">
+                <TextBlock Text="Niedziela" FontSize="20" />
+                <TextBlock Text="{Binding DayDates[6]}" FontSize="15" />
+                <ItemsControl ItemsSource="{Binding TimeBlocksByDay[Niedziela]}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       Fill="{Binding Fill}"
+                       Opacity="{Binding Opacity}"
+                       Canvas.Top="{Binding Top}"
+                       Canvas.Left="{Binding Left}" 
+                                       Grid.Row="{Binding Row}"/>
+                            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Dodaj blok pracy"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
     </Grid>
+    </ScrollViewer>
 </UserControl>

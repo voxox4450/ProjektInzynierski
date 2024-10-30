@@ -4,8 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Harmonogram.Wpf.Views.ScheduleCreatorUserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Grid.ColumnSpan="2" FontSize="20" Height="40" VerticalContentAlignment="Center" Content="Wybierz pracowników:" />
+        <ListView
+    Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.ColumnSpan="2"
+    hc:Empty.ShowEmpty="True"
+    ItemsSource="{Binding Users}"
+    SelectionMode="Single">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Width="70" Header="#">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn
+                Width="300"
+                DisplayMemberBinding="{Binding FullName}"
+                Header="Osoba" />
+                    <GridViewColumn
+                Width="400"
+                DisplayMemberBinding="{Binding Mail}"
+                Header="Adres e-mail" />
+                    <GridViewColumn
+                        Width="300"
+                        DisplayMemberBinding="{Binding PhoneNumber}"
+                        Header="Numer telefonu" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
