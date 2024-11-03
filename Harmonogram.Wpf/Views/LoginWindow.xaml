@@ -10,8 +10,11 @@
     Title="Login"
     Width="800"
     Height="450"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <!--  d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"  -->
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
+    </Window.InputBindings>
     <Window.Resources>
         <Style TargetType="components:BindablePasswordBox">
             <Setter Property="Validation.ErrorTemplate">

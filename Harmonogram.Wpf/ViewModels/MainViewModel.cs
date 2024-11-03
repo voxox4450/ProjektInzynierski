@@ -13,6 +13,10 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IDialogService _dialogService;
         private readonly LoginViewModel _loginViewModel;
+        [ObservableProperty]
+        private Visibility _openAdminVisibility = Visibility.Collapsed; // Domyślnie ukryte
+
+
         public MainViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
@@ -21,7 +25,8 @@ namespace Harmonogram.Wpf.ViewModels
         }
 
         [ObservableProperty]
-        private User? _isLogged;
+        private User _isLogged;
+        private bool CanExecuteAdminCommands => IsLogged?.IsAdmin == true;
 
 
         [RelayCommand]
@@ -40,6 +45,10 @@ namespace Harmonogram.Wpf.ViewModels
             }
             OnLoggedIn(this, _loginViewModel.userToLogged);
         }
+        private void Close()
+        {
+            Application.Current.Shutdown();
+        }
 
         [RelayCommand]
         private void OpenWorkHoursPanel()
@@ -54,13 +63,13 @@ namespace Harmonogram.Wpf.ViewModels
             var dialogViewModel = new SchedulePanelViewModel();
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
         }
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()
         {
             var dialogViewModel = new CreateScheduleViewModel();
             _dialogService.ShowDialog<CreateScheduleWindow>(this, dialogViewModel);
         }
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateUser()
         {
             var dialogViewModel = new CreateUserViewModel();
@@ -72,7 +81,17 @@ namespace Harmonogram.Wpf.ViewModels
         private void OnLoggedIn(object? sender, User user)
         {
             IsLogged = user;
+            if (IsLogged == null)
+            {
+                Close();
+            }
+            else
+            {
+                // Ustaw widoczność na podstawie roli
+                OpenAdminVisibility = IsLogged.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
+
 
     }
 

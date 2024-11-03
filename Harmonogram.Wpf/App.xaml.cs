@@ -36,7 +36,6 @@ namespace Harmonogram.Wpf
             .AddTransient<SchedulePanelViewModel>()
             .AddTransient<CreateScheduleViewModel>()
             .AddTransient<CreateUserViewModel>()
-            .AddTransient<RegisterViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
             .AddScoped<IUserRepository, UserRepository>()
