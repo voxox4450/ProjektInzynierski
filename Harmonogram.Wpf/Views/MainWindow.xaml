@@ -5,6 +5,7 @@
     xmlns:converters="clr-namespace:Harmonogram.Wpf.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     Title="Harmonogram"
@@ -20,7 +21,11 @@
         <converters:HandyColorConverter x:Key="handyColorConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
     </Window.Resources>
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OpenLoginCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.InputBindings>
         <KeyBinding
@@ -43,6 +48,7 @@
 
     <StackPanel Background="{StaticResource SecondaryRegionColor}">
         <Grid>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -60,7 +66,7 @@
                     <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
                     <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
                 </MenuItem>
-                <MenuItem Header="Panel Administacyjny">
+                <MenuItem Header="Panel Administacyjny"  Visibility="{Binding OpenAdminVisibility}">
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
                     <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
                 </MenuItem>

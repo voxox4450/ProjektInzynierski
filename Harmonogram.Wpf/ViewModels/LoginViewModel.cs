@@ -89,7 +89,5 @@ namespace Harmonogram.Wpf.ViewModels
 
         }
 
-
-
     }
 }

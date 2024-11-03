@@ -13,7 +13,7 @@ namespace Harmonogram.Common.Services
             _userRepository = userRepository;
         }
 
-        public User Login(User user)
+        public User? Login(User user)
         {
             var loggedInUser = _userRepository.Login(user);
             if (loggedInUser != null && PasswordHelper.Decrypt(user.Password) == PasswordHelper.Decrypt(loggedInUser.Password))
