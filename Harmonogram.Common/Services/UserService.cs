@@ -36,5 +36,6 @@ namespace Harmonogram.Common.Services
         {
             return _userRepository.CheckFirst(user);
         }
+
     }
 }

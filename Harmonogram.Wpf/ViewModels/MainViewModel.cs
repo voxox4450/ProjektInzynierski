@@ -6,6 +6,7 @@ using Harmonogram.Wpf.Views;
 using MvvmDialogs;
 using System.Windows;
 
+
 namespace Harmonogram.Wpf.ViewModels
 
 {
@@ -13,21 +14,27 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IDialogService _dialogService;
         private readonly LoginViewModel _loginViewModel;
-        [ObservableProperty]
-        private Visibility _openAdminVisibility = Visibility.Collapsed; // Domyślnie ukryte
-
 
         public MainViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _loginViewModel = Ioc.Default.GetRequiredService<LoginViewModel>();
+
             _loginViewModel.IsLoggedIn += OnLoggedIn;
         }
 
-        [ObservableProperty]
-        private User _isLogged;
         private bool CanExecuteAdminCommands => IsLogged?.IsAdmin == true;
 
+        [ObservableProperty]
+        private User _isLogged;
+
+        [ObservableProperty]
+        private Visibility _openAdminVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private string _userName;
+        [ObservableProperty]
+        private int _amount = 4567;
 
         [RelayCommand]
         private static void Hide()
@@ -44,10 +51,6 @@ namespace Harmonogram.Wpf.ViewModels
 
             }
             OnLoggedIn(this, _loginViewModel.userToLogged);
-        }
-        private void Close()
-        {
-            Application.Current.Shutdown();
         }
 
         [RelayCommand]
@@ -75,8 +78,15 @@ namespace Harmonogram.Wpf.ViewModels
             var dialogViewModel = new CreateUserViewModel();
             _dialogService.ShowDialog<CreateUserWindow>(this, dialogViewModel);
         }
+        private void Close()
+        {
+            Application.Current.Shutdown();
+        }
 
-        //Event hanlders
+        private void LoadData(User user)
+        {
+            UserName = user.Name;
+        }
 
         private void OnLoggedIn(object? sender, User user)
         {
@@ -87,7 +97,8 @@ namespace Harmonogram.Wpf.ViewModels
             }
             else
             {
-                // Ustaw widoczność na podstawie roli
+                LoadData(user);
+
                 OpenAdminVisibility = IsLogged.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
             }
         }

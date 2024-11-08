@@ -56,6 +56,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <!--  App menu  -->
             <Menu
@@ -66,13 +68,270 @@
                     <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
                     <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
                 </MenuItem>
-                <MenuItem Header="Panel Administacyjny"  Visibility="{Binding OpenAdminVisibility}">
+                <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
                     <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
                 </MenuItem>
 
             </Menu>
 
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" MinWidth="100" />
+                    <ColumnDefinition Width="*" MinWidth="100" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" MinHeight="60" />
+                    <RowDefinition Height="2*" MinHeight="100" />
+                    <RowDefinition Height="3*" MinHeight="200" />
+                    <RowDefinition Height="3*" MinHeight="200" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="50,10,0,10"
+                    MinWidth="60"
+                    MinHeight="60"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    FontSize="40"
+                    Foreground="White">
+                    Witaj, <Run Text="{Binding UserName}" />
+                </TextBlock>
+                <!--<TextBox
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    MinWidth="60"
+                    MinHeight="60"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="40"
+                    Foreground="White">
+                    Witaj
+                </TextBox>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    MinWidth="60"
+                    MinHeight="60"
+                    Margin="100,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="{Binding UserName}"
+                    FontSize="40"
+                    Foreground="White" />-->
+                <!--  Duży Box (większy)  -->
+
+
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Width="Auto"
+                    Height="150"
+                    Margin="10,20,10,20"
+                    CornerRadius="20">
+
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0.0" Color="#3a9bce" />
+                            <GradientStop Offset="1.0" Color="#1f6da3" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <!--  Grid jako kontener dla obu elementów  -->
+                    <Grid>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="30,15,5,5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            FontSize="30"
+                            Foreground="White"
+                            Text="Twój grafik:" />
+
+                        <Border
+                            Grid.Row="1"
+                            Width="200"
+                            Height="50"
+                            Margin="30,10,30,10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="#18496b"
+                            BorderBrush="#1f6da3"
+                            BorderThickness="2"
+                            CornerRadius="10">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                FontSize="32"
+                                Foreground="White"
+                                Text="{Binding Amount, StringFormat={}{0} zł}" />
+                        </Border>
+
+                        <!--  Dodanie liter dni tygodnia i pustych kółek  -->
+                        <StackPanel
+                            Grid.Row="0"
+                            Margin="0,15,40,15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <!--  Pierwsza litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="P" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Druga litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="W" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Trzecia litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="Ś" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Czwarta litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="C" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Piąta litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="P" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Szósta litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="S" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+
+                            <!--  Siódma litera i koło  -->
+                            <StackPanel
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="36"
+                                    Foreground="White"
+                                    Text="N" />
+                                <Ellipse
+                                    Width="40"
+                                    Height="40"
+                                    Margin="5,5,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="White"
+                                    StrokeThickness="2" />
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+
+
+            </Grid>
 
         </Grid>
     </StackPanel>
