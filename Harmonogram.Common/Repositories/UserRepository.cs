@@ -10,7 +10,7 @@ namespace Harmonogram.Common.Repositories
 
         public User Login(User user)
         {
-            return _context.Users.FirstOrDefault(u => u.Mail == user.Mail);
+            return _context.Users.FirstOrDefault(u => u.Mail == user.Mail)!;
 
         }
 
@@ -21,10 +21,10 @@ namespace Harmonogram.Common.Repositories
         }
 
 
-        public User? CheckFirst(User user)
+        public User CheckFirst(User user)
         {
             Reload();
-            return _context.Users.FirstOrDefault(u => u.LastName == user.LastName && u.Mail == user.Mail);
+            return _context.Users.FirstOrDefault(u => u.LastName == user.LastName && u.Mail == user.Mail)!;
         }
 
         public void Update(User user)

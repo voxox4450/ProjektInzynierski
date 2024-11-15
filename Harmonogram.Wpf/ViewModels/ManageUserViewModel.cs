@@ -16,7 +16,7 @@ namespace Harmonogram.Wpf.ViewModels
         private readonly IUserService _userService;
 
 
-        public ManageUserViewModel(UserViewModel user)
+        public ManageUserViewModel(UserViewModel? user = null)
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _userService = Ioc.Default.GetRequiredService<IUserService>();

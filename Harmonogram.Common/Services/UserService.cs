@@ -8,8 +8,9 @@ namespace Harmonogram.Common.Services
     {
         private readonly IUserRepository _userRepository;
 
-        public event EventHandler<User>? UserUpdated;
         //Events handlers
+        public event EventHandler<User>? UserUpdated;
+
         public UserServices(IUserRepository userRepository)
         {
             _userRepository = userRepository;

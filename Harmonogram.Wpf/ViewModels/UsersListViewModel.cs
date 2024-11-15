@@ -54,6 +54,7 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 return;
             }
+
             userToUpdate.Update(UpdatedUser);
         }
 
@@ -64,7 +65,6 @@ namespace Harmonogram.Wpf.ViewModels
             if (SelectedUser is null)
             {
                 return;
-
             }
             var dialogViewModel = new ManageUserViewModel(SelectedUser);
             _dialogService.ShowDialog<ManageUserWindow>(this, dialogViewModel);
