@@ -1,0 +1,163 @@
+﻿<hc:Window
+    x:Class="Harmonogram.Wpf.Views.ManageUserWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="clr-namespace:Harmonogram.Wpf.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:Harmonogram.Wpf.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+    x:Name="Window"
+    Title="Edytuj Dane"
+    Width="800"
+    Height="550"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
+        <Style TargetType="components:BindablePasswordBox">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <Border
+                                BorderBrush="#DB3340"
+                                BorderThickness="1"
+                                CornerRadius="3">
+
+                                <AdornedElementPlaceholder Margin="-1" />
+                            </Border>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel Background="{StaticResource SecondaryRegionColor}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Edycja Konta"
+                FontSize="35"
+                FontStyle="Italic"
+                FontWeight="SemiBold"
+                Foreground="White" />
+
+            <!--  Name  -->
+
+            <hc:TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.Name}"
+                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  Last Name  -->
+
+            <hc:TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.LastName}"
+                Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" />
+            <!--  Email  -->
+
+            <hc:TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.Mail}"
+                Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  Phone Number  -->
+            <hc:TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.PhoneNumber}"
+                Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
+
+
+            <!--  Password  -->
+
+            <components:BindablePasswordBox
+                x:Name="pass"
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="13,45,10,1"
+                FontWeight="SemiBold"
+                Foreground="#DB3340"
+                Text="{Binding ElementName=pass, Path=(Validation.Errors)/ErrorContent}" />
+
+
+            <components:BindablePasswordBox
+                x:Name="passRepeat"
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                Password="{Binding PasswordRepeat, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="13,45,10,1"
+                FontWeight="SemiBold"
+                Foreground="#DB3340"
+                Text="{Binding ElementName=passRepeat, Path=(Validation.Errors)/ErrorContent}" />
+
+            <!--  Register Button  -->
+            <Button
+                Grid.Row="8"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Width="100"
+                Margin="10,30,10,10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding EditCommand}"
+                Content="Zarejestruj" />
+
+            <!--  Go Back Button  -->
+            <Button
+                Grid.Row="8"
+                Grid.Column="1"
+                Width="100"
+                Margin="10,30,10,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding CloseCommand}"
+                Content="Powrót" />
+
+        </Grid>
+    </StackPanel>
+
+</hc:Window>

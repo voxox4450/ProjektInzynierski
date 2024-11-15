@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harmonogram.Engine", "Harmonogram.Engine\Harmonogram.Engine.csproj", "{46EAF972-101B-4013-ABBE-8D707BA86D95}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harmonogram.Wpf", "Harmonogram.Wpf\Harmonogram.Wpf.csproj", "{C3420348-FE64-4217-AA78-4789ADD68547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmonogram.Common", "Harmonogram.Common\Harmonogram.Common.csproj", "{8F74E045-6D00-4298-97B5-1BB39E2D7238}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harmonogram.Common", "Harmonogram.Common\Harmonogram.Common.csproj", "{8F74E045-6D00-4298-97B5-1BB39E2D7238}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{46EAF972-101B-4013-ABBE-8D707BA86D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46EAF972-101B-4013-ABBE-8D707BA86D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46EAF972-101B-4013-ABBE-8D707BA86D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46EAF972-101B-4013-ABBE-8D707BA86D95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3420348-FE64-4217-AA78-4789ADD68547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3420348-FE64-4217-AA78-4789ADD68547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3420348-FE64-4217-AA78-4789ADD68547}.Release|Any CPU.ActiveCfg = Release|Any CPU

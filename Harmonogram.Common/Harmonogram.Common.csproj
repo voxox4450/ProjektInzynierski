@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="Entities\UserPayment.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="HandyControlDoc\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
-    <Folder Include="ValidationRules\" />
   </ItemGroup>
 
   <ItemGroup>
