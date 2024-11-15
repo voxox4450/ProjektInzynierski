@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Harmonogram.Common.Entities;
 using Harmonogram.Wpf.Views;
 using MvvmDialogs;
+using System.Globalization;
 using System.Windows;
 
 
@@ -32,20 +33,38 @@ namespace Harmonogram.Wpf.ViewModels
         private Visibility _openAdminVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
-        private string _userName;
+        private string _userName = string.Empty!;
         [ObservableProperty]
-        private string _amount = "4567,56";
+        private string _amount = string.Empty!;
 
         [ObservableProperty]
-        private int _hoursCount = 9;
+        private int _hoursCount = 0;
 
         [ObservableProperty]
-        private double _moneyCount = 28.10 * 9;
+        private double _moneyCount = 0.0;
+
+        [ObservableProperty]
+        private string _nextShiftDate = DateTime.Today.ToString("D", new CultureInfo("pl-PL"))!;
+
+        [ObservableProperty]
+        private DateTime _startShift = new(2024, 11, 15, 10, 15, 0);
+
+        [ObservableProperty]
+        private DateTime _endShift = new(2024, 11, 15, 17, 45, 0);
+
+        [ObservableProperty]
+        private string _workHours = default!;
+
+        [ObservableProperty]
+        //TODO: z całego okresu w miesiacu
+        private string _totalHours = "16,82";
+        [ObservableProperty]
+        //TODO: z całego okresu w miesiacu
+        private string _totalAmount = "2334,56";
 
         [RelayCommand]
         private static void Hide()
         {
-            // Hide the current window
             Application.Current.MainWindow.Hide();
         }
         [RelayCommand]
@@ -95,9 +114,15 @@ namespace Harmonogram.Wpf.ViewModels
             Application.Current.Shutdown();
         }
 
+
         private void LoadData(User user)
         {
             UserName = user.Name;
+            WorkHours = $"{StartShift:HH:mm} - {EndShift:HH:mm}";
+            HoursCount = 5;
+            MoneyCount = user.PaymentPerHour * HoursCount;
+            double hoursCount = (double)HoursCount;
+            Amount = Math.Round(user.PaymentPerHour * hoursCount + user.PaymentPerHour * (hoursCount + 1) + user.PaymentPerHour * (hoursCount + 3), 2).ToString("F2");
         }
 
         private void OnLoggedIn(object? sender, User user)
@@ -114,8 +139,5 @@ namespace Harmonogram.Wpf.ViewModels
                 OpenAdminVisibility = IsLogged.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
             }
         }
-
-
     }
-
 }

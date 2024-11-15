@@ -53,7 +53,6 @@
 
     <StackPanel Background="{StaticResource SecondaryRegionColor}">
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -62,8 +61,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+
             </Grid.RowDefinitions>
             <!--  App menu  -->
             <Menu
@@ -84,7 +82,7 @@
 
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" MinWidth="100" />
+                    <ColumnDefinition Width="*" MinWidth="100" />
                     <ColumnDefinition Width="*" MinWidth="100" />
                 </Grid.ColumnDefinitions>
 
@@ -119,6 +117,10 @@
                     CornerRadius="20">
 
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <TextBlock
                             Grid.Row="0"
                             Margin="30,15,5,5"
@@ -128,9 +130,27 @@
                             FontSize="30"
                             Foreground="White"
                             Text="Twoja następna zmiana:" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="0,15,0,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="35"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding NextShiftDate, StringFormat='dddd, dd MMMM yyyy'}" />
 
-                        <Border
+                        <TextBlock
                             Grid.Row="1"
+                            Margin="30,5,5,5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="30"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding WorkHours, StringFormat='Godziny pracy: HH:mm - HH:mm'}" />
+                        <Border
+                            Grid.Row="0"
                             Width="Auto"
                             Height="auto"
                             Margin="30,10,30,10"
@@ -172,7 +192,6 @@
                         </LinearGradientBrush>
                     </Border.Background>
 
-                    <!--  Grid jako kontener dla obu elementów  -->
                     <Grid>
                         <TextBlock
                             Grid.Row="0"
@@ -357,6 +376,64 @@
                     </Grid>
                 </Border>
 
+                <Border
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Height="150"
+                    Margin="10"
+                    Background="#1f6da3"
+                    CornerRadius="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="White"
+                            Text="Zarobki:" />
+                        <TextBlock
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="32"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding TotalAmount, StringFormat={}{0:F2} zł}" />
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Height="150"
+                    Margin="10"
+                    Background="#3a9bce"
+                    CornerRadius="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="White"
+                            Text="Przepracowane godziny:" />
+                        <TextBlock
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="32"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding TotalHours, StringFormat={}{0:F2} hrs.}" />
+                    </Grid>
+                </Border>
 
             </Grid>
 
