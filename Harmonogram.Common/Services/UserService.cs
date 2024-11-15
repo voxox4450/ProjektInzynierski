@@ -8,6 +8,8 @@ namespace Harmonogram.Common.Services
     {
         private readonly IUserRepository _userRepository;
 
+        public event EventHandler<User>? UserUpdated;
+        //Events handlers
         public UserServices(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -36,6 +38,13 @@ namespace Harmonogram.Common.Services
         {
             return _userRepository.CheckFirst(user);
         }
+        public void Update(User user)
+        {
+            _userRepository.Update(user);
+            UserUpdated?.Invoke(this, user);
+        }
+
+        public IEnumerable<User> GetAll() => _userRepository.GetAll();
 
     }
 }

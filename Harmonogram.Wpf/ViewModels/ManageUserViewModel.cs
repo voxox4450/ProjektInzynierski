@@ -7,67 +7,68 @@ using Harmonogram.Common.Models;
 using Harmonogram.Common.ValidationRules;
 using MvvmDialogs;
 using System.ComponentModel.DataAnnotations;
-using System.Windows;
-using HC = HandyControl.Controls;
 
 namespace Harmonogram.Wpf.ViewModels
 {
-    public partial class CreateUserViewModel : ObservableValidator, IModalDialogViewModel
+    public partial class ManageUserViewModel : ObservableValidator, IModalDialogViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly IUserService _userService;
-        public CreateUserViewModel()
+
+
+        public ManageUserViewModel(UserViewModel user)
         {
-            _userService = Ioc.Default.GetRequiredService<IUserService>();
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
+            _userService = Ioc.Default.GetRequiredService<IUserService>();
+
+            User = user;
         }
 
-        private bool _firstRun = true;
-        public User userRegister { get; set; }
+        [ObservableProperty]
+        private User _editedUser;
 
+        [ObservableProperty]
+        private UserViewModel _user;
 
         [ObservableProperty]
         private bool? _dialogResult;
 
-
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Imię jest wymagane.")]
         [MinLength(2, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
         [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
-        private string _name = string.Empty;
-
+        private string _name;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Nazwisko jest wymagane.")]
         [MinLength(2, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
         [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
-        private string _lastname = string.Empty;
+        private string _lastname;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Adres e-mail jest wymagany.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
         [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
-        private string _mail = string.Empty;
+        private string _mail;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Numer telefonu jest wymagany.")]
         [MinLength(9, ErrorMessage = "Pole tekstowe musi zawierać 9 znaków.")]
         [MaxLength(9, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 9 znaków.")]
         [OnlyNumbers(ErrorMessage = "Pole tekstowe musi zawierać tylko cyfry.")]
-
-        private string _phone = string.Empty;
+        private string _phone;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
         [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
@@ -76,7 +77,7 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
         [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
@@ -85,7 +86,7 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Numer konta jest wymagany.")]
         [MinLength(1, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 1 znaki.")]
         [MaxLength(26, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 26 znaki.")]
@@ -93,36 +94,18 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
-        [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Pole płatność (na godzinę) jest wymagane.")]
         //dodac ze tylko cyfry
         private string _paymentPerHour = string.Empty;
 
         [RelayCommand]
-        private void Close()
+        private void Edit()
         {
-            DialogResult = true;
-        }
-
-        private bool IsValid()
-        {
-            if (_firstRun)
-            {
-                ValidateAllProperties();
-
-                _firstRun = false;
-            }
-
-            return !HasErrors;
-        }
-
-
-        [RelayCommand(CanExecute = nameof(IsValid))]
-        private void Register()
-        {
-
             var user = new User()
             {
+
+
                 Name = Name,
                 LastName = Lastname,
                 Mail = Mail,
@@ -131,19 +114,15 @@ namespace Harmonogram.Wpf.ViewModels
                 AccountNumber = AccountNumber,
                 PaymentPerHour = double.Parse(PaymentPerHour),
             };
-            userRegister = _userService.CheckFirst(user);
 
-            if (userRegister is null)
-            {
-                _userService.Register(user);
-                HC.MessageBox.Show("Rejestracja przebiegła pomyślnie.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            }
-            else
-            {
-                HC.MessageBox.Show("Błąd rejestracji. Użytkownik istnieje", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            _userService.Update(EditedUser);
             Close();
+        }
+
+        [RelayCommand]
+        private void Close()
+        {
+            DialogResult = true;
         }
     }
 }

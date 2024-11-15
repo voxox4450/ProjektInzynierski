@@ -27,9 +27,17 @@ namespace Harmonogram.Common.Repositories
             return _context.Users.FirstOrDefault(u => u.LastName == user.LastName && u.Mail == user.Mail);
         }
 
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
         public void Reload()
         {
             _context.ChangeTracker.Clear();
         }
+
+        public IEnumerable<User> GetAll() => _context.Users;
     }
 }

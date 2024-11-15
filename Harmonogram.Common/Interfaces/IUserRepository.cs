@@ -8,5 +8,7 @@ namespace Harmonogram.Common.Interfaces
         void Register(User user);
 
         User CheckFirst(User user);
+        void Update(User user);
+        IEnumerable<User> GetAll();
     }
 }

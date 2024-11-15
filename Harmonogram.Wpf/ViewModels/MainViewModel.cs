@@ -34,7 +34,13 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private string _userName;
         [ObservableProperty]
-        private int _amount = 4567;
+        private string _amount = "4567,56";
+
+        [ObservableProperty]
+        private int _hoursCount = 9;
+
+        [ObservableProperty]
+        private double _moneyCount = 28.10 * 9;
 
         [RelayCommand]
         private static void Hide()
@@ -77,6 +83,12 @@ namespace Harmonogram.Wpf.ViewModels
         {
             var dialogViewModel = new CreateUserViewModel();
             _dialogService.ShowDialog<CreateUserWindow>(this, dialogViewModel);
+        }
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
+        private void OpenListUsers()
+        {
+            var dialogViewModel = new UsersListViewModel();
+            _dialogService.ShowDialog<UsersListWindow>(this, dialogViewModel);
         }
         private void Close()
         {

@@ -9,5 +9,10 @@ namespace Harmonogram.Common.Interfaces
         void Register(User user);
 
         User CheckFirst(User user);
+        IEnumerable<User> GetAll();
+        void Update(User user);
+
+        //event handlers
+        event EventHandler<User> UserUpdated;
     }
 }

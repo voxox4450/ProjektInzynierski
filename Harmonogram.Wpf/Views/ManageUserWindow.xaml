@@ -1,5 +1,5 @@
 ﻿<hc:Window
-    x:Class="Harmonogram.Wpf.Views.CreateUserWindow"
+    x:Class="Harmonogram.Wpf.Views.ManageUserWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:components="clr-namespace:Harmonogram.Wpf.Components"
@@ -9,9 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     x:Name="Window"
-    Title="Dodaj Pracownika"
+    Title="Edytuj Dane"
     Width="800"
-    Height="700"
+    Height="550"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -46,8 +46,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -62,99 +60,49 @@
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
                 BorderBrush="Transparent"
-                Content="Tworzenie użytkownia"
+                Content="Edycja Konta"
                 FontSize="35"
                 FontStyle="Italic"
                 FontWeight="SemiBold"
                 Foreground="White" />
 
             <!--  Name  -->
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Imię: "
-                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj imię"
+                hc:InfoElement.Placeholder="{Binding EditedUser.Name}"
                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Last Name  -->
-            <Label
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Nazwisko: "
-                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj Nazwisko"
+                hc:InfoElement.Placeholder="{Binding EditedUser.LastName}"
                 Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Email  -->
-            <Label
-                Grid.Row="3"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Adres e-mail: "
-                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj adres e-mail"
+                hc:InfoElement.Placeholder="{Binding EditedUser.Mail}"
                 Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Phone Number  -->
-            <Label
-                Grid.Row="4"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Numer Tel.: "
-                Foreground="White" />
             <hc:TextBox
                 Grid.Row="4"
                 Grid.Column="1"
                 Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj numer telefonu"
+                hc:InfoElement.Placeholder="{Binding EditedUser.PhoneNumber}"
                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
 
+
             <!--  Password  -->
-            <Label
-                Grid.Row="5"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Hasło: "
-                Foreground="White" />
+
             <components:BindablePasswordBox
                 x:Name="pass"
                 Grid.Row="5"
@@ -171,18 +119,7 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=pass, Path=(Validation.Errors)/ErrorContent}" />
 
-            <!--  Password Repeat  -->
-            <Label
-                Grid.Row="6"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Powtórz hasło: "
-                Foreground="White" />
+
             <components:BindablePasswordBox
                 x:Name="passRepeat"
                 Grid.Row="6"
@@ -197,58 +134,21 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=passRepeat, Path=(Validation.Errors)/ErrorContent}" />
 
-            <!--  Account Number  -->
-            <Label
-                Grid.Row="7"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Numer konta: "
-                Foreground="White" />
-            <hc:TextBox
-                Grid.Row="7"
-                Grid.Column="1"
-                Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj numer konta"
-                Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" />
-            <!--  Payment Per Hour  -->
-            <Label
-                Grid.Row="8"
-                Grid.Column="0"
-                Margin="0,10,0,20"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Content="Płatność (na godzinę): "
-                Foreground="White" />
-            <hc:TextBox
-                Grid.Row="8"
-                Grid.Column="1"
-                Margin="10,15,10,20"
-                hc:InfoElement.Placeholder="Podaj zarobek (na godzinę)"
-                Text="{Binding PaymentPerHour, UpdateSourceTrigger=PropertyChanged}" />
-
             <!--  Register Button  -->
             <Button
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Width="100"
                 Margin="10,30,10,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Command="{Binding RegisterCommand}"
+                Command="{Binding EditCommand}"
                 Content="Zarejestruj" />
 
             <!--  Go Back Button  -->
             <Button
-                Grid.Row="9"
+                Grid.Row="8"
                 Grid.Column="1"
                 Width="100"
                 Margin="10,30,10,10"

@@ -19,6 +19,7 @@
     mc:Ignorable="d">
     <Window.Resources>
         <converters:HandyColorConverter x:Key="handyColorConverter" />
+        <converters:HoursAndMoneyConverter x:Key="hoursAndMoneyConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
     </Window.Resources>
     <i:Interaction.Triggers>
@@ -44,6 +45,10 @@
             Key="r"
             Command="{Binding OpenCreateUserCommand}"
             Modifiers="Ctrl" />
+        <KeyBinding
+            Key="t"
+            Command="{Binding OpenListUsersCommand}"
+            Modifiers="Ctrl" />
     </Window.InputBindings>
 
     <StackPanel Background="{StaticResource SecondaryRegionColor}">
@@ -55,6 +60,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -71,6 +77,7 @@
                 <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
                     <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
+                    <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj Dane" />
                 </MenuItem>
 
             </Menu>
@@ -90,48 +97,67 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
+                    MinWidth="60"
+                    MinHeight="60"
                     Margin="50,10,0,10"
-                    MinWidth="60"
-                    MinHeight="60"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="Transparent"
                     FontSize="40"
                     Foreground="White">
-                    Witaj, <Run Text="{Binding UserName}" />
+                    Witaj,<Run Text="{Binding UserName}" />
                 </TextBlock>
-                <!--<TextBox
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    MinWidth="60"
-                    MinHeight="60"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    FontSize="40"
-                    Foreground="White">
-                    Witaj
-                </TextBox>
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    MinWidth="60"
-                    MinHeight="60"
-                    Margin="100,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Content="{Binding UserName}"
-                    FontSize="40"
-                    Foreground="White" />-->
-                <!--  Duży Box (większy)  -->
-
-
 
                 <Border
                     Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Width="auto"
+                    Height="150"
+                    Margin="10,20,10,20"
+                    Background="#172d3a"
+                    CornerRadius="20">
+
+                    <Grid>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="30,15,5,5"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            FontSize="30"
+                            Foreground="White"
+                            Text="Twoja następna zmiana:" />
+
+                        <Border
+                            Grid.Row="1"
+                            Width="Auto"
+                            Height="auto"
+                            Margin="30,10,30,10"
+                            Padding="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="#1e435f"
+                            BorderThickness="2"
+                            CornerRadius="10">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="32"
+                                Foreground="White">
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource hoursAndMoneyConverter}">
+                                        <Binding Path="HoursCount" />
+                                        <Binding Path="MoneyCount" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border
+                    Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Width="Auto"
@@ -160,9 +186,10 @@
 
                         <Border
                             Grid.Row="1"
-                            Width="200"
-                            Height="50"
+                            Width="Auto"
+                            Height="auto"
                             Margin="30,10,30,10"
+                            Padding="7"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="#18496b"
@@ -175,7 +202,7 @@
                                 Background="Transparent"
                                 FontSize="32"
                                 Foreground="White"
-                                Text="{Binding Amount, StringFormat={}{0} zł}" />
+                                Text="{Binding Amount, StringFormat={}{0:F2} zł}" />
                         </Border>
 
                         <!--  Dodanie liter dni tygodnia i pustych kółek  -->

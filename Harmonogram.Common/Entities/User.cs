@@ -9,6 +9,8 @@
         public string Mail { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
+        public double PaymentPerHour { get; set; } = 0.0;
+        public string AccountNumber { get; set; } = string.Empty;
 
     }
 }
