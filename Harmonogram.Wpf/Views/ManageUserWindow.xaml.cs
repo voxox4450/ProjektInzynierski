@@ -12,7 +12,7 @@ namespace Harmonogram.Wpf.Views
         public ManageUserWindow()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<ManageUserViewModel>();
+            DataContext = new ManageUserViewModel();
         }
     }
 }

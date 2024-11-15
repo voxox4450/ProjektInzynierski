@@ -9,9 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     x:Name="Window"
-    Title="Edytuj Dane"
+    Title="Edytuj Pracownika"
     Width="800"
-    Height="550"
+    Height="700"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -46,6 +46,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -60,7 +62,7 @@
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
                 BorderBrush="Transparent"
-                Content="Edycja Konta"
+                Content="Edycja użytkownia"
                 FontSize="35"
                 FontStyle="Italic"
                 FontWeight="SemiBold"
@@ -76,7 +78,6 @@
                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Last Name  -->
-
             <hc:TextBox
                 Grid.Row="2"
                 Grid.Column="1"
@@ -84,7 +85,6 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.LastName}"
                 Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Email  -->
-
             <hc:TextBox
                 Grid.Row="3"
                 Grid.Column="1"
@@ -100,9 +100,7 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.PhoneNumber}"
                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
 
-
             <!--  Password  -->
-
             <components:BindablePasswordBox
                 x:Name="pass"
                 Grid.Row="5"
@@ -119,7 +117,7 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=pass, Path=(Validation.Errors)/ErrorContent}" />
 
-
+            <!--  Password Repeat  -->
             <components:BindablePasswordBox
                 x:Name="passRepeat"
                 Grid.Row="6"
@@ -134,9 +132,24 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=passRepeat, Path=(Validation.Errors)/ErrorContent}" />
 
+            <!--  Account Number  -->
+            <hc:TextBox
+                Grid.Row="7"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.AccountNumber}"
+                Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" />
+            <!--  Payment Per Hour  -->
+            <hc:TextBox
+                Grid.Row="8"
+                Grid.Column="1"
+                Margin="10,15,10,20"
+                hc:InfoElement.Placeholder="{Binding EditedUser.PaymentPerHour}"
+                Text="{Binding PaymentPerHour, UpdateSourceTrigger=PropertyChanged}" />
+
             <!--  Register Button  -->
             <Button
-                Grid.Row="8"
+                Grid.Row="9"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Width="100"
@@ -144,11 +157,11 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Command="{Binding EditCommand}"
-                Content="Zarejestruj" />
+                Content="Edytuj" />
 
             <!--  Go Back Button  -->
             <Button
-                Grid.Row="8"
+                Grid.Row="9"
                 Grid.Column="1"
                 Width="100"
                 Margin="10,30,10,10"

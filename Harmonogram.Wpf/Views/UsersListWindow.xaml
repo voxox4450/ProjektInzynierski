@@ -23,6 +23,12 @@
         <hc:Object2BooleanConverter x:Key="objectSelectionToBoolConverter" />
         <converters:HandyColorConverter x:Key="handyColorConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
+        <Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+
+        </Style>
     </Window.Resources>
 
     <!--<StackPanel Background="{StaticResource SecondaryRegionColor}">-->
@@ -48,6 +54,8 @@
         <ListView
             Grid.Row="1"
             Margin="10,5,10,10"
+            Background="{StaticResource SecondaryRegionColor}"
+            BorderThickness="0"
             ItemsSource="{Binding Users}"
             SelectedItem="{Binding SelectedUser}"
             SelectionMode="Single">
@@ -57,15 +65,18 @@
                     <GridViewColumn
                         Width="250"
                         DisplayMemberBinding="{Binding FullName}"
-                        Header="Osoba" />
+                        Header="Osoba"
+                        HeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" />
                     <GridViewColumn
                         Width="250"
                         DisplayMemberBinding="{Binding Mail}"
-                        Header="Adres e-mail" />
+                        Header="Adres e-mail"
+                        HeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" />
                     <GridViewColumn
                         Width="200"
                         DisplayMemberBinding="{Binding PaymentPerHour}"
-                        Header="Płatność (na godzinę)" />
+                        Header="Płatność (na godzinę)"
+                        HeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" />
                 </GridView>
             </ListView.View>
         </ListView>
@@ -74,10 +85,20 @@
             Width="200"
             Height="40"
             Margin="10"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             Command="{Binding OpenManageUserCommand}"
             Content="Edytuj Użytkownika" />
+
+        <Button
+            Grid.Row="3"
+            Width="200"
+            Height="40"
+            Margin="10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Command="{Binding ArchiveUserCommand}"
+            Content="Zarchiwizuj Użytkownika" />
 
     </Grid>
     <!--<ListBox

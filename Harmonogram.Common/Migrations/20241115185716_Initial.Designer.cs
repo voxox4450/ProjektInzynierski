@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Harmonogram.Common.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241024231525_Initial")]
+    [Migration("20241115185716_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,7 +32,15 @@ namespace Harmonogram.Common.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(26)
+                        .HasColumnType("nvarchar(26)");
+
                     b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsArchived")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
@@ -52,6 +60,9 @@ namespace Harmonogram.Common.Migrations
                         .IsRequired()
                         .HasMaxLength(48)
                         .HasColumnType("nvarchar(48)");
+
+                    b.Property<double>("PaymentPerHour")
+                        .HasColumnType("float");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
