@@ -10,6 +10,7 @@ namespace Harmonogram.Common.Services
 
         //Events handlers
         public event EventHandler<User>? UserUpdated;
+        public event EventHandler<int>? UserArchived;
 
         public UserServices(IUserRepository userRepository)
         {
@@ -45,6 +46,23 @@ namespace Harmonogram.Common.Services
             UserUpdated?.Invoke(this, user);
         }
 
+        public void Archive(int userId)
+        {
+            var user = Get(userId)!;
+            user!.IsArchived = true;
+            _userRepository.Update(user);
+
+            UserArchived?.Invoke(this, userId);
+        }
+
+        public User? Get(int userid)
+        {
+            return _userRepository.Get(userid);
+        }
+        public void Reload()
+        {
+            _userRepository.Reload();
+        }
         public IEnumerable<User> GetAll() => _userRepository.GetAll();
 
     }

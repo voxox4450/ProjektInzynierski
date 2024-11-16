@@ -20,9 +20,10 @@ namespace Harmonogram.Wpf.ViewModels
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _userService = Ioc.Default.GetRequiredService<IUserService>();
-
             User = user;
+            LoadData();
         }
+        private bool _firstRun = true;
 
         [ObservableProperty]
         private User _editedUser;
@@ -90,16 +91,46 @@ namespace Harmonogram.Wpf.ViewModels
         [Required(ErrorMessage = "Numer konta jest wymagany.")]
         [MinLength(1, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 1 znaki.")]
         [MaxLength(26, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 26 znaki.")]
-        private string _accountNumber = string.Empty;
+        private string _accountNumber;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(EditCommand))]
         [Required(ErrorMessage = "Pole płatność (na godzinę) jest wymagane.")]
         //dodac ze tylko cyfry
-        private string _paymentPerHour = string.Empty;
+        private string _paymentPerHour;
 
         [RelayCommand]
+        private void Close()
+        {
+            DialogResult = true;
+        }
+
+        private void LoadData()
+        {
+            if (User is null)
+                return;
+            Name = User.Name;
+            Lastname = User.LastName;
+            Mail = User.Mail;
+            Phone = User.PhoneNumber;
+            AccountNumber = User.AccountNumber;
+            PaymentPerHour = User.PaymentPerHour.ToString();
+        }
+
+        private bool IsValid()
+        {
+            if (_firstRun)
+            {
+                ValidateAllProperties();
+
+                _firstRun = false;
+            }
+
+            return !HasErrors;
+        }
+
+        [RelayCommand(CanExecute = nameof(IsValid))]
         private void Edit()
         {
             var user = new User()
@@ -114,15 +145,14 @@ namespace Harmonogram.Wpf.ViewModels
                 AccountNumber = AccountNumber,
                 PaymentPerHour = double.Parse(PaymentPerHour),
             };
+            user.Id = EditedUser.Id;
+            _userService.Update(user);
 
-            _userService.Update(EditedUser);
+
+
             Close();
         }
 
-        [RelayCommand]
-        private void Close()
-        {
-            DialogResult = true;
-        }
+
     }
 }
