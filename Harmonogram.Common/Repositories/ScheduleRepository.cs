@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace Harmonogram.Common.Repositories
 {
-    public class UserRepository(Context context) : IUserRepository
+    public class ScheduleRepository(Context context) : IScheduleRepository
     {
         private readonly Context _context = context;
 
-        public User GetById(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
-
-        public IEnumerable<User> GetAll() => _context.Users;
+        public void Add(Schedule schedule)
+        {
+            _context.Schedules.Add(schedule);
+            _context.SaveChanges();
+        }
     }
 }

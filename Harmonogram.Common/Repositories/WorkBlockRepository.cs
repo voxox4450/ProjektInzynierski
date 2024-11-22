@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace Harmonogram.Common.Repositories
 {
-    public class UserRepository(Context context) : IUserRepository
+    public class WorkBlockRepository(Context context) : IWorkBlockRepository
     {
         private readonly Context _context = context;
 
-        public User GetById(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
+        public void Add(WorkBlock workBlock)
+        {
+            _context.WorkBlocks.Add(workBlock);
+            _context.SaveChanges();
+        }
 
-        public IEnumerable<User> GetAll() => _context.Users;
+        public IEnumerable<WorkBlock> GetAll() => _context.WorkBlocks;
     }
 }

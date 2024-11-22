@@ -1,14 +1,11 @@
 ﻿using Harmonogram.Common.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Harmonogram.Common.Interfaces
 {
     public interface IUserService
     {
+        User GetById(int id);
+
         IEnumerable<User> GetAll();
     }
 }

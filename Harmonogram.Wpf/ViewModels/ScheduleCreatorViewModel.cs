@@ -15,13 +15,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Harmonogram.Wpf.Views;
 
 namespace Harmonogram.Wpf.ViewModels
 {
     public partial class ScheduleCreatorViewModel : ObservableValidator, IModalDialogViewModel
     {
         private readonly IDialogService _dialogService;
+        private readonly IDayService _dayService;
         private readonly IUserService _userService;
+        private readonly IWorkBlockService _workBlockService;
+
+        private readonly IScheduleService _scheduleService;
         private readonly IConstants _constants;
 
         public event EventHandler? OnRequestNextStep;
@@ -31,8 +36,14 @@ namespace Harmonogram.Wpf.ViewModels
         public ScheduleCreatorViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
+            _dayService = Ioc.Default.GetRequiredService<IDayService>();
             _userService = Ioc.Default.GetRequiredService<IUserService>();
+            _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
+            _scheduleService = Ioc.Default.GetRequiredService<IScheduleService>();
             _constants = Ioc.Default.GetRequiredService<IConstants>();
+
+            _workBlockService.WorkBlockAdded += OnWorkBlockAdded!;
+
             InitializeVariables();
             LoadUsers();
         }
@@ -84,7 +95,8 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private ObservableCollection<UserViewModel> _users = [];
 
-        public Dictionary<string, ObservableCollection<WorkBlockViewModel>> TimeBlocksByDay { get; set; }
+        [ObservableProperty]
+        private Dictionary<string, ObservableCollection<WorkBlockViewModel>> _workBlockViewModels = [];
 
         [ObservableProperty]
         private bool? _dialogResult;
@@ -139,7 +151,6 @@ namespace Harmonogram.Wpf.ViewModels
                 for (int i = 0; i < 7; i++)
                 {
                     DayDates.Add(StartingDate.AddDays(i).ToString("dd.MM"));
-                    CreateTimeBlock("Środa", 9, 15);
                 }
             }
         }
@@ -158,6 +169,8 @@ namespace Harmonogram.Wpf.ViewModels
 
         private static UserViewModel CreateUserViewModel(User user) => new UserViewModel(user);
 
+        private static WorkBlockViewModel CreateWorkBlockViewModel(WorkBlock workBlock, User user) => new WorkBlockViewModel(workBlock, user);
+
         private void InitializeVariables()
         {
             UserControlsVisibility =
@@ -168,7 +181,7 @@ namespace Harmonogram.Wpf.ViewModels
                     Visibility.Hidden
                 ];
 
-            TimeBlocksByDay = new Dictionary<string, ObservableCollection<WorkBlockViewModel>>
+            _workBlockViewModels = new Dictionary<string, ObservableCollection<WorkBlockViewModel>>
         {
             { "Poniedziałek", new ObservableCollection<WorkBlockViewModel>() },
             { "Wtorek", new ObservableCollection<WorkBlockViewModel>() },
@@ -200,31 +213,46 @@ namespace Harmonogram.Wpf.ViewModels
             UserControlsVisibility[Step.Value - 1] = Visibility.Visible;
         }
 
-        [ObservableProperty]
-        private ObservableCollection<WorkBlockViewModel> _timeBlocks = new();
-
-        // Metoda do dodawania bloków czasowych do kolekcji
-        private void CreateTimeBlock(string day, int startHour, int endHour)
+        [RelayCommand]
+        private void OpenWorkBlockCreator(object parameter)
         {
-            double hourHeight = 25;
-            double blockHeight = (endHour - startHour) * hourHeight;
-
-            var timeBlock = new WorkBlockViewModel
+            string? day = parameter as string;
+            if (day == null)
             {
-                Width = 100,
-                Height = blockHeight,
-                Fill = Brushes.Blue,
-                Opacity = 0.5,
-                Top = startHour * hourHeight,
-                Left = 0,
-                Row = startHour + 1
+                return;
+            }
+
+            var dialogViewModel = new WorkBlockCreatorViewModel();
+            var checkedUsers = Users.Where(user => user.IsChecked).ToList();
+
+            dialogViewModel.CheckedUsers = new ObservableCollection<UserViewModel>(checkedUsers);
+            dialogViewModel.Day = day;
+            dialogViewModel.Date = StartingDate.AddDays(_dayService.GetDayId(day) - 1);
+            _dialogService.ShowDialog<WorkBlockCreatorWindow>(this, dialogViewModel);
+        }
+
+        [RelayCommand]
+        private void Save()
+        {
+            var schedule = new Schedule
+            {
+                Name = ScheduleName,
+                StartDate = StartingDate,
+                EndDate = EndingDate,
+                Users = Users.Where(user => user.IsChecked).Select(user => user.User).ToList(),
+                WorkBlocks = WorkBlocks.ToList()
             };
 
-            // Dodaj blok do wybranego dnia
-            if (TimeBlocksByDay.ContainsKey(day))
-            {
-                TimeBlocksByDay[day].Add(timeBlock);
-            }
+            _scheduleService.Add(schedule);
+            DialogResult = true;
+        }
+
+        private void OnWorkBlockAdded(object sender, WorkBlock workBlock)
+        {
+            var workBlockViewModel = CreateWorkBlockViewModel(workBlock, Users.First(user => user.Id == workBlock.UserId).User);
+            workBlockViewModel.LoadBlock();
+            workBlockViewModel.SetName();
+            WorkBlockViewModels[workBlock.Day.Name].Add(workBlockViewModel);
         }
     }
 }

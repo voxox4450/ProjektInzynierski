@@ -35,9 +35,16 @@ namespace Harmonogram.Wpf
                 .AddTransient<ScheduleCreatorViewModel>()
                 .AddTransient<ScheduleViewModel>()
                 .AddTransient<WorkTimeViewModel>()
+                .AddTransient<WorkBlockCreatorViewModel>()
                 .AddScoped<IDialogService, DialogService>()
+                .AddScoped<IDayService, DayService>()
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<IScheduleService, ScheduleService>()
+                .AddScoped<IWorkBlockService, WorkBlockService>()
+                .AddScoped<IDayRepository, DayRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IScheduleRepository, ScheduleRepository>()
+                .AddScoped<IWorkBlockRepository, WorkBlockRepository>()
                 .AddScoped<IConstants, Constants>()
                 .AddScoped<ISeederContext, SeederContext>()
                 .BuildServiceProvider()
@@ -45,7 +52,8 @@ namespace Harmonogram.Wpf
 
             using var scope = Ioc.Default.CreateScope();
             var seeder = scope.ServiceProvider.GetRequiredService<ISeederContext>();
-            seeder.Seed();
+            seeder.SeedUsers();
+            seeder.SeedDays();
         }
     }
 }
