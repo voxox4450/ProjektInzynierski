@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     x:Name="Window"
-    Title="Edytuj Dane"
+    Title="Edytuj Pracownika"
     Width="800"
     Height="700"
     ResizeMode="CanMinimize"
@@ -62,7 +62,7 @@
                 HorizontalContentAlignment="Center"
                 Background="Transparent"
                 BorderBrush="Transparent"
-                Content="Edycja Konta"
+                Content="Edycja użytkownia"
                 FontSize="35"
                 FontStyle="Italic"
                 FontWeight="SemiBold"
@@ -100,6 +100,7 @@
                 BorderBrush="Transparent"
                 Content="Nazwisko: "
                 Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="2"
                 Grid.Column="1"
@@ -107,6 +108,7 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.LastName}"
                 Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Email  -->
+
             <Label
                 Grid.Row="3"
                 Grid.Column="0"
@@ -118,6 +120,7 @@
                 BorderBrush="Transparent"
                 Content="Adres e-mail: "
                 Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="3"
                 Grid.Column="1"
@@ -144,8 +147,8 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.PhoneNumber}"
                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
 
-
             <!--  Password  -->
+
             <Label
                 Grid.Row="5"
                 Grid.Column="0"
@@ -157,6 +160,7 @@
                 BorderBrush="Transparent"
                 Content="Hasło: "
                 Foreground="White" />
+
             <components:BindablePasswordBox
                 x:Name="pass"
                 Grid.Row="5"
@@ -172,6 +176,7 @@
                 FontWeight="SemiBold"
                 Foreground="#DB3340"
                 Text="{Binding ElementName=pass, Path=(Validation.Errors)/ErrorContent}" />
+
             <!--  repeat password  -->
             <Label
                 Grid.Row="6"
@@ -184,6 +189,10 @@
                 BorderBrush="Transparent"
                 Content="Powtórz hasło: "
                 Foreground="White" />
+
+
+            <!--  Password Repeat  -->
+
             <components:BindablePasswordBox
                 x:Name="passRepeat"
                 Grid.Row="6"
@@ -212,6 +221,9 @@
                 BorderBrush="Transparent"
                 Content="Numer konta: "
                 Foreground="White" />
+
+            <!--  Account Number  -->
+
             <hc:TextBox
                 Grid.Row="7"
                 Grid.Column="1"
@@ -219,6 +231,7 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.AccountNumber}"
                 Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Payment Per Hour  -->
+
             <Label
                 Grid.Row="8"
                 Grid.Column="0"
@@ -230,6 +243,7 @@
                 BorderBrush="Transparent"
                 Content="Płatność (na godzinę): "
                 Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="8"
                 Grid.Column="1"

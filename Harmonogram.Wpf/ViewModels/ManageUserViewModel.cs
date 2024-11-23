@@ -14,7 +14,7 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IDialogService _dialogService;
         private readonly IUserService _userService;
-
+        
 
         public ManageUserViewModel(UserViewModel? user = null)
         {

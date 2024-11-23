@@ -88,6 +88,7 @@ namespace Harmonogram.Common.Migrations
                     b.Property<bool>("IsArchived")
                         .HasColumnType("bit");
 
+
                     b.Property<bool>("IsChecked")
                         .HasColumnType("bit");
 

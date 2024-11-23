@@ -1,10 +1,10 @@
-﻿using Harmonogram.Common.Entities;
+using Harmonogram.Common.Entities;
 
 namespace Harmonogram.Common.Interfaces
 {
     public interface IUserService
     {
-        User? GetById(int id);
+        User? GetById(int id); // Preferred version
         User Login(User user);
 
         void Register(User user);

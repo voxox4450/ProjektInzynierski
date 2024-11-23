@@ -9,6 +9,11 @@ namespace Harmonogram.Common.Repositories
     {
         private readonly Context _context = context;
 
+        public User? Get(int userid)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == userid);
+        }
+
         public User Login(User user)
         {
             return _context.Users.FirstOrDefault(u => u.Mail == user.Mail)!;
