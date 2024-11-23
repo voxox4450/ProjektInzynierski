@@ -69,6 +69,17 @@
                 Foreground="White" />
 
             <!--  Name  -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Imię: "
+                Foreground="White" />
 
             <hc:TextBox
                 Grid.Row="1"
@@ -78,6 +89,18 @@
                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Last Name  -->
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Nazwisko: "
+                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="2"
                 Grid.Column="1"
@@ -85,6 +108,19 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.LastName}"
                 Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Email  -->
+
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Adres e-mail: "
+                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="3"
                 Grid.Column="1"
@@ -93,6 +129,17 @@
                 Text="{Binding Mail, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Phone Number  -->
+            <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Numer Tel.: "
+                Foreground="White" />
             <hc:TextBox
                 Grid.Row="4"
                 Grid.Column="1"
@@ -101,6 +148,19 @@
                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Password  -->
+
+            <Label
+                Grid.Row="5"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Hasło: "
+                Foreground="White" />
+
             <components:BindablePasswordBox
                 x:Name="pass"
                 Grid.Row="5"
@@ -117,7 +177,22 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=pass, Path=(Validation.Errors)/ErrorContent}" />
 
+            <!--  repeat password  -->
+            <Label
+                Grid.Row="6"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Powtórz hasło: "
+                Foreground="White" />
+
+
             <!--  Password Repeat  -->
+
             <components:BindablePasswordBox
                 x:Name="passRepeat"
                 Grid.Row="6"
@@ -132,7 +207,23 @@
                 Foreground="#DB3340"
                 Text="{Binding ElementName=passRepeat, Path=(Validation.Errors)/ErrorContent}" />
 
+
+
             <!--  Account Number  -->
+            <Label
+                Grid.Row="7"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Numer konta: "
+                Foreground="White" />
+
+            <!--  Account Number  -->
+
             <hc:TextBox
                 Grid.Row="7"
                 Grid.Column="1"
@@ -140,6 +231,19 @@
                 hc:InfoElement.Placeholder="{Binding EditedUser.AccountNumber}"
                 Text="{Binding AccountNumber, UpdateSourceTrigger=PropertyChanged}" />
             <!--  Payment Per Hour  -->
+
+            <Label
+                Grid.Row="8"
+                Grid.Column="0"
+                Margin="0,10,0,20"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Content="Płatność (na godzinę): "
+                Foreground="White" />
+
             <hc:TextBox
                 Grid.Row="8"
                 Grid.Column="1"

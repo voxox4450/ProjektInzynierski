@@ -153,6 +153,6 @@ namespace Harmonogram.Wpf.ViewModels
             Close();
         }
 
-       
+
     }
 }

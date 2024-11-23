@@ -5,7 +5,7 @@ namespace Harmonogram.Wpf.Converters
 {
     public class HoursAndMoneyConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values == null || values.Length < 2 || values[0] == null || values[1] == null)
                 return null;
