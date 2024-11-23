@@ -35,43 +35,45 @@ namespace Harmonogram.Wpf.ViewModels
             InitializeVariables();
             LoadUsers();
         }
-        public DateTime StartingDate
-        {
-            get => _startingDate;
-            set
-            {
-                SetProperty(ref _startingDate, value);
-                ValidateProperty(_startingDate);
-            }
-        }
-        //[ObservableProperty]
+        //public DateTime StartingDate
+        //{
+        //    get => _startingDate;
+        //    set
+        //    {
+        //        SetProperty(ref _startingDate, value);
+        //        ValidateProperty(_startingDate);
+        //    }
+        //}
+        [ObservableProperty]
         //[NotifyDataErrorInfo]
-        //private DateTime _startingDate
-
         private DateTime _startingDate;
 
-        public DateTime EndingDate
-        {
-            get => _endingDate;
-            set
-            {
-                SetProperty(ref _endingDate, value);
-                ValidateProperty(_endingDate);
-            }
-        }
+        //private DateTime _startingDate;
 
+        //public DateTime EndingDate
+        //{
+        //    get => _endingDate;
+        //    set
+        //    {
+        //        SetProperty(ref _endingDate, value);
+        //        ValidateProperty(_endingDate);
+        //    }
+        //}
+        [ObservableProperty]
+        //[NotifyDataErrorInfo]
         private DateTime _endingDate;
 
-        public string ScheduleName
-        {
-            get => _scheduleName;
-            set
-            {
-                SetProperty(ref _scheduleName, value);
-                ValidateProperty(_scheduleName);
-            }
-        }
-
+        //public string ScheduleName
+        //{
+        //    get => _scheduleName;
+        //    set
+        //    {
+        //        SetProperty(ref _scheduleName, value);
+        //        ValidateProperty(_scheduleName);
+        //    }
+        //}
+        [ObservableProperty]
+        //[NotifyDataErrorInfo]
         private string _scheduleName;
 
         [ObservableProperty]
