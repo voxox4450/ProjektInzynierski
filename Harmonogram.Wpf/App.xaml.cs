@@ -32,21 +32,30 @@ namespace Harmonogram.Wpf
             .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
             .AddTransient<LoginViewModel>()
             .AddTransient<MainViewModel>()
-            .AddTransient<WorkHoursViewModel>()
+            .AddTransient<WorkTimeViewModel>()
             .AddTransient<SchedulePanelViewModel>()
-            .AddTransient<CreateScheduleViewModel>()
+            .AddTransient<WorkBlockCreatorViewModel>()
+            .AddTransient<ScheduleCreatorViewModel>()
             .AddTransient<CreateUserViewModel>()
             .AddTransient<UsersListViewModel>()
             .AddTransient<ManageUserViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
             .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IDayService, DayService>()
+            .AddScoped<IDayRepository, DayRepository>()
+            .AddScoped<IScheduleService, ScheduleService>()
+            .AddScoped<IScheduleRepository, ScheduleRepository>()
+            .AddScoped<IWorkBlockService, WorkBlockService>()
+            .AddScoped<IWorkBlockRepository, WorkBlockRepository>()
+            .AddScoped<IConstants, Constants>()
             .AddScoped<SeederContext>()
             .BuildServiceProvider());
 
             using var scope = Ioc.Default.CreateScope();
             var seeder = scope.ServiceProvider.GetRequiredService<SeederContext>();
             seeder.SeedUser();
+            seeder.SeedDays();
         }
     }
 

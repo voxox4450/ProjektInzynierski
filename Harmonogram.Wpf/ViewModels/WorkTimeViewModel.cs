@@ -5,10 +5,10 @@ using MvvmDialogs;
 
 namespace Harmonogram.Wpf.ViewModels
 {
-    public partial class WorkHoursViewModel : ObservableObject, IModalDialogViewModel
+    public partial class WorkTimeViewModel : ObservableObject, IModalDialogViewModel
     {
         private readonly IDialogService _dialogService;
-        public WorkHoursViewModel()
+        public WorkTimeViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
         }
