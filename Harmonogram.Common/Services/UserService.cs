@@ -1,7 +1,6 @@
 ﻿using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
 using Harmonogram.Common.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace Harmonogram.Common.Services
 {
@@ -9,9 +8,6 @@ namespace Harmonogram.Common.Services
     {
         private readonly IUserRepository _userRepository;
 
-
-        public event EventHandler<User>? UserUpdated;
-        public event EventHandler<int>? UserArchived;
 
         //Events handlers
         public event EventHandler<User>? UserUpdated;
@@ -22,9 +18,9 @@ namespace Harmonogram.Common.Services
             _userRepository = userRepository;
         }
 
-        public User? Get(int userid)
+        public User? Get(int id)
         {
-            return _userRepository.Get(userid);
+            return _userRepository.GetById(id);
         }
 
 
@@ -72,14 +68,6 @@ namespace Harmonogram.Common.Services
             UserArchived?.Invoke(this, userId);
         }
 
-        public void Archive(int userId)
-        {
-            var user = GetById(userId)!;
-            user!.IsArchived = true;
-            _userRepository.Update(user);
-
-            UserArchived?.Invoke(this, userId);
-        }
 
         public User? GetById(int id)
         {
@@ -92,10 +80,6 @@ namespace Harmonogram.Common.Services
         public IEnumerable<User> GetAll() => _userRepository.GetAll();
 
 
-        public void Reload()
-        {
-            _userRepository.Reload();
-        }
 
     }
 }
