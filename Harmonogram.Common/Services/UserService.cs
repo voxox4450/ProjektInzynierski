@@ -48,16 +48,16 @@ namespace Harmonogram.Common.Services
 
         public void Archive(int userId)
         {
-            var user = Get(userId)!;
+            var user = GetById(userId)!;
             user!.IsArchived = true;
             _userRepository.Update(user);
 
             UserArchived?.Invoke(this, userId);
         }
 
-        public User? Get(int userid)
+        public User? GetById(int id)
         {
-            return _userRepository.Get(userid);
+            return _userRepository.GetById(id);
         }
         public void Reload()
         {

@@ -48,9 +48,9 @@ namespace Harmonogram.Common.Repositories
         {
             _context.ChangeTracker.Clear();
         }
-        public User? Get(int userid)
+        public User? GetById(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == userid);
+            return _context.Users.FirstOrDefault(u => u.Id == id);
         }
 
         public IEnumerable<User> GetAll()

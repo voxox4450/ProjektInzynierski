@@ -5,14 +5,14 @@ using HC = HandyControl.Controls;
 namespace Harmonogram.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for WorkHoursWindow.xaml
+    /// Interaction logic for WorkBlockCreatorWindow.xaml
     /// </summary>
-    public partial class WorkHoursWindow : HC.Window
+    public partial class WorkBlockCreatorWindow : HC.Window
     {
-        public WorkHoursWindow()
+        public WorkBlockCreatorWindow()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<WorkHoursViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<WorkBlockCreatorViewModel>();
         }
     }
 }

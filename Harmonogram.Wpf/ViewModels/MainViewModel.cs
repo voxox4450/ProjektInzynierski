@@ -81,8 +81,8 @@ namespace Harmonogram.Wpf.ViewModels
         [RelayCommand]
         private void OpenWorkHoursPanel()
         {
-            var dialogViewModel = new WorkHoursViewModel();
-            _dialogService.ShowDialog<WorkHoursWindow>(this, dialogViewModel);
+            var dialogViewModel = new WorkTimeViewModel();
+            _dialogService.ShowDialog<WorkTimeWindow>(this, dialogViewModel);
         }
 
         [RelayCommand]
@@ -94,8 +94,8 @@ namespace Harmonogram.Wpf.ViewModels
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()
         {
-            var dialogViewModel = new CreateScheduleViewModel();
-            _dialogService.ShowDialog<CreateScheduleWindow>(this, dialogViewModel);
+            var dialogViewModel = new ScheduleCreatorViewModel();
+            _dialogService.ShowDialog<ScheduleCreatorWindow>(this, dialogViewModel);
         }
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateUser()

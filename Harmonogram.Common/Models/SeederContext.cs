@@ -20,5 +20,24 @@ namespace Harmonogram.Common.Models
                 _context.SaveChanges();
             }
         }
+        public void SeedDays()
+        {
+            if (!_context.Days.Any())
+            {
+                var days = new List<Day>()
+                {
+                    new Day {Name = "Poniedziałek"},
+                    new Day {Name = "Wtorek"},
+                    new Day {Name = "Środa"},
+                    new Day {Name = "Czwartek"},
+                    new Day {Name = "Piątek"},
+                    new Day {Name = "Sobota"},
+                    new Day {Name = "Niedziela"}
+                };
+
+                _context.Days.AddRange(days);
+                _context.SaveChanges();
+            }
+        }
     }
 }

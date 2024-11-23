@@ -4,7 +4,7 @@ namespace Harmonogram.Common.Interfaces
 {
     public interface IUserService
     {
-        User? Get(int userid);
+        User? GetById(int id);
         User Login(User user);
 
         void Register(User user);
