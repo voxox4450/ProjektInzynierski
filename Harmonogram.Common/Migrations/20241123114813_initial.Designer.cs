@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Harmonogram.Common.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241123090828_updatedatabase")]
-    partial class updatedatabase
+    [Migration("20241123114813_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,7 +142,7 @@ namespace Harmonogram.Common.Migrations
                     b.Property<int>("EndHour")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ScheduleId")
+                    b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
                     b.Property<int>("StartHour")
@@ -187,7 +187,9 @@ namespace Harmonogram.Common.Migrations
 
                     b.HasOne("Harmonogram.Common.Entities.Schedule", "Schedule")
                         .WithMany("WorkBlocks")
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Harmonogram.Common.Entities.User", "User")
                         .WithMany("WorkBlocks")

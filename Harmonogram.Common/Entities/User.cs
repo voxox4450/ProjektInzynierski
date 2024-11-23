@@ -14,8 +14,8 @@
         public double PaymentPerHour { get; set; } = 0.0;
         public string AccountNumber { get; set; } = string.Empty;
 
-        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-        public ICollection<WorkBlock> WorkBlocks { get; set; } = new List<WorkBlock>();
+        public ICollection<Schedule> Schedules { get; set; } = [];
+        public ICollection<WorkBlock> WorkBlocks { get; set; } = [];
 
     }
 }
