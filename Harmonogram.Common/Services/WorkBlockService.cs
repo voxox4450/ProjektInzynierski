@@ -21,5 +21,10 @@ namespace Harmonogram.Common.Services
         }
 
         public IEnumerable<WorkBlock> GetAll() => _workBlockRepository.GetAll();
+
+        public IEnumerable<WorkBlock> GetByUserId(int userId)
+        {
+            return _workBlockRepository.GetByUserId(userId);
+        }
     }
 }

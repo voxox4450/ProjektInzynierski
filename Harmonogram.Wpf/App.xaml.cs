@@ -4,6 +4,7 @@ using Harmonogram.Common.Models;
 using Harmonogram.Common.Repositories;
 using Harmonogram.Common.Services;
 using Harmonogram.Wpf.ViewModels;
+using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,7 @@ namespace Harmonogram.Wpf
             .AddTransient<UsersListViewModel>()
             .AddTransient<UserViewModel>()
             .AddTransient<ManageUserViewModel>()
+            .AddTransient<WorkBlockListViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
             .AddScoped<IUserRepository, UserRepository>()

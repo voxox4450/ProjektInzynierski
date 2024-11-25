@@ -35,6 +35,9 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private double _blockHeight = 40;
 
+        [ObservableProperty]
+        private WorkBlock _workBlock = workBlock;
+
         public void LoadBlock()
         {
             Width = 100;

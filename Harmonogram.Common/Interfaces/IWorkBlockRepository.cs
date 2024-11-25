@@ -7,5 +7,6 @@ namespace Harmonogram.Common.Interfaces
         void Add(WorkBlock workBlock);
 
         IEnumerable<WorkBlock> GetAll();
+        IEnumerable<WorkBlock> GetByUserId(int userId);
     }
 }

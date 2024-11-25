@@ -35,43 +35,16 @@ namespace Harmonogram.Wpf.ViewModels
             InitializeVariables();
             LoadUsers();
         }
-        //public DateTime StartingDate
-        //{
-        //    get => _startingDate;
-        //    set
-        //    {
-        //        SetProperty(ref _startingDate, value);
-        //        ValidateProperty(_startingDate);
-        //    }
-        //}
+
         [ObservableProperty]
         //[NotifyDataErrorInfo]
         private DateTime _startingDate;
 
-        //private DateTime _startingDate;
-
-        //public DateTime EndingDate
-        //{
-        //    get => _endingDate;
-        //    set
-        //    {
-        //        SetProperty(ref _endingDate, value);
-        //        ValidateProperty(_endingDate);
-        //    }
-        //}
         [ObservableProperty]
         //[NotifyDataErrorInfo]
         private DateTime _endingDate;
 
-        //public string ScheduleName
-        //{
-        //    get => _scheduleName;
-        //    set
-        //    {
-        //        SetProperty(ref _scheduleName, value);
-        //        ValidateProperty(_scheduleName);
-        //    }
-        //}
+
         [ObservableProperty]
         //[NotifyDataErrorInfo]
         private string _scheduleName;
@@ -80,7 +53,7 @@ namespace Harmonogram.Wpf.ViewModels
         private IEnumerable<string> _workHours;
 
         [ObservableProperty]
-        private ObservableCollection<string> _dayDates = [];
+        private ObservableCollection<DateTime> _dayDates = [];
 
         [ObservableProperty]
         private ObservableCollection<UserViewModel> _users = [];
@@ -105,6 +78,7 @@ namespace Harmonogram.Wpf.ViewModels
         }
 
         private int? _step;
+
         [RelayCommand]
         private void NextStep()
         {
@@ -137,7 +111,7 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    DayDates.Add(StartingDate.AddDays(i).ToString("dd.MM"));
+                    DayDates.Add(StartingDate.AddDays(i));
                 }
             }
         }
@@ -214,7 +188,7 @@ namespace Harmonogram.Wpf.ViewModels
 
             dialogViewModel.CheckedUsers = new ObservableCollection<UserViewModel>(checkedUsers);
             dialogViewModel.Day = day;
-            dialogViewModel.Date = StartingDate.AddDays(_dayService.GetDayId(day) - 1);
+            dialogViewModel.Date = DayDates[_dayService.GetDayId(day) - 1];
             _dialogService.ShowDialog<WorkBlockCreatorWindow>(this, dialogViewModel);
         }
 
@@ -227,7 +201,11 @@ namespace Harmonogram.Wpf.ViewModels
                 StartDate = StartingDate,
                 EndDate = EndingDate,
                 Users = Users.Where(user => user.IsChecked).Select(user => user.User).ToList(),
-                //WorkBlocks = WorkBlocks.ToList()
+                WorkBlocks = WorkBlockViewModels.Values
+                    .SelectMany(collection => collection)
+                    .Select(viewModel => viewModel.WorkBlock)
+                    .Where(wb => wb != null)
+                    .ToList()
             };
 
             _scheduleService.Add(schedule);

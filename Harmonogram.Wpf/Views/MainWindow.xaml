@@ -102,9 +102,8 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     FontSize="40"
-                    Foreground="White">
-                    Witaj,<Run Text="{Binding UserName}" />
-                </TextBlock>
+                    Foreground="White"
+                    Text="{Binding UserName, StringFormat='Witaj, {0}!'}" />
 
                 <Border
                     Grid.Row="1"
@@ -129,7 +128,7 @@
                             Background="Transparent"
                             FontSize="30"
                             Foreground="White"
-                            Text="Twoja następna zmiana:" />
+                            Text="Status pracy: " />
                         <TextBlock
                             Grid.Row="0"
                             Margin="0,15,0,5"
@@ -167,7 +166,7 @@
                                 Foreground="White">
                                 <TextBlock.Text>
                                     <MultiBinding Converter="{StaticResource hoursAndMoneyConverter}">
-                                        <Binding Path="HoursCount" />
+                                        <Binding Path="HoursDayCount" />
                                         <Binding Path="MoneyCount" />
                                     </MultiBinding>
                                 </TextBlock.Text>
