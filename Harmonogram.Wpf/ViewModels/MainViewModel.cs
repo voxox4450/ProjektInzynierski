@@ -3,13 +3,13 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
+using Harmonogram.Wpf.Models;
 using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Harmonogram.Wpf.Views;
 using MvvmDialogs;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
-
 
 namespace Harmonogram.Wpf.ViewModels
 
@@ -20,13 +20,23 @@ namespace Harmonogram.Wpf.ViewModels
         private readonly LoginViewModel _loginViewModel;
         private readonly IWorkBlockService _workBlockService;
 
+        private readonly Const _conts;
+
         public MainViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _loginViewModel = Ioc.Default.GetRequiredService<LoginViewModel>();
             _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
 
+            _conts = Ioc.Default.GetRequiredService<Const>();
+
             _loginViewModel.IsLoggedIn += OnLoggedIn;
+
+            startOfWeek = _conts.SetStartOfWeek();
+            endOfWeek = _conts.SetEndOfWeek();
+            startOfMonth = _conts.SetStartOfMonth();
+            endOfMonth = _conts.SetEndOfMonth();
+            InitializeVariables();
         }
 
         private bool CanExecuteAdminCommands => IsLogged?.IsAdmin == true;
@@ -40,16 +50,16 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private string _userName = string.Empty!;
         [ObservableProperty]
-        private string _amount = string.Empty!;
+        private string _totalWeekAmount = string.Empty!;
 
         [ObservableProperty]
         private int _hoursDayCount = 0;
 
         [ObservableProperty]
-        private double _moneyCount = 0.0;
+        private double _moneyDayCount = 0.0;
 
         [ObservableProperty]
-        private string _nextShiftDate = "Dzień Wolny";
+        private string statusOfWork = "Dzień Wolny";
 
         [ObservableProperty]
         private DateTime _startShift = new(0001, 01, 01, 01, 01, 0);
@@ -58,16 +68,21 @@ namespace Harmonogram.Wpf.ViewModels
         private DateTime _endShift = new(0001, 01, 01, 01, 01, 0);
 
         [ObservableProperty]
-        private string _workHours = default!;
+        private string _workDayHours = default!;
 
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
-        private string _totalHours = "16,82";
+        private string _totalMonthHours = "00,00";
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
-        private string _totalAmount = "2334,56";
+        private string _totalMonthAmount = "00,00";
 
+        private DateTime startOfWeek { get; set; }
+        private DateTime endOfWeek { get; set; }
+        private DateTime startOfMonth { get; set; }
+        private DateTime endOfMonth { get; set; }
         public ObservableCollection<WorkBlockListViewModel> WorkBlocks { get; set; } = [];
+
+        [ObservableProperty]
+        private ObservableCollection<bool> _toWork = [];
 
         private void LoadWorkBlock(int userId)
         {
@@ -144,22 +159,72 @@ namespace Harmonogram.Wpf.ViewModels
             UserName = user.Name;
             LoadWorkBlock(user.Id);
 
+            double totalHoursWeek = 0;
+            double totalHoursMonth = 0;
+            double totalEarningsMonth = 0;
             foreach (var workBlock in WorkBlocks)
             {
                 if (workBlock.IsToday)
                 {
-
-                    NextShiftDate = workBlock.Date.ToString("D", new CultureInfo("pl-PL"))!;
+                    StatusOfWork = workBlock.Date.ToString("D", new CultureInfo("pl-PL"))!;
                     HoursDayCount = workBlock.EndHour - workBlock.StartHour;
-                    WorkHours = $"{workBlock.StartHourFormatted} - {workBlock.EndHourFormatted}";
+                    WorkDayHours = $"{workBlock.StartHourFormatted} - {workBlock.EndHourFormatted}";
+                }
+
+
+                if (workBlock.Date >= startOfWeek && workBlock.Date <= endOfWeek)
+                {
+                    int dayIndex = (int)workBlock.Date.DayOfWeek;
+
+                    dayIndex = (dayIndex == 0) ? 6 : dayIndex - 1;
+
+                    if (dayIndex >= 0 && dayIndex < ToWork.Count)
+                    {
+                        ToWork[dayIndex] = true;
+                    }
+
+                    totalHoursWeek += workBlock.EndHour - workBlock.StartHour;
+                }
+
+                if (workBlock.Date >= startOfMonth && workBlock.Date <= DateTime.Today && workBlock.Date <= endOfMonth)
+                {
+                    double hoursWorked = workBlock.EndHour - workBlock.StartHour;
+
+
+                    if (workBlock.Date.Date == DateTime.Today)
+                    {
+                        int currentHour = DateTime.Now.Hour;
+                        if (workBlock.EndHour > currentHour)
+                        {
+                            hoursWorked = Math.Max(0, currentHour - workBlock.StartHour);
+                        }
+                    }
+
+                    totalHoursMonth += hoursWorked;
+                    totalEarningsMonth += hoursWorked * user.PaymentPerHour;
                 }
             }
-            MoneyCount = user.PaymentPerHour * HoursDayCount;
+            MoneyDayCount = user.PaymentPerHour * HoursDayCount;
+            var totalEarningsWeeks = totalHoursWeek * user.PaymentPerHour;
+            TotalWeekAmount = Math.Round(totalEarningsWeeks, 2).ToString("F2");
 
 
+            TotalMonthHours = totalHoursMonth.ToString("F2");
+            TotalMonthAmount = totalEarningsMonth.ToString("F2");
+        }
 
-            double hoursCount = (double)HoursDayCount;
-            Amount = Math.Round(user.PaymentPerHour * hoursCount + user.PaymentPerHour * (hoursCount + 1) + user.PaymentPerHour * (hoursCount + 3), 2).ToString("F2");
+        private void InitializeVariables()
+        {
+            ToWork = new ObservableCollection<bool>
+            {
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+            };
         }
 
         private void OnLoggedIn(object? sender, User user)

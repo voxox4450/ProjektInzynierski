@@ -80,6 +80,5 @@ namespace Harmonogram.Common.Services
         public IEnumerable<User> GetAll() => _userRepository.GetAll();
 
 
-
     }
 }
