@@ -54,7 +54,8 @@ namespace Harmonogram.Wpf.ViewModels
                 StartHour = int.Parse(_workStart),
                 EndHour = int.Parse(_workEnd),
                 DayId = _dayService.GetDayId(Day),
-                UserId = _selectedUser.Id
+                UserId = _selectedUser.Id,
+                Date = _date
             };
 
             _workBlockService.Add(workBlock);

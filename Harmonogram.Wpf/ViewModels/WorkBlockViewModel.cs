@@ -6,6 +6,9 @@ namespace Harmonogram.Wpf.ViewModels
     public partial class WorkBlockViewModel(WorkBlock workBlock, User user) : ObservableObject
     {
         [ObservableProperty]
+        private WorkBlock _workBlock = workBlock;
+
+        [ObservableProperty]
         private int _id = workBlock.Id;
 
         [ObservableProperty]

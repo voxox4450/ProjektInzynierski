@@ -51,7 +51,7 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[0]}"
+                        Text="{Binding DayDates[0], StringFormat='{}{0:dd.MM}'}"
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Poniedziałek]}">
                         <ItemsControl.ItemsPanel>
@@ -102,7 +102,7 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[1]}"
+                        Text="{Binding DayDates[1], StringFormat='{}{0:dd.MM}'}"
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Wtorek]}">
                         <ItemsControl.ItemsPanel>
@@ -153,7 +153,8 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[2]}"
+                        Text="{Binding DayDates[2], StringFormat='{}{0:dd.MM}'}"
+
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Środa]}">
                         <ItemsControl.ItemsPanel>
@@ -204,7 +205,8 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[3]}"
+                        Text="{Binding DayDates[3], StringFormat='{}{0:dd.MM}'}"
+
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Czwartek]}">
                         <ItemsControl.ItemsPanel>
@@ -255,7 +257,8 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[4]}"
+                        Text="{Binding DayDates[4], StringFormat='{}{0:dd.MM}'}"
+
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Piątek]}">
                         <ItemsControl.ItemsPanel>
@@ -306,7 +309,8 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[5]}"
+                        Text="{Binding DayDates[5], StringFormat='{}{0:dd.MM}'}"
+
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Sobota]}">
                         <ItemsControl.ItemsPanel>
@@ -357,7 +361,8 @@
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="15"
-                        Text="{Binding DayDates[6]}"
+                        Text="{Binding DayDates[6], StringFormat='{}{0:dd.MM}'}"
+
                         TextAlignment="Center" />
                     <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Niedziela]}">
                         <ItemsControl.ItemsPanel>
