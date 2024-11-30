@@ -21,6 +21,18 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
 
         public bool ToWork;
 
+        [ObservableProperty]
+        private string _salary = (workBlock.User.PaymentPerHour * (workBlock.EndHour - workBlock.StartHour)).ToString("F2");
+
+        [ObservableProperty]
+        private int _hourAmount = workBlock.EndHour - workBlock.StartHour;
+
+        [ObservableProperty]
+        private string _hourRange = string.Concat(workBlock.StartHour, " - ", workBlock.EndHour);
+
+        [ObservableProperty]
+        private string _day = $"{workBlock.Date:dd.MM.yyyy}";
+
         public bool IsToday
         {
             get

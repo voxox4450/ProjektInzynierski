@@ -120,7 +120,11 @@ namespace Harmonogram.Wpf.ViewModels
         [RelayCommand]
         private void OpenWorkHoursPanel()
         {
-            var dialogViewModel = new WorkTimeViewModel();
+            if (IsLogged is null)
+            {
+                return;
+            }
+            var dialogViewModel = new WorkTimeViewModel(IsLogged);
             _dialogService.ShowDialog<WorkTimeWindow>(this, dialogViewModel);
         }
 
