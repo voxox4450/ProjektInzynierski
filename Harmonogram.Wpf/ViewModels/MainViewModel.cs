@@ -20,7 +20,6 @@ namespace Harmonogram.Wpf.ViewModels
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _loginViewModel = Ioc.Default.GetRequiredService<LoginViewModel>();
-
             _loginViewModel.IsLoggedIn += OnLoggedIn;
         }
 
@@ -34,6 +33,7 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         private string _userName = string.Empty!;
+
         [ObservableProperty]
         private string _amount = string.Empty!;
 
@@ -90,6 +90,13 @@ namespace Harmonogram.Wpf.ViewModels
         {
             var dialogViewModel = new SchedulePanelViewModel();
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
+        }
+        [RelayCommand]
+        private void OpenUserInformation()
+        {
+            var dialogViewModel = new DisplayUserInformationViewModel();
+            dialogViewModel.CurrentUser = IsLogged;
+            _dialogService.ShowDialog<DisplayUserInformationWindow>(this, dialogViewModel);
         }
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()

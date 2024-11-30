@@ -71,6 +71,7 @@
                 <MenuItem Header="Panel Użytkownika">
                     <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
                     <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
+                    <MenuItem Command="{Binding OpenUserInformationCommand}" Header="Twoje Dane" />
                 </MenuItem>
                 <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
