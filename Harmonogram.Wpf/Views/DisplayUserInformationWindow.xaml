@@ -13,7 +13,7 @@
     x:Name="Window"
     Title="Dane Użytkownika"
     Width="750"
-    Height="710"
+    Height="750"
     md:DialogServiceViews.IsRegistered="True"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
@@ -49,6 +49,7 @@
             <!--  Account Info Row  -->
             <RowDefinition Height="Auto" />
             <!--  Payment Info Row  -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -173,5 +174,15 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="10"
+            HorizontalAlignment="Center"
+            FontSize="14"
+            FontStyle="Italic"
+            Foreground="{StaticResource PrimaryTextColor}"
+            Text="Jeśli dane nie są zgodne skontaktuj się z administratorem." />
     </Grid>
 </hc:Window>
