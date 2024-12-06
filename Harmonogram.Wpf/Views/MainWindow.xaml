@@ -39,6 +39,10 @@
             Command="{Binding OpenWorkHoursPanelCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
+            Key="a"
+            Command="{Binding OpenUserInformationCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="e"
             Command="{Binding OpenCreateScheduleCommand}"
             Modifiers="Ctrl" />
@@ -70,8 +74,9 @@
                 VerticalContentAlignment="Center"
                 FontSize="21">
                 <MenuItem Header="Panel Użytkownika">
-                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
-                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
+                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Harmonogramu" />
+                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Czas Pracy" />
+                    <MenuItem Command="{Binding OpenUserInformationCommand}" Header="Twoje Dane" />
                 </MenuItem>
                 <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
