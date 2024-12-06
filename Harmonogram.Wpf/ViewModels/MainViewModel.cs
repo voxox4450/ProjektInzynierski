@@ -131,7 +131,11 @@ namespace Harmonogram.Wpf.ViewModels
         [RelayCommand]
         private void OpenSchedulePanel()
         {
-            var dialogViewModel = new SchedulePanelViewModel();
+            if (IsLogged is null)
+            {
+                return;
+            }
+            var dialogViewModel = new SchedulePanelViewModel(IsLogged);
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
         }
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
