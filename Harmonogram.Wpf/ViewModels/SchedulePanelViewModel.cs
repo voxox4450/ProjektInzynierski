@@ -5,6 +5,7 @@ using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
 using Harmonogram.Wpf.Models;
 using Harmonogram.Wpf.ViewModels.ListViewModels;
+using Harmonogram.Wpf.Views;
 using MvvmDialogs;
 using System.Collections.ObjectModel;
 
@@ -13,21 +14,22 @@ namespace Harmonogram.Wpf.ViewModels
     public partial class SchedulePanelViewModel : ObservableObject, IModalDialogViewModel
     {
         private readonly IWorkBlockService _workBlockService;
+        private readonly IDialogService _dialogService;
         private readonly Const _conts;
 
         public SchedulePanelViewModel(User? user = null)
         {
             _conts = Ioc.Default.GetRequiredService<Const>();
+            _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
 
+            User = user;
             StartOfWeek = _conts.SetStartOfWeek();
             EndOfWeek = _conts.SetEndOfWeek();
+
             UpdateCurrentContent(StartOfWeek, EndOfWeek);
-
-            User = user;
-
-            LoadData();
             LoadSchedule();
+            LoadData();
         }
 
         [ObservableProperty]
@@ -66,6 +68,10 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<WorkBlockListViewModel> _schedules = [];
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(OpenPropertiesCommand))]
+        private WorkBlockListViewModel? _selectedSchedule;
 
         private void LoadSchedule()
         {
@@ -155,6 +161,23 @@ namespace Harmonogram.Wpf.ViewModels
         private void Close()
         {
             DialogResult = true;
+        }
+
+        [RelayCommand(CanExecute = nameof(IsSelectedSchedule))]
+        private void OpenProperties()
+        {
+            if (SelectedSchedule is null)
+            {
+                return;
+            }
+            var dialogViewModel = new PropertiesListViewModel(SelectedSchedule);
+
+            _dialogService.ShowDialog<PropertiesListWindow>(this, dialogViewModel);
+        }
+
+        private bool IsSelectedSchedule()
+        {
+            return SelectedSchedule is not null;
         }
     }
 }

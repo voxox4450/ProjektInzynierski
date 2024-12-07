@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
 using MvvmDialogs;
@@ -20,6 +21,11 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         private User _currentUser;
+        [RelayCommand]
+        private void Close()
+        {
+            DialogResult = true;
+        }
 
     }
 }

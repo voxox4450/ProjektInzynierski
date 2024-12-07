@@ -18,6 +18,9 @@
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CloseCommand}" />
+    </Window.InputBindings>
 
     <Window.Resources>
         <SolidColorBrush x:Key="AccentColor" Color="#2596be" />

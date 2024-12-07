@@ -7,9 +7,11 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:Harmonogram.Wpf.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     Title="Twój grafik"
     Width="1200"
     Height="820"
+    md:DialogServiceViews.IsRegistered="True"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -132,6 +134,11 @@
             ItemsSource="{Binding Schedules}"
             SelectedItem="{Binding SelectedSchedule}"
             SelectionMode="Single">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding OpenPropertiesCommand}" Header="Szczegóły" />
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn

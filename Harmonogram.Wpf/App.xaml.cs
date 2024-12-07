@@ -44,6 +44,7 @@ namespace Harmonogram.Wpf
             .AddTransient<ManageUserViewModel>()
             .AddTransient<WorkBlockListViewModel>()
             .AddTransient<DisplayUserInformationViewModel>()
+            .AddTransient<PropertiesListViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
             .AddScoped<IUserRepository, UserRepository>()

@@ -15,13 +15,17 @@ namespace Harmonogram.Common.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<WorkBlock> GetAll() => _context.WorkBlocks;
+        public IEnumerable<WorkBlock> GetAll() => _context.WorkBlocks
+                                        .Include(wb => wb.User)
+                                        .Include(wb => wb.Day)
+                                        .Include(wb => wb.Schedule).ToList();
 
         public IEnumerable<WorkBlock> GetByUserId(int userId)
         {
             return _context.WorkBlocks
                            .Include(wb => wb.User)
                            .Include(wb => wb.Day)
+                           .Include(wb => wb.Schedule)
                            .Where(wb => wb.UserId == userId)
                            .ToList();
         }

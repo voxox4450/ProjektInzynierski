@@ -31,6 +31,9 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
         private string _hourRange = string.Concat(workBlock.StartHour, " - ", workBlock.EndHour);
 
         [ObservableProperty]
+        private string _fullName = string.Concat(workBlock.User.Name, " ", workBlock.User.LastName);
+
+        [ObservableProperty]
         private string _day = $"{workBlock.Date:dd.MM.yyyy}";
 
         public bool IsToday
