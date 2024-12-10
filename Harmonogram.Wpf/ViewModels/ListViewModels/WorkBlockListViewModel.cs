@@ -43,9 +43,7 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
                 var today = DateTime.Today;
                 int currentDayId = today.DayOfWeek == DayOfWeek.Sunday ? 7 : (int)today.DayOfWeek;
 
-
                 bool isDayMatch = DayId == currentDayId;
-
 
                 bool isDateMatch = _date.Date == today;
 

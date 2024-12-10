@@ -138,6 +138,7 @@ namespace Harmonogram.Wpf.ViewModels
             var dialogViewModel = new SchedulePanelViewModel(IsLogged);
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
         }
+
         [RelayCommand]
         private void OpenUserInformation()
         {
@@ -145,30 +146,32 @@ namespace Harmonogram.Wpf.ViewModels
             dialogViewModel.CurrentUser = IsLogged;
             _dialogService.ShowDialog<DisplayUserInformationWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()
         {
             var dialogViewModel = new ScheduleCreatorViewModel();
             _dialogService.ShowDialog<ScheduleCreatorWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateUser()
         {
             var dialogViewModel = new CreateUserViewModel();
             _dialogService.ShowDialog<CreateUserWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenListUsers()
         {
             var dialogViewModel = new UsersListViewModel();
             _dialogService.ShowDialog<UsersListWindow>(this, dialogViewModel);
         }
+
         private void Close()
         {
             Application.Current.Shutdown();
         }
-
-
         private void LoadData(User user)
         {
             UserName = user.Name;

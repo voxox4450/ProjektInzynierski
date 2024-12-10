@@ -39,8 +39,6 @@
             FontStyle="Italic"
             FontWeight="SemiBold"
             Foreground="White" />
-        <!--  {Binding SelectedDay}  -->
-        <!--  "Grafik zaspołu"  -->
         <!--  Lista zmian w danym dniu  -->
         <ListView
             Grid.Row="3"

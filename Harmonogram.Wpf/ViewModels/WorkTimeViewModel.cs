@@ -164,6 +164,7 @@ namespace Harmonogram.Wpf.ViewModels
             return true;
 
         }
+
         [RelayCommand(CanExecute = nameof(CanGoToPreviousMonth))]
         private void LeftArrow()
         {

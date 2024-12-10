@@ -24,7 +24,7 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
 
         [ObservableProperty]
         private DateTime _selectedDay;
-        //TODO: naprawic przeysałanie dnayhcg
+
         [ObservableProperty]
         private WorkBlockListViewModel _selectedWorkBlock;
 
@@ -49,13 +49,9 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
         private void LoadData()
         {
 
-            // Pobierz wszystkie bloki pracy dla użytkownika
             var workBlocks = _workBlockService.GetAll();
             var workBlocksVms = new List<WorkBlockListViewModel>();
 
-
-
-            // Filtruj bloki pracy na podstawie wybranego dnia
             foreach (var workBlock in workBlocks)
             {
                 var workBlockVm = CreateWorkBlockVm(workBlock);
@@ -76,6 +72,7 @@ namespace Harmonogram.Wpf.ViewModels.ListViewModels
         {
             return new WorkBlockListViewModel(workBlock);
         }
+
         [RelayCommand]
         private void Close()
         {
