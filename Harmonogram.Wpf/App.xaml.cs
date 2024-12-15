@@ -19,6 +19,7 @@ namespace Harmonogram.Wpf
     public partial class App : Application
     {
         public IConfiguration? Configuration { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             var builder = new ConfigurationBuilder()
@@ -35,13 +36,17 @@ namespace Harmonogram.Wpf
             .AddTransient<WorkTimeViewModel>()
             .AddTransient<SchedulePanelViewModel>()
             .AddTransient<WorkBlockCreatorViewModel>()
+            .AddTransient<WorkBlockEditorViewModel>()
             .AddTransient<ScheduleCreatorViewModel>()
+            .AddTransient<ScheduleEditorViewModel>()
             .AddTransient<CreateUserViewModel>()
             .AddTransient<UsersListViewModel>()
             .AddTransient<UserViewModel>()
             .AddTransient<ManageUserViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
+            .AddScoped<IColorService, ColorService>()
+            .AddScoped<IColorRepository, ColorRepository>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IDayService, DayService>()
             .AddScoped<IDayRepository, DayRepository>()
@@ -57,7 +62,7 @@ namespace Harmonogram.Wpf
             var seeder = scope.ServiceProvider.GetRequiredService<SeederContext>();
             seeder.SeedUser();
             seeder.SeedDays();
+            seeder.SeedColors();
         }
     }
-
 }

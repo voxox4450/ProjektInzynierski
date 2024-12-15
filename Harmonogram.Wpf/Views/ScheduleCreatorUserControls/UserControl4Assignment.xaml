@@ -4,20 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
     mc:Ignorable="d">
-    <ScrollViewer>
+    <ScrollViewer Foreground="Black">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="{Binding ColumnWidth[0]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[1]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[2]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[3]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[4]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[5]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[6]}" />
+                <ColumnDefinition Width="{Binding ColumnWidth[7]}" />
             </Grid.ColumnDefinitions>
 
             <ItemsControl
@@ -29,6 +29,7 @@
                         <TextBlock
                             Height="40"
                             FontSize="15"
+                            Foreground="White"
                             Text="{Binding}"
                             TextAlignment="Center" />
                     </DataTemplate>
@@ -42,6 +43,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Poniedziałek"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Poniedziałek"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -53,7 +58,7 @@
                         FontSize="15"
                         Text="{Binding DayDates[0], StringFormat='{}{0:dd.MM}'}"
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Poniedziałek]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[1]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -63,15 +68,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -93,6 +100,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Wtorek"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Wtorek"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -104,7 +115,7 @@
                         FontSize="15"
                         Text="{Binding DayDates[1], StringFormat='{}{0:dd.MM}'}"
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Wtorek]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[2]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -114,15 +125,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -144,6 +157,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Środa"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Środa"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -154,9 +171,8 @@
                     <TextBlock
                         FontSize="15"
                         Text="{Binding DayDates[2], StringFormat='{}{0:dd.MM}'}"
-
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Środa]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[3]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -166,15 +182,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -196,6 +214,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Czwartek"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Czwartek"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -206,9 +228,8 @@
                     <TextBlock
                         FontSize="15"
                         Text="{Binding DayDates[3], StringFormat='{}{0:dd.MM}'}"
-
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Czwartek]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[4]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -218,15 +239,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -248,6 +271,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Piątek"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Piątek"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -258,9 +285,8 @@
                     <TextBlock
                         FontSize="15"
                         Text="{Binding DayDates[4], StringFormat='{}{0:dd.MM}'}"
-
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Piątek]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[5]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -270,15 +296,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -300,6 +328,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Sobota"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Sobota"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -310,9 +342,8 @@
                     <TextBlock
                         FontSize="15"
                         Text="{Binding DayDates[5], StringFormat='{}{0:dd.MM}'}"
-
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Sobota]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[6]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -322,15 +353,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
@@ -352,6 +385,10 @@
                             Command="{Binding OpenWorkBlockCreatorCommand}"
                             CommandParameter="Niedziela"
                             Header="Dodaj blok pracy" />
+                        <MenuItem
+                            Command="{Binding OpenWorkBlockEditorCommand}"
+                            CommandParameter="Niedziela"
+                            Header="Edytuj bloki pracy" />
                     </ContextMenu>
                 </Border.ContextMenu>
                 <StackPanel>
@@ -362,9 +399,8 @@
                     <TextBlock
                         FontSize="15"
                         Text="{Binding DayDates[6], StringFormat='{}{0:dd.MM}'}"
-
                         TextAlignment="Center" />
-                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[Niedziela]}">
+                    <ItemsControl ItemsSource="{Binding WorkBlockViewModels[7]}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White" />
@@ -374,15 +410,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Rectangle
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Fill="Blue"
-                                        Opacity="0.2" />
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Fill="{Binding Color.Hex, UpdateSourceTrigger=PropertyChanged}"
+                                        Opacity="0.5" />
                                     <TextBlock
-                                        Width="{Binding Width}"
-                                        Height="{Binding Height}"
-                                        Foreground="White"
-                                        Text="{Binding Name}"
+                                        Width="{Binding Width, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="{Binding Margin, UpdateSourceTrigger=PropertyChanged}"
+                                        Foreground="Black"
+                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center" />
                                 </Grid>
                             </DataTemplate>

@@ -9,11 +9,14 @@ namespace Harmonogram.Common.Models
         public DbSet<Day> Days { get; set; }
         public DbSet<WorkBlock> WorkBlocks { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Color> Colors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //User
+
             #region User
+
             modelBuilder.Entity<User>()
                 .Property(u => u.IsAdmin)
                 .IsRequired();
@@ -46,10 +49,13 @@ namespace Harmonogram.Common.Models
                 .HasMany(u => u.WorkBlocks)
                 .WithOne(w => w.User)
                 .HasForeignKey(w => w.UserId);
+
             #endregion User
 
             //Day
+
             #region Day
+
             modelBuilder.Entity<Day>()
                 .Property(d => d.Name)
                 .HasMaxLength(15)
@@ -59,10 +65,13 @@ namespace Harmonogram.Common.Models
                 .HasMany(d => d.WorkBlocks)
                 .WithOne(w => w.Day)
                 .HasForeignKey(w => w.DayId);
+
             #endregion Day
+
             //WorkBlock
 
             #region WorkBlock
+
             modelBuilder.Entity<WorkBlock>()
                 .Property(w => w.Date)
                 .IsRequired();
@@ -82,10 +91,17 @@ namespace Harmonogram.Common.Models
             modelBuilder.Entity<WorkBlock>()
                 .Property(w => w.DayId)
                 .IsRequired();
+
+            modelBuilder.Entity<WorkBlock>()
+                .Property(w => w.ColorId)
+                .IsRequired();
+
             #endregion WorkBlock
 
             //Schedule
+
             #region Schedule
+
             modelBuilder.Entity<Schedule>()
                 .Property(s => s.Name)
                 .IsRequired();
@@ -107,7 +123,24 @@ namespace Harmonogram.Common.Models
                 .HasMany(s => s.WorkBlocks)
                 .WithOne(w => w.Schedule)
                 .HasForeignKey(w => w.ScheduleId);
+
             #endregion Schedule
+
+            //Color
+
+            #region Color
+
+            modelBuilder.Entity<Color>()
+                .Property(c => c.Name)
+                .HasMaxLength(15)
+                .IsRequired();
+
+            modelBuilder.Entity<Color>()
+                .HasMany(c => c.WorkBlocks)
+                .WithOne(w => w.Color)
+                .HasForeignKey(w => w.ColorId);
+
+            #endregion Color
         }
     }
 }

@@ -61,7 +61,6 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-
             </Grid.RowDefinitions>
             <!--  App menu  -->
             <Menu
@@ -76,8 +75,8 @@
                     <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
                     <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
                     <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj Dane" />
+                    <MenuItem Command="{Binding OpenScheduleEditorCommand}" Header="Edytuj Harmonogram" />
                 </MenuItem>
-
             </Menu>
 
             <Grid Grid.Row="1" Margin="10">
@@ -372,7 +371,6 @@
                                     StrokeThickness="2" />
                             </StackPanel>
                         </StackPanel>
-
                     </Grid>
                 </Border>
 
@@ -434,9 +432,7 @@
                             Text="{Binding TotalHours, StringFormat={}{0:F2} hrs.}" />
                     </Grid>
                 </Border>
-
             </Grid>
-
         </Grid>
     </StackPanel>
 </hc:Window>

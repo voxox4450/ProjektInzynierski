@@ -6,6 +6,10 @@ namespace Harmonogram.Common.Interfaces
     {
         void Add(WorkBlock workBlock);
 
+        void Update(WorkBlock workBlock);
+
         IEnumerable<WorkBlock> GetAll();
+
+        void Delete(WorkBlock workBlock);
     }
 }
