@@ -20,6 +20,7 @@ namespace Harmonogram.Common.Models
                 _context.SaveChanges();
             }
         }
+
         public void SeedDays()
         {
             if (!_context.Days.Any())
@@ -36,6 +37,27 @@ namespace Harmonogram.Common.Models
                 };
 
                 _context.Days.AddRange(days);
+                _context.SaveChanges();
+            }
+        }
+
+        public void SeedColors()
+        {
+            if (!_context.Colors.Any())
+            {
+                var colors = new List<Color>()
+                {
+                    new Color {Name = "Czerwony", Hex = "#FF0000"},
+                    new Color {Name = "Zielony", Hex = "#00FF00"},
+                    new Color {Name = "Niebieski", Hex = "#0000FF"},
+                    new Color {Name = "Żółty", Hex = "#FFFF00"},
+                    new Color {Name = "Pomarańczowy", Hex = "#FFA500"},
+                    new Color {Name = "Fioletowy", Hex = "#800080"},
+                    new Color {Name = "Różowy", Hex = "#FFC0CB"},
+                    new Color {Name = "Biały", Hex = "#FFFFFF"},
+                    new Color {Name = "Czarny", Hex = "#000000"}
+                };
+                _context.Colors.AddRange(colors);
                 _context.SaveChanges();
             }
         }

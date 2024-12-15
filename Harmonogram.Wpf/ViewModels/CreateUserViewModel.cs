@@ -16,6 +16,7 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IDialogService _dialogService;
         private readonly IUserService _userService;
+
         public CreateUserViewModel()
         {
             _userService = Ioc.Default.GetRequiredService<IUserService>();
@@ -25,10 +26,8 @@ namespace Harmonogram.Wpf.ViewModels
         private bool _firstRun = true;
         public User userRegister { get; set; }
 
-
         [ObservableProperty]
         private bool? _dialogResult;
-
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -37,7 +36,6 @@ namespace Harmonogram.Wpf.ViewModels
         [MinLength(2, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
         [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
         private string _name = string.Empty;
-
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -62,7 +60,6 @@ namespace Harmonogram.Wpf.ViewModels
         [MinLength(9, ErrorMessage = "Pole tekstowe musi zawierać 9 znaków.")]
         [MaxLength(9, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 9 znaków.")]
         [OnlyNumbers(ErrorMessage = "Pole tekstowe musi zawierać tylko cyfry.")]
-
         private string _phone = string.Empty;
 
         [ObservableProperty]
@@ -72,7 +69,6 @@ namespace Harmonogram.Wpf.ViewModels
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
         [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
         private string _password = string.Empty;
-
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -95,7 +91,6 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Pole płatność (na godzinę) jest wymagane.")]
-        //dodac ze tylko cyfry
         private string _paymentPerHour = string.Empty;
 
         [RelayCommand]
@@ -116,11 +111,9 @@ namespace Harmonogram.Wpf.ViewModels
             return !HasErrors;
         }
 
-
         [RelayCommand(CanExecute = nameof(IsValid))]
         private void Register()
         {
-
             var user = new User()
             {
                 Name = Name,
@@ -137,7 +130,6 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 _userService.Register(user);
                 HC.MessageBox.Show("Rejestracja przebiegła pomyślnie.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
-
             }
             else
             {

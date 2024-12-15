@@ -6,11 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Harmonogram.Common.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Colors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Hex = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colors", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Days",
                 columns: table => new
@@ -95,6 +109,7 @@ namespace Harmonogram.Common.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     DayId = table.Column<int>(type: "int", nullable: false),
+                    ColorId = table.Column<int>(type: "int", nullable: false),
                     StartHour = table.Column<int>(type: "int", nullable: false),
                     EndHour = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -103,6 +118,12 @@ namespace Harmonogram.Common.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkBlocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkBlocks_Colors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WorkBlocks_Days_DayId",
                         column: x => x.DayId,
@@ -128,6 +149,11 @@ namespace Harmonogram.Common.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WorkBlocks_ColorId",
+                table: "WorkBlocks",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WorkBlocks_DayId",
                 table: "WorkBlocks",
                 column: "DayId");
@@ -151,6 +177,9 @@ namespace Harmonogram.Common.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkBlocks");
+
+            migrationBuilder.DropTable(
+                name: "Colors");
 
             migrationBuilder.DropTable(
                 name: "Days");

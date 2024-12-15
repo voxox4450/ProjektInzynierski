@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using HandyControl.Tools.Extension;
 using Harmonogram.Common.Entities;
 using Harmonogram.Wpf.Views;
 using MvvmDialogs;
 using System.Globalization;
 using System.Windows;
-
 
 namespace Harmonogram.Wpf.ViewModels
 
@@ -34,6 +34,7 @@ namespace Harmonogram.Wpf.ViewModels
 
         [ObservableProperty]
         private string _userName = string.Empty!;
+
         [ObservableProperty]
         private string _amount = string.Empty!;
 
@@ -56,10 +57,9 @@ namespace Harmonogram.Wpf.ViewModels
         private string _workHours = default!;
 
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
         private string _totalHours = "16,82";
+
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
         private string _totalAmount = "2334,56";
 
         [RelayCommand]
@@ -67,13 +67,13 @@ namespace Harmonogram.Wpf.ViewModels
         {
             Application.Current.MainWindow.Hide();
         }
+
         [RelayCommand]
         private void OpenLogin()
         {
             if (IsLogged == null)
             {
                 _dialogService.ShowDialog<LoginWindow>(this, _loginViewModel);
-
             }
             OnLoggedIn(this, _loginViewModel.userToLogged);
         }
@@ -91,29 +91,37 @@ namespace Harmonogram.Wpf.ViewModels
             var dialogViewModel = new SchedulePanelViewModel();
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()
         {
             var dialogViewModel = new ScheduleCreatorViewModel();
             _dialogService.ShowDialog<ScheduleCreatorWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateUser()
         {
             var dialogViewModel = new CreateUserViewModel();
             _dialogService.ShowDialog<CreateUserWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenListUsers()
         {
             var dialogViewModel = new UsersListViewModel();
             _dialogService.ShowDialog<UsersListWindow>(this, dialogViewModel);
         }
-        private void Close()
+
+        //New
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
+        private void OpenScheduleEditor()
         {
-            Application.Current.Shutdown();
+            var dialogViewModel = new ScheduleEditorViewModel();
+            _dialogService.ShowDialog<ScheduleEditorWindow>(this, dialogViewModel);
         }
 
+        private static void Close() => Application.Current.Shutdown();
 
         private void LoadData(User user)
         {
@@ -122,7 +130,7 @@ namespace Harmonogram.Wpf.ViewModels
             HoursCount = 5;
             MoneyCount = user.PaymentPerHour * HoursCount;
             double hoursCount = (double)HoursCount;
-            Amount = Math.Round(user.PaymentPerHour * hoursCount + user.PaymentPerHour * (hoursCount + 1) + user.PaymentPerHour * (hoursCount + 3), 2).ToString("F2");
+            Amount = Math.Round((user.PaymentPerHour * hoursCount) + (user.PaymentPerHour * (hoursCount + 1)) + (user.PaymentPerHour * (hoursCount + 3)), 2).ToString("F2");
         }
 
         private void OnLoggedIn(object? sender, User user)
