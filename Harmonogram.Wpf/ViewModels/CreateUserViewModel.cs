@@ -6,6 +6,7 @@ using Harmonogram.Common.Interfaces;
 using Harmonogram.Common.Models;
 using Harmonogram.Common.ValidationRules;
 using MvvmDialogs;
+using ReportsSender4.Common.ValidationRules;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using HC = HandyControl.Controls;
@@ -34,8 +35,9 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Imię jest wymagane.")]
-        [MinLength(2, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
-        [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
+        [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaki.")]
+        [OnlyLetters(ErrorMessage = "Pole tekstowe może zawierać tylko litery.")]
         private string _name = string.Empty;
 
 
@@ -43,8 +45,9 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Nazwisko jest wymagane.")]
-        [MinLength(2, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
-        [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
+        [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 2 znaki.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaki.")]
+        [OnlyLetters(ErrorMessage = "Pole tekstowe może zawierać tylko litery.")]
         private string _lastname = string.Empty;
 
         [ObservableProperty]
@@ -52,7 +55,8 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Adres e-mail jest wymagany.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
-        [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaki.")]
+        [EmailAddress(ErrorMessage = "Nieprawidłowy format adresu e-mail.")]
         private string _mail = string.Empty;
 
         [ObservableProperty]
@@ -62,7 +66,6 @@ namespace Harmonogram.Wpf.ViewModels
         [MinLength(9, ErrorMessage = "Pole tekstowe musi zawierać 9 znaków.")]
         [MaxLength(9, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 9 znaków.")]
         [OnlyNumbers(ErrorMessage = "Pole tekstowe musi zawierać tylko cyfry.")]
-
         private string _phone = string.Empty;
 
         [ObservableProperty]
@@ -70,7 +73,8 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
-        [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaków.")]
+        [StrongPassword(ErrorMessage = "Hasło musi być silne.")]
         private string _password = string.Empty;
 
 
@@ -79,7 +83,8 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
-        [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaków.")]
+        [StrongPassword(ErrorMessage = "Hasło musi być silne.")]
         [MatchProperty(nameof(Password), ErrorMessage = "Hasła nie są takie same")]
         private string _passwordRepeat = string.Empty;
 
@@ -87,15 +92,16 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Numer konta jest wymagany.")]
-        [MinLength(1, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 1 znaki.")]
-        [MaxLength(26, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 26 znaki.")]
+        [MinLength(26, ErrorMessage = "Pole tekstowe musi zawierać dokłądnie 26 znaków.")]
+        [MaxLength(26, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 26 znaków.")]
+        [OnlyNumbers(ErrorMessage = "Pole tekstowe musi zawierać tylko cyfry.")]
         private string _accountNumber = string.Empty;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [NotifyCanExecuteChangedFor(nameof(RegisterCommand))]
         [Required(ErrorMessage = "Pole płatność (na godzinę) jest wymagane.")]
-        //dodac ze tylko cyfry
+        [DecimalNumber(ErrorMessage = "Pole tekstowe musi zawierać poprawny format liczbowy (cyfra, przecinek/kropka).")]
         private string _paymentPerHour = string.Empty;
 
         [RelayCommand]

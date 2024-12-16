@@ -16,5 +16,16 @@ namespace Harmonogram.Common.Services
         {
             _scheduleRepository.Add(schedule);
         }
+
+        public IEnumerable<Schedule> GetAllEditable()
+        {
+            var today = DateTime.Today;
+            return _scheduleRepository.GetAll().Where(s => s.StartDate > today);
+        }
+
+        public void Update(Schedule schedule)
+        {
+            _scheduleRepository.Update(schedule);
+        }
     }
 }

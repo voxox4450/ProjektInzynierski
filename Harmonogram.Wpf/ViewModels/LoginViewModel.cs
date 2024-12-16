@@ -34,7 +34,8 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         [Required(ErrorMessage = "Adres e-mail jest wymagany")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
-        [MaxLength(24, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 24 znaki.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaki.")]
+        [EmailAddress(ErrorMessage = "Nieprawidłowy format adresu e-mail.")]
         private string _mail = string.Empty;
 
         [ObservableProperty]
@@ -42,7 +43,7 @@ namespace Harmonogram.Wpf.ViewModels
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [MinLength(3, ErrorMessage = "Pole tekstowe musi zawierać więcej niż 3 znaki.")]
-        [MaxLength(48, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 48 znaków.")]
+        [MaxLength(32, ErrorMessage = "Pole tekstowe nie może zawierać więcej niż 32 znaki.")]
         private string _password = string.Empty;
 
         [RelayCommand]

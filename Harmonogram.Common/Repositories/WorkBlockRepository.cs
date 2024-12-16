@@ -14,7 +14,16 @@ namespace Harmonogram.Common.Repositories
             _context.WorkBlocks.Add(workBlock);
             _context.SaveChanges();
         }
-
+        public void Delete(WorkBlock workBlock)
+        {
+            _context.WorkBlocks.Remove(workBlock);
+            _context.SaveChanges();
+        }
+        public void Update(WorkBlock workBlock)
+        {
+            _context.WorkBlocks.Update(workBlock);
+            _context.SaveChanges();
+        }
         public IEnumerable<WorkBlock> GetAll() => _context.WorkBlocks
                                         .Include(wb => wb.User)
                                         .Include(wb => wb.Day)
