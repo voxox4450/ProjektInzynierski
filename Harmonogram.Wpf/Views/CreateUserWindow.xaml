@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     x:Name="Window"
-    Title="Dodaj Pracownika"
+    Title="Dodaj pracownika"
     Width="800"
     Height="700"
     ResizeMode="CanMinimize"

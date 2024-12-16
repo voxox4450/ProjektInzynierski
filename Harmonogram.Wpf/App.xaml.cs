@@ -37,7 +37,9 @@ namespace Harmonogram.Wpf
             .AddTransient<WorkTimeViewModel>()
             .AddTransient<SchedulePanelViewModel>()
             .AddTransient<WorkBlockCreatorViewModel>()
+            .AddTransient<WorkBlockEditorViewModel>()
             .AddTransient<ScheduleCreatorViewModel>()
+            .AddTransient<ScheduleEditorViewModel>()
             .AddTransient<CreateUserViewModel>()
             .AddTransient<UsersListViewModel>()
             .AddTransient<UserViewModel>()
@@ -54,6 +56,8 @@ namespace Harmonogram.Wpf
             .AddScoped<IScheduleRepository, ScheduleRepository>()
             .AddScoped<IWorkBlockService, WorkBlockService>()
             .AddScoped<IWorkBlockRepository, WorkBlockRepository>()
+            .AddScoped<IColorService, ColorService>()
+            .AddScoped<IColorRepository, ColorRepository>()
             .AddScoped<IConstants, Constants>()
             .AddScoped<SeederContext>()
             .AddScoped<Const>()
@@ -63,6 +67,7 @@ namespace Harmonogram.Wpf
             var seeder = scope.ServiceProvider.GetRequiredService<SeederContext>();
             seeder.SeedUser();
             seeder.SeedDays();
+            seeder.SeedColors();
         }
     }
 

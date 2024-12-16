@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Harmonogram.Wpf.Views.ScheduleCreatorUserControls
+namespace Harmonogram.Wpf.Views.WorkBlockEditorUserControls
 {
     /// <summary>
-    /// Logika interakcji dla klasy UserControl4Assignment.xaml
+    /// Logika interakcji dla klasy UserControl2Edit.xaml
     /// </summary>
-    public partial class UserControl4Assignment : UserControl
+    public partial class UserControl2Edit : UserControl
     {
-        public UserControl4Assignment()
+        public UserControl2Edit()
         {
             InitializeComponent();
-
-            DataContext = this;
         }
     }
 }

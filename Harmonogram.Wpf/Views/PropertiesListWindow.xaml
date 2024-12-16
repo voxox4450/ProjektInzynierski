@@ -9,6 +9,7 @@
     Title="Grafik zespołu"
     Width="800"
     Height="450"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CloseCommand}" />

@@ -11,7 +11,7 @@
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     xmlns:viewmodels="clr-namespace:Harmonogram.Wpf.ViewModels"
     x:Name="Window"
-    Title="Dane Użytkownika"
+    Title="Dane pracownika"
     Width="750"
     Height="750"
     md:DialogServiceViews.IsRegistered="True"

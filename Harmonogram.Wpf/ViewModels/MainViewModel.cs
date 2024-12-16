@@ -167,6 +167,12 @@ namespace Harmonogram.Wpf.ViewModels
             var dialogViewModel = new UsersListViewModel();
             _dialogService.ShowDialog<UsersListWindow>(this, dialogViewModel);
         }
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
+        private void OpenScheduleEditor()
+        {
+            var dialogViewModel = new ScheduleEditorViewModel();
+            _dialogService.ShowDialog<ScheduleEditorWindow>(this, dialogViewModel);
+        }
 
         private void Close()
         {

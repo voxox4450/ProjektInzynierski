@@ -1,10 +1,10 @@
 ﻿<UserControl
-    x:Class="Harmonogram.Wpf.Views.ScheduleCreatorUserControls.UserControl3Employees"
+    x:Class="Harmonogram.Wpf.Views.WorkBlockEditorUserControls.UserControl1WorkBlocks"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
-    xmlns:local="clr-namespace:Harmonogram.Wpf.Views.ScheduleCreatorUserControls"
+    xmlns:local="clr-namespace:Harmonogram.Wpf.Views.WorkBlockEditorUserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -22,35 +22,26 @@
         </Grid.RowDefinitions>
         <Label
             Grid.ColumnSpan="2"
-Width="400"
-Height="80"
-VerticalContentAlignment="Center"
-Background="#172d3a"
-            Content="Wybierz pracowników:"
-            FontSize="25" />
+            Height="40"
+            VerticalContentAlignment="Center"
+            Content="Wybierz blok pracy:"
+            FontSize="20" />
         <ListView
             Grid.Row="1"
-            FontSize="15"
             Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             hc:Empty.ShowEmpty="True"
-            ItemsSource="{Binding Users}"
+            ItemsSource="{Binding WorkBlocks}"
+            SelectedItem="{Binding SelectedWorkBlock}"
             SelectionMode="Single">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Width="70" Header="#">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Width="70" Header="Id" DisplayMemberBinding="{Binding Id}" />
+
                     <GridViewColumn
                         Width="300"
-                        DisplayMemberBinding="{Binding FullName}"
-                        Header="Osoba" />
+                        DisplayMemberBinding="{Binding Name}"
+                        Header="Nazwa" />
                     <GridViewColumn
                         Width="400"
                         DisplayMemberBinding="{Binding Mail}"
@@ -61,6 +52,11 @@ Background="#172d3a"
                         Header="Numer telefonu" />
                 </GridView>
             </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Usuń" Command="{Binding DeleteCommand}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>

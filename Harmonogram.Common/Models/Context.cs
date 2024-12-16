@@ -36,7 +36,7 @@ namespace Harmonogram.Common.Models
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.Password)
-                .HasMaxLength(32)
+                .HasMaxLength(64)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.PaymentPerHour)

@@ -74,14 +74,16 @@
                 VerticalContentAlignment="Center"
                 FontSize="21">
                 <MenuItem Header="Panel Użytkownika">
-                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Harmonogramu" />
-                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Czas Pracy" />
-                    <MenuItem Command="{Binding OpenUserInformationCommand}" Header="Twoje Dane" />
+                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Harmonogram" />
+                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Miesięczny czas pracy" />
+                    <MenuItem Command="{Binding OpenUserInformationCommand}" Header="Twoje dane" />
                 </MenuItem>
                 <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
-                    <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
-                    <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
-                    <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj Dane" />
+                    <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie harmonogramu" />
+                    <MenuItem Command="{Binding OpenScheduleEditorCommand}" Header="Edytuj harmonogramu" />
+                    <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie użytkownika" />
+                    <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj danych użytkownika" />
+
                 </MenuItem>
 
             </Menu>

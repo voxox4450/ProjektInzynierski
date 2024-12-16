@@ -16,23 +16,32 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="2*" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Label
             Grid.ColumnSpan="2"
-            Height="40"
+            Width="400"
+            Height="80"
             VerticalContentAlignment="Center"
+            Background="#172d3a"
             Content="Podaj nazwę harmonogramu:"
-            FontSize="20" />
+            FontSize="25" />
         <Label
             Grid.Row="1"
-            Width="150"
+            Width="180"
+            Height="50"
+            FontSize="15"
+            Margin="0,0,20,0"
+            HorizontalAlignment="Right"
             Content="Nazwa harmonogramu:" />
         <TextBox
             Grid.Row="1"
             Grid.Column="1"
-            Width="150"
+            FontSize="15"
+            Width="160"
             Height="50"
+            Margin="40,0,0,0"
+            HorizontalAlignment="Left"
             Text="{Binding ScheduleName, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

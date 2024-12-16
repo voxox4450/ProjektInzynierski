@@ -1,92 +1,84 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-using HandyControl.Tools.Extension;
 using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
 using Harmonogram.Wpf.Views;
 using Microsoft.IdentityModel.Tokens;
 using MvvmDialogs;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using HC = HandyControl.Controls;
 
 namespace Harmonogram.Wpf.ViewModels
 {
-    public partial class ScheduleCreatorViewModel : ObservableValidator, IModalDialogViewModel
+    public partial class ScheduleEditorViewModel : ObservableValidator, IModalDialogViewModel
     {
         private readonly IDialogService _dialogService;
+        private readonly IScheduleService _scheduleService;
         private readonly IUserService _userService;
-        private readonly IDayService _dayService;
         private readonly IWorkBlockService _workBlockService;
         private readonly IColorService _colorService;
-        private readonly IScheduleService _scheduleService;
         private readonly IConstants _constants;
+        private readonly IDayService _dayService;
 
         public event EventHandler? OnRequestNextStep;
 
         public event EventHandler? OnRequestPrevioustStep;
 
-        public ScheduleCreatorViewModel()
+        public ScheduleEditorViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
-            _userService = Ioc.Default.GetRequiredService<IUserService>();
-            _dayService = Ioc.Default.GetRequiredService<IDayService>();
-            _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
             _scheduleService = Ioc.Default.GetRequiredService<IScheduleService>();
+            _userService = Ioc.Default.GetRequiredService<IUserService>();
+            _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
             _colorService = Ioc.Default.GetRequiredService<IColorService>();
             _constants = Ioc.Default.GetRequiredService<IConstants>();
+            _dayService = Ioc.Default.GetRequiredService<IDayService>();
+
             _workBlockService.WorkBlockAdded += OnWorkBlockAdded!;
             _workBlockService.WorkBlockUpdated += OnWorkBlockUpdated!;
             _workBlockService.WorkBlockDeleted += OnWorkBlockDeleted!;
 
             InitializeVariables();
+            LoadSchedules();
             LoadUsers();
             ValidateAllProperties();
         }
 
-        [Required(ErrorMessage = "Data rozpoczęcia jest wymagana.")]
-        public DateTime StartingDate
+        #region Fields & Properties
+
+        [ObservableProperty]
+        private ObservableCollection<ScheduleViewModel> _schedules = [];
+
+        public ScheduleViewModel SelectedSchedule
         {
-            get => _startingDate;
+            get => _selectedSchedule;
             set
             {
-                SetProperty(ref _startingDate, value);
-                ValidateProperty(_startingDate);
+                SetProperty(ref _selectedSchedule, value);
+                ValidateProperty(_selectedSchedule);
                 NextStepCommand.NotifyCanExecuteChanged();
+                LoadWorkBlocks();
             }
         }
 
-        private DateTime _startingDate;
-
-        [Required(ErrorMessage = "Nazwa harmonogramu jest wymagana.")]
-        public string ScheduleName
-        {
-            get => _scheduleName;
-            set
-            {
-                SetProperty(ref _scheduleName, value);
-                ValidateProperty(_scheduleName);
-            }
-        }
-
-        private string _scheduleName;
+        private ScheduleViewModel _selectedSchedule;
 
         [ObservableProperty]
         private double _windowWidth = Application.Current.MainWindow.ActualWidth;
 
         [ObservableProperty]
-        private IEnumerable<string> _workHours;
-
-        [ObservableProperty]
         private ObservableCollection<double> _columnWidth = [];
 
         [ObservableProperty]
-        private ObservableCollection<DateTime> _dayDates = [];
+        private ObservableCollection<UserViewModel> _users = [];
 
         [ObservableProperty]
-        private ObservableCollection<UserViewModel> _users = [];
+        private IEnumerable<string> _workHours;
+
+        [ObservableProperty]
+        private ObservableCollection<DateTime> _dayDates = [];
 
         [ObservableProperty]
         private Dictionary<int, ObservableCollection<WorkBlockViewModel>> _workBlockViewModels = [];
@@ -109,14 +101,42 @@ namespace Harmonogram.Wpf.ViewModels
 
         private int? _step;
 
+        #endregion Fields & Properties
+
         private bool IsValid()
         {
             return Step switch
             {
-                1 => StartingDate > DateTime.Today,
-                2 => !ScheduleName.IsNullOrEmpty(),
+                1 => !Schedules.IsNullOrEmpty() && SelectedSchedule != null,
+                2 => !SelectedSchedule!.Name.IsNullOrEmpty() && SelectedSchedule.StartDate > DateTime.Today,
                 3 => !Users.IsNullOrEmpty() && Users.Any(u => u.IsChecked),
                 _ => false,
+            };
+        }
+
+        private void InitializeVariables()
+        {
+            UserControlsVisibility =
+                [
+                    Visibility.Visible,
+                    Visibility.Hidden,
+                    Visibility.Hidden,
+                    Visibility.Hidden
+                ];
+            Step = 1;
+            //StartingDate = _constants.SetStartDate();
+            //EndingDate = _constants.SetEndDate();
+            WorkHours = _constants.SetHours();
+            ColumnWidth = new ObservableCollection<double>
+            {
+                50,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7,
+                (WindowWidth - 50) / 7
             };
         }
 
@@ -128,7 +148,7 @@ namespace Harmonogram.Wpf.ViewModels
                 Step++;
                 ReloadVariables();
             }
-            OnRequestNextStep?.Invoke(this, EventArgs.Empty);
+            OnRequestNextStep?.Invoke(this, new EventArgs());
         }
 
         [RelayCommand]
@@ -139,23 +159,54 @@ namespace Harmonogram.Wpf.ViewModels
                 Step--;
                 ReloadVariables();
             }
-            OnRequestPrevioustStep?.Invoke(this, EventArgs.Empty);
+            OnRequestPrevioustStep?.Invoke(this, new EventArgs());
         }
 
         private void ReloadVariables()
         {
-            if (Step == 2)
+            if (Step == 3)
             {
-                ScheduleName = _constants.SetBaseName(StartingDate);
+                foreach (var user in Users)
+                {
+                    user.IsChecked = SelectedSchedule.Users.Any(u => u.Id == user.Id);
+                }
             }
             if (Step == 4)
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    DayDates.Add(StartingDate.AddDays(i));
+                    DayDates.Add(SelectedSchedule.StartDate.AddDays(i));
                 }
             }
         }
+
+        [RelayCommand]
+        private void ToggleVisibility()
+        {
+            if (!Step.HasValue)
+            {
+                return;
+            }
+
+            for (int i = 0; i < UserControlsVisibility.Count; i++)
+            {
+                UserControlsVisibility[i] = Visibility.Hidden;
+            }
+            UserControlsVisibility[Step.Value - 1] = Visibility.Visible;
+        }
+
+        private void LoadSchedules()
+        {
+            var schedules = _scheduleService.GetAllEditable();
+            var schedulesViewModels = new List<ScheduleViewModel>();
+            foreach (var schedule in schedules)
+            {
+                schedulesViewModels.Add(CreateScheduleViewModel(schedule));
+            }
+            Schedules = new ObservableCollection<ScheduleViewModel>(schedulesViewModels);
+        }
+
+        private static ScheduleViewModel CreateScheduleViewModel(Schedule schedule) => new ScheduleViewModel(schedule);
 
         private void LoadUsers()
         {
@@ -167,6 +218,35 @@ namespace Harmonogram.Wpf.ViewModels
                 usersViewModels.Add(CreateUserViewModel(user));
             }
             Users = new ObservableCollection<UserViewModel>(usersViewModels);
+        }
+
+        private void LoadWorkBlocks()
+        {
+            WorkBlockViewModels = new Dictionary<int, ObservableCollection<WorkBlockViewModel>>
+            {
+                { _dayService.GetDayId("Poniedziałek"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Wtorek"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Środa"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Czwartek"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Piątek"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Sobota"), new ObservableCollection<WorkBlockViewModel>() },
+                { _dayService.GetDayId("Niedziela"), new ObservableCollection<WorkBlockViewModel>() },
+            };
+            foreach (var workBlock in SelectedSchedule.WorkBlocks)
+            {
+                var workBlocksCountByDay = WorkBlockViewModels[workBlock.DayId].Count;
+                double newWidth = ColumnWidth[workBlock.DayId] / (workBlocksCountByDay + 1);
+                var iterator = 0;
+                foreach (var wbvm in WorkBlockViewModels[workBlock.DayId])
+                {
+                    iterator++;
+                    wbvm.Width = newWidth;
+                    wbvm.Margin = new Thickness(iterator * newWidth, 0, 0, 0);
+                }
+                workBlock.LoadBlock(newWidth);
+                workBlock.SetName();
+                WorkBlockViewModels[workBlock.DayId].Add(workBlock);
+            }
         }
 
         private void ReloadWorkBlocks(int dayId)
@@ -193,84 +273,31 @@ namespace Harmonogram.Wpf.ViewModels
                 double newWidth = ColumnWidth[dayId] / group.Count;
                 for (int i = 0; i < group.Count; i++)
                 {
-                    group[i].Margin = new Thickness(i * newWidth, 0, 0, 0);
                     group[i].LoadBlock(newWidth);
+                    group[i].Margin = new Thickness(i * newWidth, 0, 0, 0);
                 }
             }
         }
 
-        private static UserViewModel CreateUserViewModel(User user) => new(user);
+        private static UserViewModel CreateUserViewModel(Common.Entities.User user) => new UserViewModel(user);
 
-        private static WorkBlockViewModel CreateWorkBlockViewModel(WorkBlock workBlock, User user) => new(workBlock, user);
-
-        private void InitializeVariables()
-        {
-            UserControlsVisibility =
-                [
-                    Visibility.Visible,
-                    Visibility.Hidden,
-                    Visibility.Hidden,
-                    Visibility.Hidden
-                ];
-
-            WorkBlockViewModels = new Dictionary<int, ObservableCollection<WorkBlockViewModel>>
-                {
-                    { _dayService.GetDayId("Poniedziałek"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Wtorek"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Środa"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Czwartek"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Piątek"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Sobota"), new ObservableCollection<WorkBlockViewModel>() },
-                    { _dayService.GetDayId("Niedziela"), new ObservableCollection<WorkBlockViewModel>() },
-                };
-            Step = 1;
-            StartingDate = _constants.SetStartDate();
-            WorkHours = _constants.SetHours();
-
-            ColumnWidth = new ObservableCollection<double>
-            {
-                50,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7,
-                (WindowWidth - 50) / 7
-            };
-        }
-
-        [RelayCommand]
-        private void ToggleVisibility()
-        {
-            if (!Step.HasValue)
-            {
-                return;
-            }
-
-            for (int i = 0; i < UserControlsVisibility.Count; i++)
-            {
-                UserControlsVisibility[i] = Visibility.Hidden;
-            }
-
-            UserControlsVisibility[Step.Value - 1] = Visibility.Visible;
-        }
+        private static WorkBlockViewModel CreateWorkBlockViewModel(WorkBlock workBlock, Common.Entities.User user) => new(workBlock, user);
 
         [RelayCommand]
         private void OpenWorkBlockCreator(object parameter)
         {
-            if (parameter is not string day)
+            string? day = parameter as string;
+            if (day == null)
             {
                 return;
             }
 
             var dialogViewModel = new WorkBlockCreatorViewModel();
             var checkedUsers = Users.Where(user => user.IsChecked).ToList();
-
             dialogViewModel.CheckedUsers = new ObservableCollection<UserViewModel>(checkedUsers);
+            dialogViewModel.SelectedUser = dialogViewModel.CheckedUsers[0];
             dialogViewModel.Day = day;
             dialogViewModel.Date = DayDates[_dayService.GetDayId(day) - 1];
-            dialogViewModel.SelectedUser = dialogViewModel.CheckedUsers[0];
             _dialogService.ShowDialog<WorkBlockCreatorWindow>(this, dialogViewModel);
         }
 
@@ -283,7 +310,7 @@ namespace Harmonogram.Wpf.ViewModels
             }
             var dialogViewModel = new WorkBlockEditorViewModel();
             var checkedUsers = Users.Where(user => user.IsChecked).ToList();
-            var workBlocks = WorkBlockViewModels[_dayService.GetDayId(day)].ToList();
+            var workBlocks = SelectedSchedule.WorkBlocks.Where(wb => wb.DayId == _dayService.GetDayId(day)).ToList();
 
             dialogViewModel.CheckedUsers = new ObservableCollection<UserViewModel>(checkedUsers);
             dialogViewModel.Day = day;
@@ -301,19 +328,23 @@ namespace Harmonogram.Wpf.ViewModels
                 return;
             }
 
-            var schedule = new Schedule
-            {
-                Name = ScheduleName,
-                StartDate = StartingDate,
-                EndDate = StartingDate.AddDays(6),
-                Users = Users.Where(user => user.IsChecked).Select(user => user.User).ToList(),
-                WorkBlocks = WorkBlockViewModels.Values
-                    .SelectMany(collection => collection)
-                    .Select(viewModel => viewModel.WorkBlock)
-                    .Where(wb => wb != null)
-                    .ToList()
-            };
-            _scheduleService.Add(schedule);
+            SelectedSchedule.Schedule.EndDate = SelectedSchedule.StartDate.AddDays(6);
+
+            SelectedSchedule.Schedule.Users = Users
+                .Where(u => u.IsChecked)
+                .Select(cu => cu.User)
+                .ToList();
+
+            SelectedSchedule.Schedule.WorkBlocks = WorkBlockViewModels.Values
+                .SelectMany(collection => collection)
+                .Select(viewModel => viewModel.WorkBlock)
+                .Where(wb => wb != null)
+                .ToList();
+
+            SelectedSchedule.Schedule.ModifiedOn = DateTime.Now;
+
+            _scheduleService.Update(SelectedSchedule.Schedule);
+
             DialogResult = true;
         }
 

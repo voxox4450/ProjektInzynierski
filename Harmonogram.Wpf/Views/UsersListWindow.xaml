@@ -11,7 +11,7 @@
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     xmlns:viewmodels="clr-namespace:Harmonogram.Wpf.ViewModels"
     x:Name="Window"
-    Title="Wybierz Użytkownika"
+    Title="Edytuj pracownika"
     Width="800"
     Height="550"
     md:DialogServiceViews.IsRegistered="True"
