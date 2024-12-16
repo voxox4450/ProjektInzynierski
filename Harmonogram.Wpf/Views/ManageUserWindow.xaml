@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     x:Name="Window"
-    Title="Edytuj Pracownika"
+    Title="Edytuj pracownika"
     Width="800"
     Height="700"
     ResizeMode="CanMinimize"
@@ -26,7 +26,6 @@
                                 BorderBrush="#DB3340"
                                 BorderThickness="1"
                                 CornerRadius="3">
-
                                 <AdornedElementPlaceholder Margin="-1" />
                             </Border>
                         </DockPanel>
@@ -148,7 +147,6 @@
                 Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Password  -->
-
             <Label
                 Grid.Row="5"
                 Grid.Column="0"
@@ -192,7 +190,6 @@
 
 
             <!--  Password Repeat  -->
-
             <components:BindablePasswordBox
                 x:Name="passRepeat"
                 Grid.Row="6"

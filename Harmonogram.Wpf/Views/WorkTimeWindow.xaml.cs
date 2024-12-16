@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Harmonogram.Wpf.ViewModels;
+﻿using Harmonogram.Wpf.ViewModels;
 using HC = HandyControl.Controls;
 
 namespace Harmonogram.Wpf.Views
@@ -12,7 +11,7 @@ namespace Harmonogram.Wpf.Views
         public WorkTimeWindow()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<WorkTimeViewModel>();
+            DataContext = new WorkTimeViewModel();
         }
     }
 }

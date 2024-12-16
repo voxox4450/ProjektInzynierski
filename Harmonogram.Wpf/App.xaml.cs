@@ -3,7 +3,9 @@ using Harmonogram.Common.Interfaces;
 using Harmonogram.Common.Models;
 using Harmonogram.Common.Repositories;
 using Harmonogram.Common.Services;
+using Harmonogram.Wpf.Models;
 using Harmonogram.Wpf.ViewModels;
+using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,11 +37,16 @@ namespace Harmonogram.Wpf
             .AddTransient<WorkTimeViewModel>()
             .AddTransient<SchedulePanelViewModel>()
             .AddTransient<WorkBlockCreatorViewModel>()
+            .AddTransient<WorkBlockEditorViewModel>()
             .AddTransient<ScheduleCreatorViewModel>()
+            .AddTransient<ScheduleEditorViewModel>()
             .AddTransient<CreateUserViewModel>()
             .AddTransient<UsersListViewModel>()
             .AddTransient<UserViewModel>()
             .AddTransient<ManageUserViewModel>()
+            .AddTransient<WorkBlockListViewModel>()
+            .AddTransient<DisplayUserInformationViewModel>()
+            .AddTransient<PropertiesListViewModel>()
             .AddScoped<IDialogService, DialogService>()
             .AddScoped<IUserService, UserServices>()
             .AddScoped<IUserRepository, UserRepository>()
@@ -49,14 +56,18 @@ namespace Harmonogram.Wpf
             .AddScoped<IScheduleRepository, ScheduleRepository>()
             .AddScoped<IWorkBlockService, WorkBlockService>()
             .AddScoped<IWorkBlockRepository, WorkBlockRepository>()
+            .AddScoped<IColorService, ColorService>()
+            .AddScoped<IColorRepository, ColorRepository>()
             .AddScoped<IConstants, Constants>()
             .AddScoped<SeederContext>()
+            .AddScoped<Const>()
             .BuildServiceProvider());
 
             using var scope = Ioc.Default.CreateScope();
             var seeder = scope.ServiceProvider.GetRequiredService<SeederContext>();
             seeder.SeedUser();
             seeder.SeedDays();
+            seeder.SeedColors();
         }
     }
 

@@ -9,6 +9,7 @@ namespace Harmonogram.Common.Models
         public DbSet<Day> Days { get; set; }
         public DbSet<WorkBlock> WorkBlocks { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Color> Colors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,21 +20,23 @@ namespace Harmonogram.Common.Models
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.Name)
+                .HasMaxLength(32)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.LastName)
+                .HasMaxLength(32)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.Mail)
-                .HasMaxLength(24)
+                .HasMaxLength(32)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.PhoneNumber)
-                .HasMaxLength(20)
+                .HasMaxLength(9)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.Password)
-                .HasMaxLength(48)
+                .HasMaxLength(64)
                 .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.PaymentPerHour)
@@ -108,6 +111,21 @@ namespace Harmonogram.Common.Models
                 .WithOne(w => w.Schedule)
                 .HasForeignKey(w => w.ScheduleId);
             #endregion Schedule
+            //Color
+
+            #region Color
+
+            modelBuilder.Entity<Color>()
+                .Property(c => c.Name)
+                .HasMaxLength(15)
+                .IsRequired();
+
+            modelBuilder.Entity<Color>()
+                .HasMany(c => c.WorkBlocks)
+                .WithOne(w => w.Color)
+                .HasForeignKey(w => w.ColorId);
+
+            #endregion Color
         }
     }
 }

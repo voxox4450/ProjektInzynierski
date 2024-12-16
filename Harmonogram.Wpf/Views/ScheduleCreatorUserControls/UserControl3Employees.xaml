@@ -22,12 +22,15 @@
         </Grid.RowDefinitions>
         <Label
             Grid.ColumnSpan="2"
-            Height="40"
-            VerticalContentAlignment="Center"
+Width="400"
+Height="80"
+VerticalContentAlignment="Center"
+Background="#172d3a"
             Content="Wybierz pracowników:"
-            FontSize="20" />
+            FontSize="25" />
         <ListView
             Grid.Row="1"
+            FontSize="15"
             Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             hc:Empty.ShowEmpty="True"

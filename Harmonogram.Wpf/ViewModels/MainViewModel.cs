@@ -2,11 +2,14 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Harmonogram.Common.Entities;
+using Harmonogram.Common.Interfaces;
+using Harmonogram.Wpf.Models;
+using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Harmonogram.Wpf.Views;
 using MvvmDialogs;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
-
 
 namespace Harmonogram.Wpf.ViewModels
 
@@ -15,13 +18,25 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IDialogService _dialogService;
         private readonly LoginViewModel _loginViewModel;
+        private readonly IWorkBlockService _workBlockService;
+
+        private readonly Const _conts;
 
         public MainViewModel()
         {
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _loginViewModel = Ioc.Default.GetRequiredService<LoginViewModel>();
+            _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
+
+            _conts = Ioc.Default.GetRequiredService<Const>();
 
             _loginViewModel.IsLoggedIn += OnLoggedIn;
+
+            startOfWeek = _conts.SetStartOfWeek();
+            endOfWeek = _conts.SetEndOfWeek();
+            startOfMonth = _conts.SetStartOfMonth();
+            endOfMonth = _conts.SetEndOfMonth();
+            InitializeVariables();
         }
 
         private bool CanExecuteAdminCommands => IsLogged?.IsAdmin == true;
@@ -35,32 +50,56 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private string _userName = string.Empty!;
         [ObservableProperty]
-        private string _amount = string.Empty!;
+        private string _totalWeekAmount = string.Empty!;
 
         [ObservableProperty]
-        private int _hoursCount = 0;
+        private int _hoursDayCount = 0;
 
         [ObservableProperty]
-        private double _moneyCount = 0.0;
+        private double _moneyDayCount = 0.0;
 
         [ObservableProperty]
-        private string _nextShiftDate = DateTime.Today.ToString("D", new CultureInfo("pl-PL"))!;
+        private string statusOfWork = "Dzień Wolny";
 
         [ObservableProperty]
-        private DateTime _startShift = new(2024, 11, 15, 10, 15, 0);
+        private DateTime _startShift = new(0001, 01, 01, 01, 01, 0);
 
         [ObservableProperty]
-        private DateTime _endShift = new(2024, 11, 15, 17, 45, 0);
+        private DateTime _endShift = new(0001, 01, 01, 01, 01, 0);
 
         [ObservableProperty]
-        private string _workHours = default!;
+        private string _workDayHours = default!;
 
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
-        private string _totalHours = "16,82";
+        private string _totalMonthHours = "00,00";
         [ObservableProperty]
-        //TODO: z całego okresu w miesiacu
-        private string _totalAmount = "2334,56";
+        private string _totalMonthAmount = "00,00";
+
+        private DateTime startOfWeek { get; set; }
+        private DateTime endOfWeek { get; set; }
+        private DateTime startOfMonth { get; set; }
+        private DateTime endOfMonth { get; set; }
+        public ObservableCollection<WorkBlockListViewModel> WorkBlocks { get; set; } = [];
+
+        [ObservableProperty]
+        private ObservableCollection<bool> _toWork = [];
+
+        private void LoadWorkBlock(int userId)
+        {
+            var workBlocks = _workBlockService.GetByUserId(userId);
+            var workBlocksVms = new List<WorkBlockListViewModel>();
+
+            foreach (var workBlock in workBlocks)
+            {
+                workBlocksVms.Add(CreateWorkBlockVm(workBlock));
+            }
+            WorkBlocks = new ObservableCollection<WorkBlockListViewModel>(workBlocksVms);
+        }
+
+        private static WorkBlockListViewModel CreateWorkBlockVm(WorkBlock workBlock)
+        {
+            return new WorkBlockListViewModel(workBlock);
+        }
 
         [RelayCommand]
         private static void Hide()
@@ -81,48 +120,135 @@ namespace Harmonogram.Wpf.ViewModels
         [RelayCommand]
         private void OpenWorkHoursPanel()
         {
-            var dialogViewModel = new WorkTimeViewModel();
+            if (IsLogged is null)
+            {
+                return;
+            }
+            var dialogViewModel = new WorkTimeViewModel(IsLogged);
             _dialogService.ShowDialog<WorkTimeWindow>(this, dialogViewModel);
         }
 
         [RelayCommand]
         private void OpenSchedulePanel()
         {
-            var dialogViewModel = new SchedulePanelViewModel();
+            if (IsLogged is null)
+            {
+                return;
+            }
+            var dialogViewModel = new SchedulePanelViewModel(IsLogged);
             _dialogService.ShowDialog<SchedulePanelWindow>(this, dialogViewModel);
         }
+
+        [RelayCommand]
+        private void OpenUserInformation()
+        {
+            var dialogViewModel = new DisplayUserInformationViewModel();
+            dialogViewModel.CurrentUser = IsLogged;
+            _dialogService.ShowDialog<DisplayUserInformationWindow>(this, dialogViewModel);
+        }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateSchedule()
         {
             var dialogViewModel = new ScheduleCreatorViewModel();
             _dialogService.ShowDialog<ScheduleCreatorWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenCreateUser()
         {
             var dialogViewModel = new CreateUserViewModel();
             _dialogService.ShowDialog<CreateUserWindow>(this, dialogViewModel);
         }
+
         [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
         private void OpenListUsers()
         {
             var dialogViewModel = new UsersListViewModel();
             _dialogService.ShowDialog<UsersListWindow>(this, dialogViewModel);
         }
+        [RelayCommand(CanExecute = nameof(CanExecuteAdminCommands))]
+        private void OpenScheduleEditor()
+        {
+            var dialogViewModel = new ScheduleEditorViewModel();
+            _dialogService.ShowDialog<ScheduleEditorWindow>(this, dialogViewModel);
+        }
+
         private void Close()
         {
             Application.Current.Shutdown();
         }
-
-
         private void LoadData(User user)
         {
             UserName = user.Name;
-            WorkHours = $"{StartShift:HH:mm} - {EndShift:HH:mm}";
-            HoursCount = 5;
-            MoneyCount = user.PaymentPerHour * HoursCount;
-            double hoursCount = (double)HoursCount;
-            Amount = Math.Round(user.PaymentPerHour * hoursCount + user.PaymentPerHour * (hoursCount + 1) + user.PaymentPerHour * (hoursCount + 3), 2).ToString("F2");
+            LoadWorkBlock(user.Id);
+
+            double totalHoursWeek = 0;
+            double totalHoursMonth = 0;
+            double totalEarningsMonth = 0;
+            foreach (var workBlock in WorkBlocks)
+            {
+                if (workBlock.IsToday)
+                {
+                    StatusOfWork = workBlock.Date.ToString("D", new CultureInfo("pl-PL"))!;
+                    HoursDayCount = workBlock.EndHour - workBlock.StartHour;
+                    WorkDayHours = $"{workBlock.StartHourFormatted} - {workBlock.EndHourFormatted}";
+                }
+
+
+                if (workBlock.Date >= startOfWeek && workBlock.Date <= endOfWeek)
+                {
+                    int dayIndex = (int)workBlock.Date.DayOfWeek;
+
+                    dayIndex = (dayIndex == 0) ? 6 : dayIndex - 1;
+
+                    if (dayIndex >= 0 && dayIndex < ToWork.Count)
+                    {
+                        ToWork[dayIndex] = true;
+                    }
+
+                    totalHoursWeek += workBlock.EndHour - workBlock.StartHour;
+                }
+
+                if (workBlock.Date >= startOfMonth && workBlock.Date <= DateTime.Today && workBlock.Date <= endOfMonth)
+                {
+                    double hoursWorked = workBlock.EndHour - workBlock.StartHour;
+
+
+                    if (workBlock.Date.Date == DateTime.Today)
+                    {
+                        int currentHour = DateTime.Now.Hour;
+                        if (workBlock.EndHour > currentHour)
+                        {
+                            hoursWorked = Math.Max(0, currentHour - workBlock.StartHour);
+                        }
+                    }
+
+                    totalHoursMonth += hoursWorked;
+                    totalEarningsMonth += hoursWorked * user.PaymentPerHour;
+                }
+            }
+            MoneyDayCount = user.PaymentPerHour * HoursDayCount;
+            var totalEarningsWeeks = totalHoursWeek * user.PaymentPerHour;
+            TotalWeekAmount = Math.Round(totalEarningsWeeks, 2).ToString("F2");
+
+
+            TotalMonthHours = totalHoursMonth.ToString("F2");
+            TotalMonthAmount = totalEarningsMonth.ToString("F2");
+        }
+
+        private void InitializeVariables()
+        {
+            ToWork = new ObservableCollection<bool>
+            {
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+            };
         }
 
         private void OnLoggedIn(object? sender, User user)

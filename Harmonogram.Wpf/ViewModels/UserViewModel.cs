@@ -31,6 +31,7 @@ namespace Harmonogram.Wpf.ViewModels
         [ObservableProperty]
         private bool _isChecked;
 
+
         public User User { get; private set; } = user;
 
         public void Update(User user)

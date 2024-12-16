@@ -30,8 +30,10 @@ namespace Harmonogram.Common.Repositories
         public User CheckFirst(User user)
         {
             Reload();
-            return _context.Users.FirstOrDefault(u => u.LastName == user.LastName && u.Mail == user.Mail)!;
+            return _context.Users
+                .FirstOrDefault(u => (u.LastName == user.LastName || u.Mail == user.Mail) && u.IsArchived == false)!;
         }
+
 
         public void Update(User user)
         {

@@ -20,6 +20,7 @@
     <Window.Resources>
         <converters:HandyColorConverter x:Key="handyColorConverter" />
         <converters:HoursAndMoneyConverter x:Key="hoursAndMoneyConverter" />
+        <converters:BoolColorConverter x:Key="boolColorConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
     </Window.Resources>
     <i:Interaction.Triggers>
@@ -31,11 +32,15 @@
     <Window.InputBindings>
         <KeyBinding
             Key="q"
-            Command="{Binding OpenWorkHoursPanelCommand}"
+            Command="{Binding OpenSchedulePanelCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
             Key="w"
-            Command="{Binding OpenSchedulePanelCommand}"
+            Command="{Binding OpenWorkHoursPanelCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="a"
+            Command="{Binding OpenUserInformationCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
             Key="e"
@@ -69,13 +74,16 @@
                 VerticalContentAlignment="Center"
                 FontSize="21">
                 <MenuItem Header="Panel Użytkownika">
-                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Panel Czasu Pracy" />
-                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Panel Harmonogramu" />
+                    <MenuItem Command="{Binding OpenSchedulePanelCommand}" Header="Harmonogram" />
+                    <MenuItem Command="{Binding OpenWorkHoursPanelCommand}" Header="Miesięczny czas pracy" />
+                    <MenuItem Command="{Binding OpenUserInformationCommand}" Header="Twoje dane" />
                 </MenuItem>
                 <MenuItem Header="Panel Administacyjny" Visibility="{Binding OpenAdminVisibility}">
-                    <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie Harmonogramu" />
-                    <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie Użytkownika" />
-                    <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj Dane" />
+                    <MenuItem Command="{Binding OpenCreateScheduleCommand}" Header="Tworzenie harmonogramu" />
+                    <MenuItem Command="{Binding OpenScheduleEditorCommand}" Header="Edytuj harmonogramu" />
+                    <MenuItem Command="{Binding OpenCreateUserCommand}" Header="Tworzenie użytkownika" />
+                    <MenuItem Command="{Binding OpenListUsersCommand}" Header="Edytuj danych użytkownika" />
+
                 </MenuItem>
 
             </Menu>
@@ -102,9 +110,8 @@
                     VerticalAlignment="Center"
                     Background="Transparent"
                     FontSize="40"
-                    Foreground="White">
-                    Witaj,<Run Text="{Binding UserName}" />
-                </TextBlock>
+                    Foreground="White"
+                    Text="{Binding UserName, StringFormat='Witaj, {0}!'}" />
 
                 <Border
                     Grid.Row="1"
@@ -129,7 +136,7 @@
                             Background="Transparent"
                             FontSize="30"
                             Foreground="White"
-                            Text="Twoja następna zmiana:" />
+                            Text="Status pracy: " />
                         <TextBlock
                             Grid.Row="0"
                             Margin="0,15,0,5"
@@ -138,7 +145,7 @@
                             FontSize="35"
                             FontWeight="Bold"
                             Foreground="White"
-                            Text="{Binding NextShiftDate, StringFormat='dddd, dd MMMM yyyy'}" />
+                            Text="{Binding StatusOfWork, StringFormat='dddd, dd MMMM yyyy'}" />
 
                         <TextBlock
                             Grid.Row="1"
@@ -148,7 +155,7 @@
                             FontSize="30"
                             FontWeight="Bold"
                             Foreground="White"
-                            Text="{Binding WorkHours, StringFormat='Godziny pracy: HH:mm - HH:mm'}" />
+                            Text="{Binding WorkDayHours, StringFormat='Godziny pracy: HH:mm - HH:mm'}" />
                         <Border
                             Grid.Row="0"
                             Width="Auto"
@@ -167,8 +174,8 @@
                                 Foreground="White">
                                 <TextBlock.Text>
                                     <MultiBinding Converter="{StaticResource hoursAndMoneyConverter}">
-                                        <Binding Path="HoursCount" />
-                                        <Binding Path="MoneyCount" />
+                                        <Binding Path="HoursDayCount" />
+                                        <Binding Path="MoneyDayCount" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -221,7 +228,7 @@
                                 Background="Transparent"
                                 FontSize="32"
                                 Foreground="White"
-                                Text="{Binding Amount, StringFormat={}{0:F2} zł}" />
+                                Text="{Binding TotalWeekAmount, StringFormat={}{0:F2} zł}" />
                         </Border>
 
                         <!--  Dodanie liter dni tygodnia i pustych kółek  -->
@@ -248,8 +255,10 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[0], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
+
                             </StackPanel>
 
                             <!--  Druga litera i koło  -->
@@ -268,6 +277,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[1], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -288,6 +298,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[2], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -308,6 +319,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[3], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -328,6 +340,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[4], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -348,6 +361,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[5], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -368,6 +382,7 @@
                                     Margin="5,5,5,0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Fill="{Binding Path=ToWork[6], Converter={StaticResource boolColorConverter}}"
                                     Stroke="White"
                                     StrokeThickness="2" />
                             </StackPanel>
@@ -402,7 +417,7 @@
                             FontSize="32"
                             FontWeight="Bold"
                             Foreground="White"
-                            Text="{Binding TotalAmount, StringFormat={}{0:F2} zł}" />
+                            Text="{Binding TotalMonthAmount, StringFormat={}{0:F2} zł}" />
                     </Grid>
                 </Border>
                 <Border
@@ -431,7 +446,7 @@
                             FontSize="32"
                             FontWeight="Bold"
                             Foreground="White"
-                            Text="{Binding TotalHours, StringFormat={}{0:F2} hrs.}" />
+                            Text="{Binding TotalMonthHours, StringFormat={}{0:F2} hrs.}" />
                     </Grid>
                 </Border>
 

@@ -5,16 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:Harmonogram.Wpf.Views"
-    xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     xmlns:uc="clr-namespace:Harmonogram.Wpf.Views.ScheduleCreatorUserControls"
-    Title="Kreator Harmonogramu"
+    Title="Kreator harmonogramu"
     Width="800"
     Height="450"
     md:DialogServiceViews.IsRegistered="True"
     Loaded="Window_Loaded"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
     mc:Ignorable="d">
-
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding PreviousStepCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextStepCommand}" />
+        <KeyBinding Key="Enter" Command="{Binding SaveCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding ExitCommand}" />
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -31,7 +39,7 @@
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
-            Margin="0,0,10,0">
+            Margin="0,50,10,0">
             <hc:StepBarItem Content="Data" />
             <hc:StepBarItem Content="Nazwa" />
             <hc:StepBarItem Content="Pracownicy" />
@@ -58,15 +66,21 @@
         <Button
             Grid.Row="2"
             Grid.Column="0"
+            Height="40"
+            Background="#172d3a"
             Command="{Binding PreviousStepCommand}"
-            Content="Poprzedni krok" />
+            Content="Poprzedni krok"
+            FontSize="15" />
         <Button
             Grid.Row="2"
             Grid.ColumnSpan="2"
+            Width="150"
+            Height="40"
             HorizontalAlignment="Center"
             hc:IconElement.Geometry="{StaticResource SaveGeometry}"
             Command="{Binding SaveCommand}"
-            Content="Zapisz">
+            Content="Zapisz"
+            FontSize="15">
             <Button.Style>
                 <Style BasedOn="{StaticResource ButtonSuccess}" TargetType="Button">
                     <Setter Property="Visibility" Value="Hidden" />
@@ -81,7 +95,10 @@
         <Button
             Grid.Row="2"
             Grid.Column="2"
+            Height="40"
+            Background="#172d3a"
             Command="{Binding NextStepCommand}"
-            Content="Następny krok" />
+            Content="Następny krok"
+            FontSize="15" />
     </Grid>
 </hc:Window>
