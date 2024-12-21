@@ -3,7 +3,6 @@ using Harmonogram.Common.Interfaces;
 using Harmonogram.Common.Models;
 using Harmonogram.Common.Repositories;
 using Harmonogram.Common.Services;
-using Harmonogram.Wpf.Models;
 using Harmonogram.Wpf.ViewModels;
 using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +59,7 @@ namespace Harmonogram.Wpf
             .AddScoped<IColorRepository, ColorRepository>()
             .AddScoped<IConstants, Constants>()
             .AddScoped<SeederContext>()
-            .AddScoped<Const>()
+            .AddScoped<Constants>()
             .BuildServiceProvider());
 
             using var scope = Ioc.Default.CreateScope();
