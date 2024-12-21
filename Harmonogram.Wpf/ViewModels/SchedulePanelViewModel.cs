@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
-using Harmonogram.Wpf.Models;
+using Harmonogram.Common.Models;
 using Harmonogram.Wpf.ViewModels.ListViewModels;
 using Harmonogram.Wpf.Views;
 using MvvmDialogs;
@@ -15,11 +15,11 @@ namespace Harmonogram.Wpf.ViewModels
     {
         private readonly IWorkBlockService _workBlockService;
         private readonly IDialogService _dialogService;
-        private readonly Const _conts;
+        private readonly Constants _conts;
 
         public SchedulePanelViewModel(User? user = null)
         {
-            _conts = Ioc.Default.GetRequiredService<Const>();
+            _conts = Ioc.Default.GetRequiredService<Constants>();
             _dialogService = Ioc.Default.GetRequiredService<IDialogService>();
             _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
 

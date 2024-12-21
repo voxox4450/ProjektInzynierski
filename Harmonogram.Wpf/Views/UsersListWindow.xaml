@@ -21,13 +21,7 @@
 
     <Window.Resources>
         <hc:Object2BooleanConverter x:Key="objectSelectionToBoolConverter" />
-        <converters:HandyColorConverter x:Key="handyColorConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
-        <!--<Style x:Key="GridViewColumnHeaderStyle" TargetType="GridViewColumnHeader">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-        </Style>-->
     </Window.Resources>
 
     <Grid Margin="10,5,10,10" Background="{StaticResource SecondaryRegionColor}">
