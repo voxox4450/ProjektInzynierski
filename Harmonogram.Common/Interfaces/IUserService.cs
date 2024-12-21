@@ -6,9 +6,7 @@ namespace Harmonogram.Common.Interfaces
     {
         User? GetById(int id); // Preferred version
         User Login(User user);
-
         void Register(User user);
-
         User CheckFirst(User user);
         IEnumerable<User> GetAll();
         void Update(User user);

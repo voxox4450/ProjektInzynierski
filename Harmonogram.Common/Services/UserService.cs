@@ -18,12 +18,6 @@ namespace Harmonogram.Common.Services
             _userRepository = userRepository;
         }
 
-        public User? Get(int id)
-        {
-            return _userRepository.GetById(id);
-        }
-
-
         public User? Login(User user)
         {
             var loggedInUser = _userRepository.Login(user);
@@ -51,7 +45,7 @@ namespace Harmonogram.Common.Services
         {
             _userRepository.Update(user);
             Reload();
-            var editedUser = Get(user.Id);
+            var editedUser = GetById(user.Id);
             if (editedUser != null)
             {
                 UserUpdated?.Invoke(this, editedUser);
@@ -61,7 +55,7 @@ namespace Harmonogram.Common.Services
 
         public void Archive(int userId)
         {
-            var user = Get(userId)!;
+            var user = GetById(userId)!;
             user!.IsArchived = true;
             _userRepository.Update(user);
 

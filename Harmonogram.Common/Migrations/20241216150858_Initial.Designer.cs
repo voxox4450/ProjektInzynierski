@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Harmonogram.Common.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241216132830_initial")]
-    partial class initial
+    [Migration("20241216150858_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
