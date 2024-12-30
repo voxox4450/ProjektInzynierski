@@ -96,6 +96,8 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 SetProperty(ref _step, value);
                 ToggleVisibility();
+                NextStepCommand.NotifyCanExecuteChanged();
+                PreviousStepCommand.NotifyCanExecuteChanged();
             }
         }
 
