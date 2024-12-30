@@ -16,16 +16,16 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Label
             Grid.ColumnSpan="2"
-            Height="40"
+            Width="400"
+            Height="80"
             VerticalContentAlignment="Center"
+            Background="#172d3a"
             Content="Wybierz blok pracy:"
-            FontSize="20" />
+            FontSize="25" />
         <ListView
             Grid.Row="1"
             Grid.RowSpan="3"
@@ -36,7 +36,10 @@
             SelectionMode="Single">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Width="70" Header="Id" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn
+                        Width="70"
+                        DisplayMemberBinding="{Binding Id}"
+                        Header="Id" />
 
                     <GridViewColumn
                         Width="300"
@@ -54,7 +57,7 @@
             </ListView.View>
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Usuń" Command="{Binding DeleteCommand}" />
+                    <MenuItem Command="{Binding DeleteCommand}" Header="Usuń" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

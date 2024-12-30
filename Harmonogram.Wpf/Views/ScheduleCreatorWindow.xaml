@@ -13,7 +13,7 @@
     Height="450"
     md:DialogServiceViews.IsRegistered="True"
     Loaded="Window_Loaded"
-    ResizeMode="CanMinimize"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">

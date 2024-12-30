@@ -8,6 +8,7 @@ using Harmonogram.Wpf.Views;
 using Microsoft.IdentityModel.Tokens;
 using MvvmDialogs;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using HC = HandyControl.Controls;
@@ -68,6 +69,7 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 SetProperty(ref _scheduleName, value);
                 ValidateProperty(_scheduleName);
+                NextStepCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -104,41 +106,42 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 SetProperty(ref _step, value);
                 ToggleVisibility();
+                NextStepCommand.NotifyCanExecuteChanged();
+                PreviousStepCommand.NotifyCanExecuteChanged();
             }
         }
 
         private int? _step;
 
-        private bool IsValid()
+        private bool CanNextStepBeExecuted()
         {
             return Step switch
             {
-                1 => StartingDate > DateTime.Today,
+                1 => StartingDate > DateTime.Today && StartingDate.DayOfWeek.Equals(DayOfWeek.Monday),
                 2 => !ScheduleName.IsNullOrEmpty(),
                 3 => !Users.IsNullOrEmpty() && Users.Any(u => u.IsChecked),
                 _ => false,
             };
         }
 
-        [RelayCommand(CanExecute = nameof(IsValid))]
+        private bool CanPreviousStepBeExecuted()
+        {
+            return Step > 1;
+        }
+
+        [RelayCommand(CanExecute = nameof(CanNextStepBeExecuted))]
         private void NextStep()
         {
-            if (Step < 4)
-            {
-                Step++;
-                ReloadVariables();
-            }
+            Step++;
+            ReloadVariables();
             OnRequestNextStep?.Invoke(this, EventArgs.Empty);
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanPreviousStepBeExecuted))]
         private void PreviousStep()
         {
-            if (Step > 1)
-            {
-                Step--;
-                ReloadVariables();
-            }
+            Step--;
+            ReloadVariables();
             OnRequestPrevioustStep?.Invoke(this, EventArgs.Empty);
         }
 
@@ -164,7 +167,9 @@ namespace Harmonogram.Wpf.ViewModels
 
             foreach (var user in users)
             {
-                usersViewModels.Add(CreateUserViewModel(user));
+                var userViewModel = CreateUserViewModel(user);
+                userViewModel.PropertyChanged += UserViewModel_PropertyChanged;
+                usersViewModels.Add(userViewModel);
             }
             Users = new ObservableCollection<UserViewModel>(usersViewModels);
         }
@@ -339,16 +344,15 @@ namespace Harmonogram.Wpf.ViewModels
             WorkBlockViewModels[workBlock.DayId].Add(workBlockViewModel);
             ReloadWorkBlocks(workBlock.DayId);
             workBlockViewModel.LoadBlock(workBlockViewModel.Width);
-            workBlockViewModel.SetName();
         }
 
         private void OnWorkBlockUpdated(object sender, WorkBlock workBlock)
         {
             var workBlockViewModel = WorkBlockViewModels[workBlock.DayId].First(wbvm => wbvm.WorkBlock.Id == workBlock.Id);
+            workBlockViewModel.User = workBlock.User;
             ReloadWorkBlocks(workBlock.DayId);
             workBlockViewModel.Update(workBlock);
             workBlockViewModel.LoadBlock(workBlockViewModel.Width);
-            workBlockViewModel.SetName();
         }
 
         private void OnWorkBlockDeleted(object sender, WorkBlock workBlock)
@@ -356,6 +360,14 @@ namespace Harmonogram.Wpf.ViewModels
             var workBlockViewModel = WorkBlockViewModels[workBlock.DayId].First(wbvm => wbvm.WorkBlock.Id == workBlock.Id);
             WorkBlockViewModels[workBlock.DayId].Remove(workBlockViewModel);
             ReloadWorkBlocks(workBlock.DayId);
+        }
+
+        private void UserViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(UserViewModel.IsChecked))
+            {
+                NextStepCommand.NotifyCanExecuteChanged();
+            }
         }
     }
 }

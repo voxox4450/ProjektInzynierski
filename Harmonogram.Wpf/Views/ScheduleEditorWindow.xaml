@@ -14,9 +14,16 @@
     Height="450"
     md:DialogServiceViews.IsRegistered="True"
     Loaded="Window_Loaded"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding PreviousStepCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextStepCommand}" />
+        <KeyBinding Key="Enter" Command="{Binding SaveCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding ExitCommand}" />
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -36,7 +43,8 @@
             Margin="0,0,10,0">
             <hc:StepBarItem Content="Harmonogram" />
             <hc:StepBarItem Content="Edycja" />
-            <hc:StepBarItem Content="Edycja" />
+            <hc:StepBarItem Content="Pracownicy" />
+            <hc:StepBarItem Content="Przypisz godziny" />
         </hc:StepBar>
 
         <uce:UserControl1Schedule
@@ -59,15 +67,21 @@
         <Button
             Grid.Row="2"
             Grid.Column="0"
+            Height="40"
+            Background="#172d3a"
             Command="{Binding PreviousStepCommand}"
-            Content="Poprzedni krok" />
+            Content="Poprzedni krok"
+            FontSize="15" />
         <Button
             Grid.Row="2"
             Grid.ColumnSpan="2"
+            Width="150"
+            Height="40"
             HorizontalAlignment="Center"
             hc:IconElement.Geometry="{StaticResource SaveGeometry}"
             Command="{Binding SaveCommand}"
-            Content="Zapisz">
+            Content="Zapisz"
+            FontSize="15">
             <Button.Style>
                 <Style BasedOn="{StaticResource ButtonSuccess}" TargetType="Button">
                     <Setter Property="Visibility" Value="Hidden" />
@@ -82,7 +96,10 @@
         <Button
             Grid.Row="2"
             Grid.Column="2"
+            Height="40"
+            Background="#172d3a"
             Command="{Binding NextStepCommand}"
-            Content="Następny krok" />
+            Content="Następny krok"
+            FontSize="15" />
     </Grid>
 </hc:Window>
