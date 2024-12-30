@@ -59,6 +59,7 @@ namespace Harmonogram.Wpf
             .AddScoped<IColorRepository, ColorRepository>()
             .AddScoped<Constants>()
             .AddScoped<SeederContext>()
+            .AddScoped<Constants>()
             .BuildServiceProvider());
 
             using var scope = Ioc.Default.CreateScope();
