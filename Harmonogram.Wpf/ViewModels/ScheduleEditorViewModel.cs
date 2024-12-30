@@ -104,15 +104,20 @@ namespace Harmonogram.Wpf.ViewModels
 
         #endregion Fields & Properties
 
-        private bool IsValid()
+        private bool CanNextStepBeExecuted()
         {
             return Step switch
             {
                 1 => !Schedules.IsNullOrEmpty() && SelectedSchedule != null,
-                2 => !SelectedSchedule!.Name.IsNullOrEmpty() && SelectedSchedule.StartDate > DateTime.Today,
+                2 => !SelectedSchedule!.Name.IsNullOrEmpty() && SelectedSchedule.StartDate > DateTime.Today && SelectedSchedule.StartDate.DayOfWeek.Equals(DayOfWeek.Monday),
                 3 => !Users.IsNullOrEmpty() && Users.Any(u => u.IsChecked),
                 _ => false,
             };
+        }
+
+        private bool CanPreviousStepBeExecuted()
+        {
+            return Step > 1;
         }
 
         private void InitializeVariables()
@@ -141,25 +146,19 @@ namespace Harmonogram.Wpf.ViewModels
             };
         }
 
-        [RelayCommand(CanExecute = nameof(IsValid))]
+        [RelayCommand(CanExecute = nameof(CanNextStepBeExecuted))]
         private void NextStep()
         {
-            if (Step < 4)
-            {
-                Step++;
-                ReloadVariables();
-            }
+            Step++;
+            ReloadVariables();
             OnRequestNextStep?.Invoke(this, new EventArgs());
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanPreviousStepBeExecuted))]
         private void PreviousStep()
         {
-            if (Step > 1)
-            {
-                Step--;
-                ReloadVariables();
-            }
+            Step--;
+            ReloadVariables();
             OnRequestPrevioustStep?.Invoke(this, new EventArgs());
         }
 
@@ -245,7 +244,6 @@ namespace Harmonogram.Wpf.ViewModels
                     wbvm.Margin = new Thickness(iterator * newWidth, 0, 0, 0);
                 }
                 workBlock.LoadBlock(newWidth);
-                workBlock.SetName();
                 WorkBlockViewModels[workBlock.DayId].Add(workBlock);
             }
         }
@@ -280,9 +278,9 @@ namespace Harmonogram.Wpf.ViewModels
             }
         }
 
-        private static UserViewModel CreateUserViewModel(Common.Entities.User user) => new UserViewModel(user);
+        private static UserViewModel CreateUserViewModel(User user) => new UserViewModel(user);
 
-        private static WorkBlockViewModel CreateWorkBlockViewModel(WorkBlock workBlock, Common.Entities.User user) => new(workBlock, user);
+        private static WorkBlockViewModel CreateWorkBlockViewModel(WorkBlock workBlock, User user) => new(workBlock, user);
 
         [RelayCommand]
         private void OpenWorkBlockCreator(object parameter)
@@ -311,7 +309,7 @@ namespace Harmonogram.Wpf.ViewModels
             }
             var dialogViewModel = new WorkBlockEditorViewModel();
             var checkedUsers = Users.Where(user => user.IsChecked).ToList();
-            var workBlocks = SelectedSchedule.WorkBlocks.Where(wb => wb.DayId == _dayService.GetDayId(day)).ToList();
+            var workBlocks = WorkBlockViewModels[_dayService.GetDayId(day)].ToList();
 
             dialogViewModel.CheckedUsers = new ObservableCollection<UserViewModel>(checkedUsers);
             dialogViewModel.Day = day;
@@ -371,7 +369,6 @@ namespace Harmonogram.Wpf.ViewModels
             WorkBlockViewModels[workBlock.DayId].Add(workBlockViewModel);
             ReloadWorkBlocks(workBlock.DayId);
             workBlockViewModel.LoadBlock(workBlockViewModel.Width);
-            workBlockViewModel.SetName();
         }
 
         private void OnWorkBlockUpdated(object sender, WorkBlock workBlock)
@@ -380,7 +377,6 @@ namespace Harmonogram.Wpf.ViewModels
             ReloadWorkBlocks(workBlock.DayId);
             workBlockViewModel.Update(workBlock);
             workBlockViewModel.LoadBlock(workBlockViewModel.Width);
-            workBlockViewModel.SetName();
         }
 
         private void OnWorkBlockDeleted(object sender, WorkBlock workBlock)

@@ -10,8 +10,24 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.ColumnSpan="2"
+            Width="400"
+            Height="80"
+            VerticalContentAlignment="Center"
+            Background="#172d3a"
+            Content="Wybierz harmonogram:"
+            FontSize="25" />
         <ListView
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             hc:Empty.ShowEmpty="True"
