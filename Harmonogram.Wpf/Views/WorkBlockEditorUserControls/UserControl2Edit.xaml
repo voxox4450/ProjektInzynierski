@@ -20,60 +20,101 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Label
             Grid.ColumnSpan="2"
-            Height="40"
+            Width="400"
+            Height="80"
             VerticalContentAlignment="Center"
-            Content="Edytuj block pracy:"
-            FontSize="20" />
+            Background="#172d3a"
+            Content="Edytuj dane:"
+            FontSize="25" />
 
-        <Label Grid.Row="1" Content="Nazwa:" />
+        <Label
+            Grid.Row="1"
+            Width="170"
+            Height="50"
+            Margin="0,0,30,0"
+            HorizontalAlignment="Right"
+            Content="Godzina rozpoczęcia:"
+            FontSize="15" />
         <TextBox
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding SelectedWorkBlock.Name, UpdateSourceTrigger=PropertyChanged}" />
+            Width="50"
+            Height="50"
+            Margin="150,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="15"
+            Text="{Binding SelectedWorkBlock.StartHour, UpdateSourceTrigger=PropertyChanged}"
+            TextAlignment="Center" />
 
-        <Label Grid.Row="2" Content="Godzina rozpoczęcia:" />
+        <Label
+            Grid.Row="2"
+            Width="170"
+            Height="50"
+            Margin="0,0,30,0"
+            HorizontalAlignment="Right"
+            Content="Godzina zakończenia:"
+            FontSize="15" />
         <TextBox
             Grid.Row="2"
             Grid.Column="1"
-            Text="{Binding SelectedWorkBlock.StartHour, UpdateSourceTrigger=PropertyChanged}" />
+            Width="50"
+            Height="50"
+            Margin="150,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="15"
+            Text="{Binding SelectedWorkBlock.EndHour, UpdateSourceTrigger=PropertyChanged}"
+            TextAlignment="Center" />
 
-        <Label Grid.Row="3" Content="Godzina zakończenia:" />
-        <TextBox
+        <Label
+            Grid.Row="3"
+            Width="100"
+            Height="50"
+            Margin="0,0,100,0"
+            HorizontalAlignment="Right"
+            Content="Pracownik:"
+            FontSize="15" />
+        <ComboBox
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding SelectedWorkBlock.EndHour, UpdateSourceTrigger=PropertyChanged}" />
-
-        <Label Grid.Row="4" Content="Wybierz pracownika:" />
-        <ComboBox
-            Grid.Row="4"
-            Grid.Column="1"
+            Width="150"
+            Height="50"
+            Margin="50,0,0,0"
+            HorizontalAlignment="Left"
             DisplayMemberPath="Name"
+            FontSize="15"
             ItemsSource="{Binding CheckedUsers}"
             SelectedItem="{Binding SelectedUser}" />
         <Label
-    Grid.Row="5"
-    Grid.Column="0"
-    Content="Kolor:" />
+            Grid.Row="4"
+            Width="70"
+            Height="50"
+            Margin="0,0,130,0"
+            HorizontalAlignment="Right"
+            Content="Kolor:"
+            FontSize="15" />
         <ComboBox
-    Grid.Row="5"
-    Grid.Column="1"
-    ItemsSource="{Binding Colors}"
-    SelectedItem="{Binding SelectedColor}">
+            Grid.Row="4"
+            Grid.Column="1"
+            Width="160"
+            Height="50"
+            Margin="40,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="15"
+            ItemsSource="{Binding Colors}"
+            SelectedItem="{Binding SelectedColor}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle
-                    Width="16"
-                    Height="16"
-                    Margin="0,0,5,0"
-                    Fill="{Binding .Hex}"
-                    Opacity="0.5" />
+                            Width="16"
+                            Height="16"
+                            Margin="0,0,5,0"
+                            Fill="{Binding .Hex}"
+                            Opacity="0.5" />
                         <TextBlock VerticalAlignment="Center" Text="{Binding .Name}" />
                     </StackPanel>
                 </DataTemplate>

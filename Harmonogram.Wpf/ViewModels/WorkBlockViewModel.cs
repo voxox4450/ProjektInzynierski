@@ -58,16 +58,12 @@ namespace Harmonogram.Wpf.ViewModels
             Height = (EndHour - StartHour) * BlockHeight;
             Top = StartHour * BlockHeight + 20;
             Color = _colorService.GetById(ColorId);
-        }
-
-        public void SetName()
-        {
-            Name = $"Zmiana:\n {user.Name}\n {user.LastName}\n{StartHour} - {EndHour}";
+            Name = $"Zmiana:\n {workBlock.User.Name}\n {workBlock.User.LastName}\n{StartHour}:00 - {EndHour}:00";
         }
 
         public void Update(WorkBlock workBlock)
         {
-            User = user;
+            User = workBlock.User;
             WorkBlock = workBlock;
             DayId = workBlock.DayId;
             StartHour = workBlock.StartHour;

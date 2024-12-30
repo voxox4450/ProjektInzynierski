@@ -9,12 +9,11 @@
     xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
     xmlns:uc="clr-namespace:Harmonogram.Wpf.Views.WorkBlockEditorUserControls"
     Title="Edycja bloku pracy"
-    Width="800"
-    Height="450"
+    Width="500"
+    Height="550"
     md:DialogServiceViews.IsRegistered="True"
     Loaded="Window_Loaded"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -48,15 +47,22 @@
         <Button
             Grid.Row="2"
             Grid.Column="0"
+            Height="40"
+            Margin="0,0,50,0"
+            Background="#172d3a"
             Command="{Binding PreviousStepCommand}"
-            Content="Poprzedni krok" />
+            Content="Poprzedni krok"
+            FontSize="15" />
         <Button
             Grid.Row="2"
             Grid.ColumnSpan="2"
+            Width="150"
+            Height="40"
             HorizontalAlignment="Center"
             hc:IconElement.Geometry="{StaticResource SaveGeometry}"
             Command="{Binding SaveCommand}"
-            Content="Zapisz">
+            Content="Zapisz"
+            FontSize="15">
             <Button.Style>
                 <Style BasedOn="{StaticResource ButtonSuccess}" TargetType="Button">
                     <Setter Property="Visibility" Value="Hidden" />
@@ -71,7 +77,11 @@
         <Button
             Grid.Row="2"
             Grid.Column="2"
+            Height="40"
+            Margin="50,0,0,0"
+            Background="#172d3a"
             Command="{Binding NextStepCommand}"
-            Content="Następny krok" />
+            Content="Następny krok"
+            FontSize="15" />
     </Grid>
 </hc:Window>

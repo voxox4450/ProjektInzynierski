@@ -23,21 +23,46 @@
 
         <Label
             Grid.ColumnSpan="2"
-            Height="40"
+            Width="400"
+            Height="80"
             VerticalContentAlignment="Center"
-            Content="Edytuj harmonogram:"
-            FontSize="20" />
-
-        <Label Grid.Row="1" Content="Nazwa:" />
+            Background="#172d3a"
+            Content="Edytuj nazwę i datę:"
+            FontSize="25" />
+        <Label
+            Grid.Row="1"
+            Width="80"
+            Height="50"
+            Margin="0,0,120,0"
+            HorizontalAlignment="Right"
+            Content="Nazwa:"
+            FontSize="15" />
         <TextBox
             Grid.Row="1"
             Grid.Column="1"
+            Width="180"
+            Height="50"
+            Margin="20,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="15"
             Text="{Binding SelectedSchedule.Name, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="2" Content="Data rozpoczęcia:" />
+        <Label
+            Grid.Row="2"
+            Width="140"
+            Height="50"
+            Margin="0,0,60,0"
+            HorizontalAlignment="Right"
+            Content="Data rozpoczęcia:"
+            FontSize="15" />
         <DatePicker
             Grid.Row="2"
             Grid.Column="1"
+            Width="110"
+            Height="50"
+            Margin="90,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="15"
             SelectedDate="{Binding SelectedSchedule.StartDate, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
