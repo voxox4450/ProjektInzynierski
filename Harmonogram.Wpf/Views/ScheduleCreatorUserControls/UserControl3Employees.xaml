@@ -16,24 +16,22 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <Label
             Grid.ColumnSpan="2"
-Width="400"
-Height="80"
-VerticalContentAlignment="Center"
-Background="#172d3a"
+            Width="400"
+            Height="80"
+            VerticalContentAlignment="Center"
+            Background="#172d3a"
             Content="Wybierz pracowników:"
             FontSize="25" />
         <ListView
             Grid.Row="1"
-            FontSize="15"
             Grid.RowSpan="3"
             Grid.ColumnSpan="2"
             hc:Empty.ShowEmpty="True"
+            FontSize="15"
             ItemsSource="{Binding Users}"
             SelectionMode="Single">
             <ListView.View>

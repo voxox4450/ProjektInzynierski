@@ -57,7 +57,7 @@ namespace Harmonogram.Wpf
             .AddScoped<IWorkBlockRepository, WorkBlockRepository>()
             .AddScoped<IColorService, ColorService>()
             .AddScoped<IColorRepository, ColorRepository>()
-            .AddScoped<IConstants, Constants>()
+            .AddScoped<Constants>()
             .AddScoped<SeederContext>()
             .AddScoped<Constants>()
             .BuildServiceProvider());

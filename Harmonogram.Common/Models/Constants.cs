@@ -1,8 +1,6 @@
-﻿using Harmonogram.Common.Interfaces;
-
-namespace Harmonogram.Common.Models
+﻿namespace Harmonogram.Common.Models
 {
-    public class Constants : IConstants
+    public class Constants
     {
         public IEnumerable<string> SetHours()
         {

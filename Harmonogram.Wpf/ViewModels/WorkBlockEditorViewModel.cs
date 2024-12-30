@@ -64,6 +64,7 @@ namespace Harmonogram.Wpf.ViewModels
                 SetProperty(ref _selectedWorkBlock, value);
                 ValidateProperty(_selectedWorkBlock);
                 NextStepCommand.NotifyCanExecuteChanged();
+                PreviousStepCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -82,6 +83,8 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 SetProperty(ref _step, value);
                 ToggleVisibility();
+                NextStepCommand.NotifyCanExecuteChanged();
+                PreviousStepCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -89,13 +92,18 @@ namespace Harmonogram.Wpf.ViewModels
 
         #endregion Fields & Properties
 
-        private bool IsValid()
+        private bool CanNextStepBeExecuted()
         {
             return Step switch
             {
                 1 => !WorkBlocks.IsNullOrEmpty() && SelectedWorkBlock != null,
                 _ => false,
             };
+        }
+
+        private bool CanPreviousStepBeExecuted()
+        {
+            return Step > 1;
         }
 
         private void InitializeVariables()
@@ -108,25 +116,19 @@ namespace Harmonogram.Wpf.ViewModels
             Step = 1;
         }
 
-        [RelayCommand(CanExecute = nameof(IsValid))]
+        [RelayCommand(CanExecute = nameof(CanNextStepBeExecuted))]
         private void NextStep()
         {
-            if (Step < 2)
-            {
-                Step++;
-                ReloadVariables();
-            }
+            Step++;
+            ReloadVariables();
             OnRequestNextStep?.Invoke(this, new EventArgs());
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanPreviousStepBeExecuted))]
         private void PreviousStep()
         {
-            if (Step > 1)
-            {
-                Step--;
-                ReloadVariables();
-            }
+            Step--;
+            ReloadVariables();
             OnRequestPrevioustStep?.Invoke(this, new EventArgs());
         }
 
@@ -165,6 +167,10 @@ namespace Harmonogram.Wpf.ViewModels
                 SelectedWorkBlock.EndHour > SelectedWorkBlock.StartHour)
             {
                 SelectedWorkBlock.WorkBlock.ColorId = SelectedColor.Id;
+                SelectedWorkBlock.WorkBlock.StartHour = SelectedWorkBlock.StartHour;
+                SelectedWorkBlock.WorkBlock.EndHour = SelectedWorkBlock.EndHour;
+                SelectedWorkBlock.WorkBlock.UserId = SelectedUser.Id;
+                SelectedWorkBlock.WorkBlock.User = SelectedUser.User;
 
                 _workBlockService.Update(SelectedWorkBlock.WorkBlock);
 
