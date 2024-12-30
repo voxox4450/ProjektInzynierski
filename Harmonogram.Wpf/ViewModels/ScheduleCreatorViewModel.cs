@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using HandyControl.Tools.Extension;
 using Harmonogram.Common.Entities;
 using Harmonogram.Common.Interfaces;
+using Harmonogram.Common.Models;
 using Harmonogram.Wpf.Views;
 using Microsoft.IdentityModel.Tokens;
 using MvvmDialogs;
@@ -22,7 +23,7 @@ namespace Harmonogram.Wpf.ViewModels
         private readonly IWorkBlockService _workBlockService;
         private readonly IColorService _colorService;
         private readonly IScheduleService _scheduleService;
-        private readonly IConstants _constants;
+        private readonly Constants _constants;
 
         public event EventHandler? OnRequestNextStep;
 
@@ -36,7 +37,7 @@ namespace Harmonogram.Wpf.ViewModels
             _workBlockService = Ioc.Default.GetRequiredService<IWorkBlockService>();
             _scheduleService = Ioc.Default.GetRequiredService<IScheduleService>();
             _colorService = Ioc.Default.GetRequiredService<IColorService>();
-            _constants = Ioc.Default.GetRequiredService<IConstants>();
+            _constants = Ioc.Default.GetRequiredService<Constants>();
             _workBlockService.WorkBlockAdded += OnWorkBlockAdded!;
             _workBlockService.WorkBlockUpdated += OnWorkBlockUpdated!;
             _workBlockService.WorkBlockDeleted += OnWorkBlockDeleted!;

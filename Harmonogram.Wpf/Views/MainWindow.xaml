@@ -18,7 +18,6 @@
     WindowState="Maximized"
     mc:Ignorable="d">
     <Window.Resources>
-        <converters:HandyColorConverter x:Key="handyColorConverter" />
         <converters:HoursAndMoneyConverter x:Key="hoursAndMoneyConverter" />
         <converters:BoolColorConverter x:Key="boolColorConverter" />
         <SolidColorBrush x:Key="SecondaryRegionColor" Color="#2d2d30" />
