@@ -8,6 +8,7 @@ using Harmonogram.Wpf.Views;
 using Microsoft.IdentityModel.Tokens;
 using MvvmDialogs;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using HC = HandyControl.Controls;
 
@@ -97,6 +98,8 @@ namespace Harmonogram.Wpf.ViewModels
             {
                 SetProperty(ref _step, value);
                 ToggleVisibility();
+                NextStepCommand.NotifyCanExecuteChanged();
+                PreviousStepCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -173,6 +176,7 @@ namespace Harmonogram.Wpf.ViewModels
             }
             if (Step == 4)
             {
+                DayDates = [];
                 for (int i = 0; i < 7; i++)
                 {
                     DayDates.Add(SelectedSchedule.StartDate.AddDays(i));
@@ -201,7 +205,9 @@ namespace Harmonogram.Wpf.ViewModels
             var schedulesViewModels = new List<ScheduleViewModel>();
             foreach (var schedule in schedules)
             {
-                schedulesViewModels.Add(CreateScheduleViewModel(schedule));
+                var scheduleViewModel = CreateScheduleViewModel(schedule);
+                scheduleViewModel.PropertyChanged += ScheduleViewModel_PropertyChanged;
+                schedulesViewModels.Add(scheduleViewModel);
             }
             Schedules = new ObservableCollection<ScheduleViewModel>(schedulesViewModels);
         }
@@ -215,7 +221,9 @@ namespace Harmonogram.Wpf.ViewModels
 
             foreach (var user in users)
             {
-                usersViewModels.Add(CreateUserViewModel(user));
+                var userViewModel = CreateUserViewModel(user);
+                userViewModel.PropertyChanged += UserViewModel_PropertyChanged;
+                usersViewModels.Add(userViewModel);
             }
             Users = new ObservableCollection<UserViewModel>(usersViewModels);
         }
@@ -384,6 +392,25 @@ namespace Harmonogram.Wpf.ViewModels
             var workBlockViewModel = WorkBlockViewModels[workBlock.DayId].First(wbvm => wbvm.WorkBlock.Id == workBlock.Id);
             WorkBlockViewModels[workBlock.DayId].Remove(workBlockViewModel);
             ReloadWorkBlocks(workBlock.DayId);
+        }
+
+        private void UserViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(UserViewModel.IsChecked))
+            {
+                NextStepCommand.NotifyCanExecuteChanged();
+            }
+        }
+
+        private void ScheduleViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is ScheduleViewModel scheduleViewModel)
+            {
+                if (e.PropertyName == nameof(ScheduleViewModel.Name) || e.PropertyName == nameof(ScheduleViewModel.StartDate))
+                {
+                    scheduleViewModel.Name = _constants.SetBaseName(scheduleViewModel.StartDate);
+                }
+            }
         }
     }
 }
