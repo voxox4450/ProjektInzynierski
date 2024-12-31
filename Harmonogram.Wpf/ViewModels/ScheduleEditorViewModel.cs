@@ -346,7 +346,11 @@ namespace Harmonogram.Wpf.ViewModels
 
             SelectedSchedule.Schedule.WorkBlocks = WorkBlockViewModels.Values
                 .SelectMany(collection => collection)
-                .Select(viewModel => viewModel.WorkBlock)
+                .Select(viewModel =>
+                {
+                    viewModel.WorkBlock.Date = DayDates[viewModel.WorkBlock.DayId - 1];
+                    return viewModel.WorkBlock;
+                })
                 .Where(wb => wb != null)
                 .ToList();
 

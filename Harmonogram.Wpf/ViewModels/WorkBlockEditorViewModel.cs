@@ -169,6 +169,7 @@ namespace Harmonogram.Wpf.ViewModels
                 SelectedWorkBlock.WorkBlock.ColorId = SelectedColor.Id;
                 SelectedWorkBlock.WorkBlock.StartHour = SelectedWorkBlock.StartHour;
                 SelectedWorkBlock.WorkBlock.EndHour = SelectedWorkBlock.EndHour;
+                SelectedWorkBlock.WorkBlock.Date = Date;
                 SelectedWorkBlock.WorkBlock.UserId = SelectedUser.Id;
                 SelectedWorkBlock.WorkBlock.User = SelectedUser.User;
 
