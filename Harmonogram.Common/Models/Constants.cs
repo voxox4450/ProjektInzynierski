@@ -5,7 +5,7 @@
         public IEnumerable<string> SetHours()
         {
             List<string> hours = new List<string>();
-            for (int hour = 0; hour < 24; hour++)
+            for (int hour = 0; hour < 25; hour++)
             {
                 hours.Add($"{hour:D2}:00");
             }

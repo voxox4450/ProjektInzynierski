@@ -161,7 +161,7 @@ namespace Harmonogram.Wpf.ViewModels
         {
             if (!SelectedWorkBlock.Name.IsNullOrEmpty() &&
                 SelectedWorkBlock.StartHour >= 0 &&
-                SelectedWorkBlock.StartHour <= 23 &&
+                SelectedWorkBlock.StartHour <= 24 &&
                 SelectedWorkBlock.EndHour >= 0 &&
                 SelectedWorkBlock.EndHour <= 24 &&
                 SelectedWorkBlock.EndHour > SelectedWorkBlock.StartHour)

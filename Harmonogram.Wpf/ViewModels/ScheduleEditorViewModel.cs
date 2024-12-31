@@ -335,6 +335,8 @@ namespace Harmonogram.Wpf.ViewModels
                 return;
             }
 
+            SelectedSchedule.Schedule.Name = SelectedSchedule.Name;
+            SelectedSchedule.Schedule.StartDate = SelectedSchedule.StartDate;
             SelectedSchedule.Schedule.EndDate = SelectedSchedule.StartDate.AddDays(6);
 
             SelectedSchedule.Schedule.Users = Users

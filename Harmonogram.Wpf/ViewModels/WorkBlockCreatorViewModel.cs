@@ -72,7 +72,7 @@ namespace Harmonogram.Wpf.ViewModels
         private void Save()
         {
             if (WorkStart >= 0 &&
-                WorkStart <= 23 &&
+                WorkStart <= 24 &&
                 WorkEnd >= 0 &&
                 WorkEnd <= 24 &&
                 WorkEnd > WorkStart)
