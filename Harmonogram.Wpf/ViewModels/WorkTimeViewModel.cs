@@ -141,10 +141,9 @@ namespace Harmonogram.Wpf.ViewModels
         private void RightArrow()
         {
             StartOfMonth = StartOfMonth.AddMonths(1);
-            EndOfMonth = EndOfMonth.AddMonths(1);
             EndOfMonth = new DateTime(StartOfMonth.Year, StartOfMonth.Month, 1)
-                .AddMonths(1)
-                .AddDays(-1);
+            .AddMonths(1)
+            .AddDays(-1);
             UpdateCurrentContent(StartOfMonth, EndOfMonth);
             LoadSchedule();
             LoadData();
@@ -152,8 +151,8 @@ namespace Harmonogram.Wpf.ViewModels
         private bool CanGoToNextMonth()
         {
 
-            return EndOfMonth.DayOfYear < DateTime.Today.DayOfYear
-                && StartOfMonth.AddMonths(1).Year <= DateTime.Today.Year;
+            return EndOfMonth.AddDays(1).Month < DateTime.Today.Month ||
+             EndOfMonth.Year < DateTime.Today.Year;
         }
 
         private bool CanGoToPreviousMonth()

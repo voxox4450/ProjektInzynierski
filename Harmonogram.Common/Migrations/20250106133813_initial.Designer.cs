@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Harmonogram.Common.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241216132830_initial")]
+    [Migration("20250106133813_initial")]
     partial class initial
     {
         /// <inheritdoc />
