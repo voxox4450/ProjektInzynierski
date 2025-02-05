@@ -6,14 +6,6 @@ W tym repozytorium znajduję się kod źródłowy aplikacji tworzonej dla zalicz
 
 Szczegółowa dokumentacja została umieszczona na dysku google:
 [Link do pliku 7zip zawierający całą dokumentację projektu](https://drive.google.com/file/d/1Ex8u6JYd321W7WpVx3owEQt_uYTLc1em/view?usp=sharing)
-> [!NOTE]
-> W późniejszych etapach projektu umieszczony zostanie krótki filmik prezentujący działanie aplikacji.
-
-W dokumentacji branchów znajduje się :
-* Imię i Nazwisko autora
-* Aktualny stan pracy
-* Streszczenie
-* Pełny opis obowiązków
 
 # Opis
 Projekt obejmuje stworzenie aplikacji desktopowej do zarządzania harmonogramami pracy, tworzenia grafików manualnie. Aplikacja działa w tle, umożliwiając pracownikom przegląd zmian, oraz obliczanie wynagrodzenia na podstawie
