@@ -4,7 +4,8 @@ W tym repozytorium znajduję się kod źródłowy aplikacji tworzonej dla zalicz
 
 # Dokumentacja
 
-Szczegółowa dokumentacja została podzielona i umieszczona na branchach autorów projektu dla jasnego rozdzielenia zadań. 
+Szczegółowa dokumentacja została umieszczona na dysku google:
+[Link do pliku 7zip zawierający całą dokumentację projektu](https://drive.google.com/file/d/1Ex8u6JYd321W7WpVx3owEQt_uYTLc1em/view?usp=sharing)
 > [!NOTE]
 > W późniejszych etapach projektu umieszczony zostanie krótki filmik prezentujący działanie aplikacji.
 
@@ -22,5 +23,3 @@ przepracowanych godzin.
 - Wykorzytanie wzorcu architektonicznego MVVM (Model-View-ViewModel) z użyciem MVVM Toolkit
 - Użycie języka C# i XAML
 - Dane użytkowe znajdujące się w bazie danych SQL
-
-# Szczegóły
